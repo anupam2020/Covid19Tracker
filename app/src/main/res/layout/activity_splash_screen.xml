@@ -14,7 +14,7 @@
         android:layout_marginTop="50dp"
         android:textSize="40dp"
         android:fontFamily="@font/aladin"
-        android:textColor="#5E35B1"
+        android:textColor="@color/blue"
         android:layout_centerHorizontal="true"
         android:id="@+id/splashText"/>
 
@@ -28,9 +28,9 @@
         android:layout_centerInParent="true"/>
 
     <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:lottie_fileName="loading_violet.json"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:lottie_fileName="78334-loading.json"
         app:lottie_loop="true"
         app:lottie_autoPlay="true"
         android:id="@+id/splashLottieBottom"
