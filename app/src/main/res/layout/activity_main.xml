@@ -52,7 +52,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView1">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="150dp"
@@ -67,7 +68,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView2">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="150dp"
@@ -82,7 +84,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView3">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="150dp"
@@ -97,7 +100,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView4">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="150dp"
@@ -112,7 +116,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView5">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="150dp"
@@ -127,7 +132,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView6">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="150dp"
