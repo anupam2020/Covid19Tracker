@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -11,6 +13,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private CardView card1,card2,card3,card4,card5,card6;
 
     private AppCompatButton button;
+
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
         rootLayout.setBackgroundColor(Color.WHITE);
         gridLayout.setBackgroundColor(Color.WHITE);
 
+        firebaseAuth= FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser()!=null)
+        {
+            startActivity(new Intent(MainActivity.this,CovidTrackerActivity.class));
+            finishAffinity();
+        }
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,4 +73,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Exit");
+        builder.setMessage("Do you really want to exit?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                finishAffinity();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
+    }
+
 }

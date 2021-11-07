@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "965260515018",
+    "project_id": "covid19tracker-c239d",
+    "storage_bucket": "covid19tracker-c239d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965260515018:android:c160cc15d17181addf0633",
+        "android_client_info": {
+          "package_name": "com.sbdev.covid19tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965260515018-qc5oqgsbbsqpqca382qqgbi169ph3t6v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sbdev.covid19tracker",
+            "certificate_hash": "7c3deb02e9140275ca0db8e4d5718c5b4dcc8b22"
+          }
+        },
+        {
+          "client_id": "965260515018-uvfdvilocdkrfdvj3tl5b954i55ul1a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5L9wNmv8tjb0T19L1sBEvwkOr9N9lXtY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965260515018-uvfdvilocdkrfdvj3tl5b954i55ul1a9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

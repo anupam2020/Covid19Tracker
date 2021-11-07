@@ -4,7 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CovidTrackerActivity">
+    tools:context=".CovidTrackerActivity"
+    android:id="@+id/covidTrackerRelative">
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="Logout"
+        android:textSize="20dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/covidLogout"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"

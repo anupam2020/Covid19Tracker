@@ -1,8 +1,12 @@
 package com.sbdev.covid19tracker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +16,9 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,11 +40,13 @@ public class CovidTrackerActivity extends AppCompatActivity {
     private ArrayList<String> isoList;
 
     private EditText text;
-    private Button submit;
+    private Button submit,logout;
 
     private TextView textView;
 
     private RelativeLayout rootLayout;
+
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +56,12 @@ public class CovidTrackerActivity extends AppCompatActivity {
 
         text=findViewById(R.id.editText);
         submit=findViewById(R.id.btnSubmit);
+        logout=findViewById(R.id.covidLogout);
         textView=findViewById(R.id.textView);
 
-        rootLayout=findViewById(R.id.rootLayout);
+        rootLayout=findViewById(R.id.covidTrackerRelative);
+
+        firebaseAuth=FirebaseAuth.getInstance();
 
         countryList=new ArrayList<>();
         isoList=new ArrayList<>();
@@ -308,6 +320,45 @@ public class CovidTrackerActivity extends AppCompatActivity {
             }
         });
 
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                firebaseAuth.signOut();
+                finishAffinity();
+                startActivity(new Intent(CovidTrackerActivity.this,MainActivity.class));
+            }
+        });
+
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(CovidTrackerActivity.this);
+        builder.setTitle("Warning");
+        builder.setMessage("Please select any one!");
+
+        builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                finishAffinity();
+            }
+        });
+
+        builder.setNegativeButton("Logout", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                firebaseAuth.signOut();
+                startActivity(new Intent(CovidTrackerActivity.this,MainActivity.class));
+                finishAffinity();
+            }
+        });
+
+        builder.show();
+    }
+
 }
