@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/drawable-v24/ic_outline_mark_email_read_24.xml" value="0.2703125" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/drawable/blue_border.xml" value="0.2703125" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/drawable/button_bg_blue.xml" value="0.2703125" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/drawable/corner_radius_bg.xml" value="0.2703125" />
@@ -15,6 +16,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/activity_login_reg.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/activity_splash_screen.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/activity_twitter.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/fragment_login.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/fragment_register.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/loading_bg.xml" value="0.25416666666666665" />

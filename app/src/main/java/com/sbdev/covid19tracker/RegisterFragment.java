@@ -124,16 +124,16 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        // TWITTER--------
-//        twitterBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent=new Intent(RegisterActivity.this,TwitterActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                startActivity(intent);
-//            }
-//        });
+
+        twitterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(getActivity(),TwitterActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
 
         // FACEBOOK---------
 //        facebookBtn.setOnClickListener(new View.OnClickListener() {
