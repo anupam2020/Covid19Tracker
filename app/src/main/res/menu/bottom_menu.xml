@@ -3,14 +3,17 @@
 
     <item
         android:title="Home"
-        android:id="@+id/home"/>
+        android:id="@+id/home"
+        android:icon="@drawable/ic_baseline_home_24"/>
 
     <item
         android:title="News"
-        android:id="@+id/news"/>
+        android:id="@+id/news"
+        android:icon="@drawable/ic_baseline_sticky_note_2_24"/>
 
     <item
         android:title="Weather"
-        android:id="@+id/weather"/>
+        android:id="@+id/weather"
+        android:icon="@drawable/ic_baseline_wb_sunny_24"/>
 
 </menu>

@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,10 +16,13 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -40,7 +44,13 @@ public class CovidTrackerActivity extends AppCompatActivity {
 
     private DrawerLayout drawer;
 
-    FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
+
+    private BottomNavigationView bottomNavigationView;
+
+    private NavigationView navigationView;
+
+    private ImageView menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +59,23 @@ public class CovidTrackerActivity extends AppCompatActivity {
 
         getWindow().setStatusBarColor(getResources().getColor(R.color.blue_bg));
 
-
         drawer=findViewById(R.id.covidTrackerDrawer);
 
+        bottomNavigationView=findViewById(R.id.bottomNav);
+
+        navigationView=findViewById(R.id.navView);
+
+        menu=findViewById(R.id.mainMenu);
+
         firebaseAuth=FirebaseAuth.getInstance();
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
 
     }
 
