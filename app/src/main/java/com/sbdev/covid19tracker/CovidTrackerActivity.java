@@ -1,5 +1,6 @@
 package com.sbdev.covid19tracker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -12,6 +13,8 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -77,8 +80,35 @@ public class CovidTrackerActivity extends AppCompatActivity {
             }
         });
 
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId())
+                {
+                    case R.id.home:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new HomeFragment()).commit();
+                        break;
+
+                    case R.id.news:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new NewsFragment()).commit();
+                        break;
+
+                    case R.id.weather:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new WeatherFragment()).commit();
+                        break;
+                }
+
+                return false;
+            }
+        });
+
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     public void onBackPressed() {
