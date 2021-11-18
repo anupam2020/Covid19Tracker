@@ -8,8 +8,21 @@
     android:id="@+id/covidTrackerDrawer"
     android:background="@color/blue_bg">
 
-    <include
-        layout="@layout/main_layout"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_baseline_menu_24"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="15dp"
+            app:tint="@color/white"
+            android:id="@+id/mainMenu"/>
+
+    </RelativeLayout>
+
 
     <include
         layout="@layout/bottom_layout"/>
