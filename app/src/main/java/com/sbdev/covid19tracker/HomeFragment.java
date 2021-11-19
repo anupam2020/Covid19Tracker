@@ -35,6 +35,9 @@ public class HomeFragment extends Fragment {
         CovidtabLayout.addTab(CovidtabLayout.newTab().setText("My Country"));
         CovidtabLayout.addTab(CovidtabLayout.newTab().setText("Global"));
 
+        CovidtabLayout.getTabAt(0).setIcon(R.drawable.ic_baseline_location_on_24);
+        CovidtabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_world_24);
+
         CovidtabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

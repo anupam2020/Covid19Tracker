@@ -65,7 +65,8 @@ public class CovidTrackerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_covid_tracker);
 
-        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(Color.WHITE);
 
         drawer=findViewById(R.id.covidTrackerDrawer);
 
