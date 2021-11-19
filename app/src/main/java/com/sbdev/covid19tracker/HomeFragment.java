@@ -16,50 +16,47 @@ import com.google.android.material.tabs.TabLayout;
 
 public class HomeFragment extends Fragment {
 
-    private TabLayout tabLayout;
-    private ViewPager2 viewPager2;
-    private FragmentAdapter adapter;
+    private TabLayout CovidtabLayout;
+    private ViewPager2 CovidviewPager2;
+    private FragmentAdapter Covidadapter;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tabLayout=view.findViewById(R.id.covidTabLayout);
-        viewPager2=view.findViewById(R.id.covidViewPager2);
+        CovidtabLayout=view.findViewById(R.id.covidTabLayout);
+        CovidviewPager2=view.findViewById(R.id.covidViewPager2);
 
 
         FragmentManager fm=getChildFragmentManager();
-        adapter=new FragmentAdapter(fm,getLifecycle());
-        viewPager2.setAdapter(adapter);
+        Covidadapter=new FragmentAdapter(fm,getLifecycle());
+        CovidviewPager2.setAdapter(Covidadapter);
 
-        tabLayout.addTab(tabLayout.newTab().setText("My Country"));
-        tabLayout.addTab(tabLayout.newTab().setText("Global"));
+        CovidtabLayout.addTab(CovidtabLayout.newTab().setText("My Country"));
+        CovidtabLayout.addTab(CovidtabLayout.newTab().setText("Global"));
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        CovidtabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                viewPager2.setCurrentItem(tab.getPosition());
-                tab.removeBadge();
+                CovidviewPager2.setCurrentItem(tab.getPosition());
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                tab.removeBadge();
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                tab.removeBadge();
             }
         });
 
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        CovidviewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
 
-                tabLayout.selectTab(tabLayout.getTabAt(position));
+                CovidtabLayout.selectTab(CovidtabLayout.getTabAt(position));
             }
         });
 

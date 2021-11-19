@@ -9,8 +9,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            layout="@layout/main_layout"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainStats"
+            android:text="Statistics"
+            android:layout_marginLeft="15dp"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="100dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/mainStats"
+            android:layout_margin="30dp">
+
+            <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/covidTabLayout"
+                android:background="@drawable/white_corner_radius"/>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/covidViewPager2"
+                android:layout_below="@id/covidTabLayout"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

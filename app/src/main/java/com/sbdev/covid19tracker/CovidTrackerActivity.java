@@ -65,7 +65,7 @@ public class CovidTrackerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_covid_tracker);
 
-        getWindow().setStatusBarColor(getResources().getColor(R.color.blue_bg));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         drawer=findViewById(R.id.covidTrackerDrawer);
 
@@ -78,6 +78,7 @@ public class CovidTrackerActivity extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new HomeFragment()).commit();
+        navigationView.setCheckedItem(R.id.home);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,14 +97,17 @@ public class CovidTrackerActivity extends AppCompatActivity {
                 {
                     case R.id.home:
                         getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new HomeFragment()).commit();
+                        item.setChecked(true);
                         break;
 
                     case R.id.news:
                         getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new NewsFragment()).commit();
+                        item.setChecked(true);
                         break;
 
                     case R.id.weather:
                         getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new WeatherFragment()).commit();
+                        item.setChecked(true);
                         break;
                 }
 
@@ -113,10 +117,7 @@ public class CovidTrackerActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
+
 
     @Override
     public void onBackPressed() {

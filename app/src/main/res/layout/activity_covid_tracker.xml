@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".CovidTrackerActivity"
     android:id="@+id/covidTrackerDrawer"
-    android:background="@color/blue_bg">
+    android:background="@color/black">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -21,16 +21,22 @@
             app:tint="@color/white"
             android:id="@+id/mainMenu"/>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/covidFrameLayout"
+            android:layout_above="@id/bottomNav"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/bottom_menu"
+            android:layout_margin="15dp"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/bottomNav"
+            android:background="@drawable/corner_circular"/>
+
     </RelativeLayout>
-
-
-    <include
-        layout="@layout/bottom_layout"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/covidFrameLayout"/>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
