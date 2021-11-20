@@ -6,189 +6,333 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".GlobalFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
 
-        <GridLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/globalGridTop"
-            android:rowCount="2"
-            android:columnCount="2"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="25dp">
+            android:layout_height="match_parent">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="135dp"
-                android:layout_height="100dp"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="#5E35B0"
-                android:layout_gravity="start"
-                app:cardElevation="5dp"
-                android:layout_margin="10dp">
+            <GridLayout
+                android:id="@+id/globalGridTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="25dp"
+                android:columnCount="2"
+                android:rowCount="4">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="135dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="start"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/violet"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textAffected"
-                        android:text="Affected"
-                        android:textColor="@color/white"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textAffectedCount"
-                        android:text="3,00,000"
-                        android:textSize="20dp"
-                        android:textColor="@color/white"
-                        android:layout_marginLeft="10dp"
-                        android:textStyle="bold"
-                        android:layout_centerInParent="true"/>
+                        <TextView
+                            android:id="@+id/textAffectedGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Total Cases"
+                            android:textColor="@color/white"
+                            android:textSize="15dp" />
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/textAffectedCountGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="00"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
 
-            </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="135dp"
-                android:layout_height="100dp"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/red"
-                android:layout_gravity="end"
-                app:cardElevation="5dp"
-                android:layout_margin="10dp">
+                </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="135dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="end"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/red"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textDeath"
-                        android:text="Death"
-                        android:textColor="@color/white"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textDeathCount"
-                        android:text="1,234"
-                        android:textSize="20dp"
-                        android:textColor="@color/white"
-                        android:layout_marginLeft="10dp"
-                        android:textStyle="bold"
-                        android:layout_centerInParent="true"/>
+                        <TextView
+                            android:id="@+id/textDeathGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Total Deaths"
+                            android:textColor="@color/white"
+                            android:textSize="15dp" />
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/textDeathCountGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="00"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
 
-            </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="135dp"
-                android:layout_height="100dp"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/orange"
-                android:layout_gravity="start"
-                app:cardElevation="5dp"
-                android:layout_margin="10dp">
+                </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="135dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="start"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/dirty_green"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textRecovered"
-                        android:text="Recovered"
-                        android:textColor="@color/white"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textRecoveredCount"
-                        android:text="1,50,000"
-                        android:textSize="20dp"
-                        android:textColor="@color/white"
-                        android:layout_marginLeft="10dp"
-                        android:textStyle="bold"
-                        android:layout_centerInParent="true"/>
+                        <TextView
+                            android:id="@+id/textRecoveredGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Total Recovered"
+                            android:textColor="@color/white"
+                            android:textSize="15dp" />
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/textRecoveredCountGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="00"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
 
-            </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="135dp"
-                android:layout_height="100dp"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/light_blue"
-                android:layout_gravity="end"
-                app:cardElevation="5dp"
-                android:layout_margin="10dp">
+                </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="135dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="end"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/light_blue"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textActive"
-                        android:text="Active"
-                        android:textColor="@color/white"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textActiveCount"
-                        android:text="6,584"
-                        android:textSize="20dp"
-                        android:textColor="@color/white"
-                        android:layout_marginLeft="10dp"
-                        android:textStyle="bold"
-                        android:layout_centerInParent="true"/>
+                        <TextView
+                            android:id="@+id/textActiveGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Active Cases"
+                            android:textColor="@color/white"
+                            android:textSize="15dp" />
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/textActiveCountGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="00"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
 
-            </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
 
-        </GridLayout>
+                </androidx.cardview.widget.CardView>
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/globalGridBelow"
-            android:rowCount="1"
-            android:columnCount="2"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="25dp"
-            android:layout_below="@id/globalGridTop">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="135dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="end"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/pink"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
+                        <TextView
+                            android:id="@+id/textNewCasesGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="New Cases"
+                            android:textColor="@color/white"
+                            android:textSize="15dp" />
 
-        </GridLayout>
+                        <TextView
+                            android:id="@+id/textNewCasesCountGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="00"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
 
-    </RelativeLayout>
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="135dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="end"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/black"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textNewDeathsGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="New Deaths"
+                            android:textColor="@color/white"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:id="@+id/textNewDeathsCountGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="00"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="135dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="end"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/dark_green"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textNewRecoveredGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="New Recovered"
+                            android:textColor="@color/white"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:id="@+id/textNewRecoveredCountGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="00"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="135dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="end"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/orange"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textCriticalGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Critical"
+                            android:textColor="@color/white"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:id="@+id/textCriticalCountGlobal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="00"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </GridLayout>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

@@ -17,9 +17,12 @@
     <color name="red">#FF0600</color>
     <color name="light_red">#BFFF0400</color>
     <color name="green">#38F140</color>
+    <color name="dark_green">#43A047</color>
+    <color name="dirty_green">#00897B</color>
     <color name="yellow">#FDD835</color>
     <color name="grey">#40000000</color>
-    <color name="pink">#CCFF005E</color>
+    <color name="pink">#FF005E</color>
+    <color name="dark_pink">#D81B60</color>
     <color name="notes_blue">#80039BE5</color>
     <color name="very_light_blue">#08029AE6</color>
     <color name="notes_status_bar_blue">#BF029AE6</color>

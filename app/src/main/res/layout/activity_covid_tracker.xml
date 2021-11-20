@@ -12,20 +12,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_baseline_menu_24"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="15dp"
-            app:tint="@color/black"
-            android:id="@+id/mainMenu"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_baseline_menu_24"
+                app:tint="@color/black"
+                android:id="@+id/mainMenu"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:lottie_fileName="76038-contact-mail.json"
+                android:layout_alignParentRight="true"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
 
         <FrameLayout
+            android:id="@+id/covidFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/covidFrameLayout"
-            android:layout_above="@id/bottomNav"/>
+            android:layout_above="@id/bottomNav" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="match_parent"

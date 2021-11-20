@@ -1,15 +1,133 @@
 package com.sbdev.covid19tracker;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class GlobalFragment extends Fragment {
+
+    private TextView affected,death,recovered,active,newAffected,newDeath,newRecovered,critical;
+
+    private int affCount,deathCount,recCount,actCount,newAffCount,newDeathCount,newRecCount,critCount;
+
+    private ProgressDialog progressDialog;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        affected=view.findViewById(R.id.textAffectedCountGlobal);
+        death=view.findViewById(R.id.textDeathCountGlobal);
+        recovered=view.findViewById(R.id.textRecoveredCountGlobal);
+        active=view.findViewById(R.id.textActiveCountGlobal);
+        newAffected=view.findViewById(R.id.textNewCasesCountGlobal);
+        newDeath=view.findViewById(R.id.textNewDeathsCountGlobal);
+        newRecovered=view.findViewById(R.id.textNewRecoveredCountGlobal);
+        critical=view.findViewById(R.id.textCriticalCountGlobal);
+
+        progressDialog=new ProgressDialog(getActivity());
+
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.loading_bg);
+        progressDialog.setCancelable(false);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/world")
+                .get()
+                .addHeader("x-rapidapi-host", "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com")
+                .addHeader("x-rapidapi-key", "e8f6c57650msh666fef2e3a110b5p13b950jsn4359d608e124")
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+                Log.e("OnFailure",e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                if(response.isSuccessful())
+                {
+
+                    String res=response.body().string();
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            try {
+
+                                JSONArray jsonArray=new JSONArray(res);
+                                JSONObject jsonObject=jsonArray.getJSONObject(0);
+
+                                affCount=jsonObject.getInt("TotalCases");
+                                deathCount=jsonObject.getInt("TotalDeaths");
+                                recCount=jsonObject.getInt("TotalRecovered");
+                                actCount=jsonObject.getInt("ActiveCases");
+                                newAffCount=jsonObject.getInt("NewCases");
+                                newDeathCount=jsonObject.getInt("NewDeaths");
+                                newRecCount=jsonObject.getInt("NewRecovered");
+                                critCount=jsonObject.getInt("Serious_Critical");
+
+
+
+                                affected.setText(getFormatedAmount(affCount));
+                                death.setText(getFormatedAmount(deathCount));
+                                recovered.setText(getFormatedAmount(recCount));
+                                active.setText(getFormatedAmount(actCount));
+                                newAffected.setText(getFormatedAmount(newAffCount));
+                                newDeath.setText(getFormatedAmount(newDeathCount));
+                                newRecovered.setText(getFormatedAmount(newRecCount));
+                                critical.setText(getFormatedAmount(critCount));
+
+                                progressDialog.dismiss();
+
+                            } catch (JSONException e) {
+                                Log.e("Catch",e.getMessage());
+                            }
+
+                        }
+                    });
+
+                }
+
+            }
+        });
+
+    }
+
+    private static String getFormatedAmount(int amount){
+        return NumberFormat.getNumberInstance(Locale.US).format(amount);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
