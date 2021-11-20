@@ -15,18 +15,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/countryGridTop"
                 android:rowCount="4"
                 android:columnCount="2"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="25dp">
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="135dp"
+                    android:layout_width="140dp"
                     android:layout_height="100dp"
                     app:cardCornerRadius="10dp"
                     app:cardBackgroundColor="@color/violet"
@@ -64,7 +65,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="135dp"
+                    android:layout_width="140dp"
                     android:layout_height="100dp"
                     app:cardCornerRadius="10dp"
                     app:cardBackgroundColor="@color/red"
@@ -102,7 +103,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="135dp"
+                    android:layout_width="140dp"
                     android:layout_height="100dp"
                     app:cardCornerRadius="10dp"
                     app:cardBackgroundColor="@color/dirty_green"
@@ -140,7 +141,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="135dp"
+                    android:layout_width="140dp"
                     android:layout_height="100dp"
                     app:cardCornerRadius="10dp"
                     app:cardBackgroundColor="@color/light_blue"
@@ -178,7 +179,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="135dp"
+                    android:layout_width="140dp"
                     android:layout_height="100dp"
                     android:layout_gravity="end"
                     android:layout_margin="10dp"
@@ -216,7 +217,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="135dp"
+                    android:layout_width="140dp"
                     android:layout_height="100dp"
                     android:layout_gravity="end"
                     android:layout_margin="10dp"
@@ -254,7 +255,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="135dp"
+                    android:layout_width="140dp"
                     android:layout_height="100dp"
                     android:layout_gravity="end"
                     android:layout_margin="10dp"
@@ -292,7 +293,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="135dp"
+                    android:layout_width="140dp"
                     android:layout_height="100dp"
                     android:layout_gravity="end"
                     android:layout_margin="10dp"
