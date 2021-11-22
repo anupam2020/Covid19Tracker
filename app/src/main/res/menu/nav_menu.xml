@@ -15,11 +15,6 @@
             android:icon="@drawable/ic_baseline_outlined_flag_24"
             android:id="@+id/showAll" />
 
-        <item
-            android:title="Search by Country"
-            android:icon="@drawable/ic_baseline_search_24"
-            android:id="@+id/search" />
-
     </group>
 
 

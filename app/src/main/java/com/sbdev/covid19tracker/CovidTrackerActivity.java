@@ -116,6 +116,23 @@ public class CovidTrackerActivity extends AppCompatActivity {
             }
         });
 
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId())
+                {
+
+                    case R.id.showAll:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new AllCountryFragment()).commit();
+                        item.setChecked(true);
+                        break;
+                }
+
+                return false;
+            }
+        });
+
     }
 
 
