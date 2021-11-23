@@ -30,6 +30,11 @@ public class AllCountryAdapter extends RecyclerView.Adapter<AllCountryAdapter.Co
     @Override
     public void onBindViewHolder(@NonNull CountryViewHolder holder, int position) {
 
+        holder.location.setText(arrayList.get(position).getLocation());
+        holder.active.setText(arrayList.get(position).getActive());
+        holder.deaths.setText(arrayList.get(position).getDeaths());
+        holder.recovered.setText(arrayList.get(position).getRecovered());
+
     }
 
     @Override
