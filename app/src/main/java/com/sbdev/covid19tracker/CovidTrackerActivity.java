@@ -126,6 +126,7 @@ public class CovidTrackerActivity extends AppCompatActivity {
                     case R.id.showAll:
                         getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new AllCountryFragment()).commit();
                         item.setChecked(true);
+                        drawer.closeDrawer(GravityCompat.START);
                         break;
                 }
 

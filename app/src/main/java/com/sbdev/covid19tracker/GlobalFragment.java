@@ -100,14 +100,14 @@ public class GlobalFragment extends Fragment {
 
 
 
-                                affected.setText(getFormatedAmount(affCount));
-                                death.setText(getFormatedAmount(deathCount));
-                                recovered.setText(getFormatedAmount(recCount));
-                                active.setText(getFormatedAmount(actCount));
-                                newAffected.setText(getFormatedAmount(newAffCount));
-                                newDeath.setText(getFormatedAmount(newDeathCount));
-                                newRecovered.setText(getFormatedAmount(newRecCount));
-                                critical.setText(getFormatedAmount(critCount));
+                                affected.setText(getFormattedAmount(affCount));
+                                death.setText(getFormattedAmount(deathCount));
+                                recovered.setText(getFormattedAmount(recCount));
+                                active.setText(getFormattedAmount(actCount));
+                                newAffected.setText(getFormattedAmount(newAffCount));
+                                newDeath.setText(getFormattedAmount(newDeathCount));
+                                newRecovered.setText(getFormattedAmount(newRecCount));
+                                critical.setText(getFormattedAmount(critCount));
 
                                 progressDialog.dismiss();
 
@@ -125,7 +125,7 @@ public class GlobalFragment extends Fragment {
 
     }
 
-    private static String getFormatedAmount(int amount){
+    private String getFormattedAmount(int amount){
         return NumberFormat.getNumberInstance(Locale.US).format(amount);
     }
 

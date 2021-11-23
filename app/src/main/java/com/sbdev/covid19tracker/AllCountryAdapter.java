@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AllCountryAdapter extends RecyclerView.Adapter<AllCountryAdapter.CountryViewHolder> {
 
@@ -30,10 +31,10 @@ public class AllCountryAdapter extends RecyclerView.Adapter<AllCountryAdapter.Co
     @Override
     public void onBindViewHolder(@NonNull CountryViewHolder holder, int position) {
 
-        holder.location.setText(arrayList.get(position).getLocation());
-        holder.active.setText(arrayList.get(position).getActive());
-        holder.deaths.setText(arrayList.get(position).getDeaths());
-        holder.recovered.setText(arrayList.get(position).getRecovered());
+        holder.location.setText(arrayList.get(holder.getAdapterPosition()).location);
+        holder.active.setText(arrayList.get(holder.getAdapterPosition()).active);
+        holder.deaths.setText(arrayList.get(holder.getAdapterPosition()).deaths);
+        holder.recovered.setText(arrayList.get(holder.getAdapterPosition()).recovered);
 
     }
 
@@ -45,7 +46,7 @@ public class AllCountryAdapter extends RecyclerView.Adapter<AllCountryAdapter.Co
     public class CountryViewHolder extends RecyclerView.ViewHolder
     {
 
-        private TextView location,active,deaths,recovered;
+        TextView location,active,deaths,recovered;
 
         public CountryViewHolder(@NonNull View itemView) {
             super(itemView);

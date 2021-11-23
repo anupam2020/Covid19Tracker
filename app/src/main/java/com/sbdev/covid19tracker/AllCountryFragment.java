@@ -1,5 +1,6 @@
 package com.sbdev.covid19tracker;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,7 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -35,6 +38,8 @@ public class AllCountryFragment extends Fragment {
     private AllCountryAdapter adapter;
     private ArrayList<CountryModel> arrayList;
 
+    private ProgressDialog dialog;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -44,8 +49,15 @@ public class AllCountryFragment extends Fragment {
 
         arrayList=new ArrayList<>();
 
+        dialog=new ProgressDialog(getActivity());
+
         adapter=new AllCountryAdapter(getActivity(),arrayList);
         recyclerView.setAdapter(adapter);
+
+        dialog.show();
+        dialog.setContentView(R.layout.loading_bg);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         OkHttpClient client = new OkHttpClient();
 
@@ -70,33 +82,49 @@ public class AllCountryFragment extends Fragment {
 
                     String res=response.body().string();
 
-                    try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
-                        JSONArray jsonArray=new JSONArray(res);
-                        for(int i=1;i<=220;i++)
-                        {
-                            JSONObject jsonObject=jsonArray.getJSONObject(i);
+                            try {
 
-                            String country=jsonObject.getString("Country");
-                            String active=jsonObject.getString("ActiveCases");
-                            String deaths=jsonObject.getString("TotalDeaths");
-                            String recovered=jsonObject.getString("TotalRecovered");
+                                JSONArray jsonArray=new JSONArray(res);
+                                Log.d("Array Size", String.valueOf(jsonArray.length()));
+                                for(int i=1;i<jsonArray.length();i++)
+                                {
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                            arrayList.add(new CountryModel(country,active,deaths,recovered));
-                            //adapter.notifyDataSetChanged();
+                                        String country = jsonObject.getString("Country");
+                                        String active = jsonObject.getString("ActiveCases");
+                                        String deaths = jsonObject.getString("TotalDeaths");
+                                        String recovered = jsonObject.getString("TotalRecovered");
+
+                                        arrayList.add(new CountryModel(country, getFormattedAmount(Integer.parseInt(active)), getFormattedAmount(Integer.parseInt(deaths)), getFormattedAmount(Integer.parseInt(recovered))));
+
+                                }
+
+
+                                adapter.notifyDataSetChanged();
+
+                                dialog.dismiss();
+
+
+                            } catch (JSONException e) {
+                                Log.e("Catch",e.getMessage());
+                            }
 
                         }
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    });
 
                 }
 
             }
         });
 
+    }
+
+    private String getFormattedAmount(int amount){
+        return NumberFormat.getNumberInstance(Locale.US).format(amount);
     }
 
     @Override
