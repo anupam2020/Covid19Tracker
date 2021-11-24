@@ -1,15 +1,30 @@
 package com.sbdev.covid19tracker;
 
+import java.util.Comparator;
+
 public class CountryModel {
 
     String location;
-    String active;
+    String affected;
     String deaths;
     String recovered;
 
+//    public static Comparator<CountryModel> StuNameComparator = new Comparator<CountryModel>() {
+//
+//        public int compare(CountryModel s1, CountryModel s2) {
+//            String StudentName1 = s1.getActive().toUpperCase();
+//            String StudentName2 = s2.getActive().toUpperCase();
+//
+//            //ascending order
+//            return StudentName1.compareTo(StudentName2);
+//
+//            //descending order
+//            //return StudentName2.compareTo(StudentName1);
+//        }};
+
     public CountryModel(String location, String active, String deaths, String recovered) {
         this.location = location;
-        this.active = active;
+        this.affected = active;
         this.deaths = deaths;
         this.recovered = recovered;
     }
@@ -23,11 +38,11 @@ public class CountryModel {
     }
 
     public String getActive() {
-        return active;
+        return affected;
     }
 
     public void setActive(String active) {
-        this.active = active;
+        this.affected = active;
     }
 
     public String getDeaths() {

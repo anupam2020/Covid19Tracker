@@ -32,7 +32,7 @@ public class AllCountryAdapter extends RecyclerView.Adapter<AllCountryAdapter.Co
     public void onBindViewHolder(@NonNull CountryViewHolder holder, int position) {
 
         holder.location.setText(arrayList.get(holder.getAdapterPosition()).location);
-        holder.active.setText(arrayList.get(holder.getAdapterPosition()).active);
+        holder.affected.setText(arrayList.get(holder.getAdapterPosition()).affected);
         holder.deaths.setText(arrayList.get(holder.getAdapterPosition()).deaths);
         holder.recovered.setText(arrayList.get(holder.getAdapterPosition()).recovered);
 
@@ -46,13 +46,13 @@ public class AllCountryAdapter extends RecyclerView.Adapter<AllCountryAdapter.Co
     public class CountryViewHolder extends RecyclerView.ViewHolder
     {
 
-        TextView location,active,deaths,recovered;
+        TextView location,affected,deaths,recovered;
 
         public CountryViewHolder(@NonNull View itemView) {
             super(itemView);
 
             location=itemView.findViewById(R.id.textLocation);
-            active=itemView.findViewById(R.id.textActive);
+            affected=itemView.findViewById(R.id.textAffected);
             deaths=itemView.findViewById(R.id.textDeath);
             recovered=itemView.findViewById(R.id.textRecovered);
 

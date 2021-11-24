@@ -1,164 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:id="@+id/rootLayout">
+    tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Stop the"
-        android:layout_marginTop="15dp"
-        android:textSize="40dp"
-        android:fontFamily="@font/algerian"
-        android:textColor="@color/blue"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/mainText1"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rootLayout">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="spread of"
-        android:textSize="28dp"
-        android:fontFamily="@font/algerian"
-        android:textColor="@color/blue"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/mainText2"
-        android:layout_below="@id/mainText1"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Germs!"
-        android:textSize="25dp"
-        android:fontFamily="@font/algerian"
-        android:textColor="@color/blue"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/mainText3"
-        android:layout_below="@id/mainText2"/>
-
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:rowCount="3"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/mainText3"
-        android:layout_marginTop="15dp"
-        android:id="@+id/gridLayout">
-
-        <androidx.cardview.widget.CardView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cardView1">
+            android:text="Stop the"
+            android:layout_marginTop="15dp"
+            android:textSize="40dp"
+            android:fontFamily="@font/algerian"
+            android:textColor="@color/blue"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/mainText1"/>
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:lottie_fileName="64890-covid-icon-wash-hands.json"
-                app:lottie_loop="true"
-                app:lottie_autoPlay="true"
-                android:id="@+id/splashLottie1"
-                android:layout_centerInParent="true"/>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cardView2">
+            android:text="spread of"
+            android:textSize="28dp"
+            android:fontFamily="@font/algerian"
+            android:textColor="@color/blue"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/mainText2"
+            android:layout_below="@id/mainText1"/>
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:lottie_fileName="64753-covid-icon-use-a-mask.json"
-                app:lottie_loop="true"
-                app:lottie_autoPlay="true"
-                android:id="@+id/splashLottie2"
-                android:layout_centerInParent="true"/>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cardView3">
+            android:text="Germs!"
+            android:textSize="25dp"
+            android:fontFamily="@font/algerian"
+            android:textColor="@color/blue"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/mainText3"
+            android:layout_below="@id/mainText2"/>
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:lottie_fileName="64195-covid-icon-avoid-crowd-places.json"
-                app:lottie_loop="true"
-                app:lottie_autoPlay="true"
-                android:id="@+id/splashLottie3"
-                android:layout_centerInParent="true"/>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cardView4">
+            android:columnCount="2"
+            android:rowCount="3"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/mainText3"
+            android:layout_marginTop="15dp"
+            android:id="@+id/gridLayout">
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:lottie_fileName="64153-covid-icon-avoid-contacts.json"
-                app:lottie_loop="true"
-                app:lottie_autoPlay="true"
-                android:id="@+id/splashLottie4"
-                android:layout_centerInParent="true"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardView1">
 
-        </androidx.cardview.widget.CardView>
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:lottie_fileName="64890-covid-icon-wash-hands.json"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    android:id="@+id/splashLottie1"
+                    android:layout_centerInParent="true"/>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/cardView5">
+            </androidx.cardview.widget.CardView>
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:lottie_fileName="64592-covid-icon-stay-at-home.json"
-                app:lottie_loop="true"
-                app:lottie_autoPlay="true"
-                android:id="@+id/splashLottie5"
-                android:layout_centerInParent="true"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardView2">
 
-        </androidx.cardview.widget.CardView>
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:lottie_fileName="64753-covid-icon-use-a-mask.json"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    android:id="@+id/splashLottie2"
+                    android:layout_centerInParent="true"/>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/cardView6">
+            </androidx.cardview.widget.CardView>
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:lottie_fileName="64311-covid-icon-avoid-handshakes.json"
-                app:lottie_loop="true"
-                app:lottie_autoPlay="true"
-                android:id="@+id/splashLottie6"
-                android:layout_centerInParent="true"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardView3">
 
-        </androidx.cardview.widget.CardView>
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:lottie_fileName="64195-covid-icon-avoid-crowd-places.json"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    android:id="@+id/splashLottie3"
+                    android:layout_centerInParent="true"/>
 
-    </GridLayout>
+            </androidx.cardview.widget.CardView>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:background="@drawable/button_bg_blue"
-        android:layout_marginTop="15dp"
-        android:text="LET'S  GO"
-        android:textSize="18dp"
-        android:textColor="@color/white"
-        android:id="@+id/mainLetsGoButton"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/gridLayout"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardView4">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:lottie_fileName="64153-covid-icon-avoid-contacts.json"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    android:id="@+id/splashLottie4"
+                    android:layout_centerInParent="true"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardView5">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:lottie_fileName="64592-covid-icon-stay-at-home.json"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    android:id="@+id/splashLottie5"
+                    android:layout_centerInParent="true"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardView6">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:lottie_fileName="64311-covid-icon-avoid-handshakes.json"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"
+                    android:id="@+id/splashLottie6"
+                    android:layout_centerInParent="true"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </GridLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:background="@drawable/button_bg_blue"
+            android:layout_marginTop="15dp"
+            android:text="LET'S  GO"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:id="@+id/mainLetsGoButton"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/gridLayout"/>
+
+    </RelativeLayout>
 
 
-</RelativeLayout>
+</androidx.core.widget.NestedScrollView>

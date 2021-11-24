@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -31,6 +32,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,11 +125,40 @@ public class CovidTrackerActivity extends AppCompatActivity {
                 switch (item.getItemId())
                 {
 
-                    case R.id.showAll:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new AllCountryFragment()).commit();
-                        item.setChecked(true);
+                    case R.id.profile:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new ProfileFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
+
+                    case R.id.showAll:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new AllCountryFragment()).commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        break;
+
+                    case R.id.shareApp:
+                        shareMyApp();
+                        break;
+
+                    case R.id.feedback:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new FeedbackFragment()).commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        break;
+
+                    case R.id.updateApp:
+                        openAppInGooglePlay();
+                        break;
+
+                    case R.id.logout:
+                        firebaseAuth.signOut();
+                        startActivity(new Intent(CovidTrackerActivity.this,MainActivity.class));
+                        finish();
+                        break;
+
+                    case R.id.more:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new MoreFragment()).commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        break;
+
                 }
 
                 return false;
@@ -136,6 +167,28 @@ public class CovidTrackerActivity extends AppCompatActivity {
 
     }
 
+    public void shareMyApp()
+    {
+        try {
+            final String appPackageName = CovidTrackerActivity.this.getPackageName();
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out the App at: https://play.google.com/store/apps/details?id=" + appPackageName);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+        } catch(Exception e) {
+            DynamicToast.makeError(CovidTrackerActivity.this,e.getMessage(),2000).show();
+        }
+    }
+
+    public void openAppInGooglePlay() {
+        final String appPackageName = getPackageName();
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException e) { // if there is no Google Play on device
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
 
 
     @Override

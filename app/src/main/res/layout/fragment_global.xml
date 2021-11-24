@@ -44,7 +44,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
-                            android:text="Total Cases"
+                            android:text="Affected"
                             android:textColor="@color/white"
                             android:textSize="15dp" />
 
@@ -82,7 +82,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
-                            android:text="Total Deaths"
+                            android:text="Deaths"
                             android:textColor="@color/white"
                             android:textSize="15dp" />
 
@@ -120,7 +120,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
-                            android:text="Total Recovered"
+                            android:text="Recovered"
                             android:textColor="@color/white"
                             android:textSize="15dp" />
 

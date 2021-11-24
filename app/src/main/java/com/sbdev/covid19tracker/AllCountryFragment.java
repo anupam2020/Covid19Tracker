@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,8 @@ public class AllCountryFragment extends Fragment {
     private AllCountryAdapter adapter;
     private ArrayList<CountryModel> arrayList;
 
+    private ArrayList<CountryModel> filterList;
+
     private ProgressDialog dialog;
 
     @Override
@@ -48,6 +52,7 @@ public class AllCountryFragment extends Fragment {
         recyclerView=view.findViewById(R.id.countryRecyclerView);
 
         arrayList=new ArrayList<>();
+        filterList=new ArrayList<>();
 
         dialog=new ProgressDialog(getActivity());
 
@@ -95,7 +100,11 @@ public class AllCountryFragment extends Fragment {
                                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                                         String country = jsonObject.getString("Country");
-                                        String active = jsonObject.getString("ActiveCases");
+                                        if(country.equals("Total:"))
+                                        {
+                                            country="World";
+                                        }
+                                        String active = jsonObject.getString("TotalCases");
                                         String deaths = jsonObject.getString("TotalDeaths");
                                         String recovered = jsonObject.getString("TotalRecovered");
 
@@ -120,6 +129,49 @@ public class AllCountryFragment extends Fragment {
 
             }
         });
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                filterList.clear();
+
+                if(s.toString().isEmpty())
+                {
+                    recyclerView.setAdapter(new AllCountryAdapter(getActivity(),arrayList));
+                    adapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    filter(s.toString());
+                }
+            }
+        });
+
+    }
+
+    private void filter(String country) {
+
+        for(CountryModel model : arrayList)
+        {
+            if(model.getLocation().toLowerCase().contains(country.toLowerCase()))
+            {
+                filterList.add(model);
+            }
+        }
+
+        recyclerView.setAdapter(new AllCountryAdapter(getActivity(),filterList));
+        adapter.notifyDataSetChanged();
 
     }
 

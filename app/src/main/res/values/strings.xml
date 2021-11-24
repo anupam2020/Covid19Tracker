@@ -5,5 +5,7 @@
 
     <string name="facebook_app_id">473883470627876</string>
     <string name="fb_login_protocol_scheme">fb473883470627876</string>
+    <string name="author_name">Author: <u><i>Anupam Basak</i></u></string>
+    <string name="author_email">Email: <u><i>anupam00basak@gmail.com</i></u></string>
 
 </resources>
