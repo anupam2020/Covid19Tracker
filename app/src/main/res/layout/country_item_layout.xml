@@ -6,7 +6,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         app:cardCornerRadius="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:id="@+id/countryLinear"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:layout_margin="5dp">
 
             <TextView
                 android:layout_width="80dp"
@@ -28,7 +29,6 @@
                 android:textColor="@color/black"
                 android:id="@+id/textLocation"
                 android:textAlignment="center"
-                android:layout_marginLeft="5dp"
                 android:fontFamily="@font/aladin"
                 android:textSize="15dp"/>
 
@@ -37,8 +37,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp">
+                android:layout_gravity="center_vertical">
 
                 <TextView
                     android:layout_width="80dp"

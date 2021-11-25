@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StatesActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/statesRelative">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/statesTopRelative">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                app:tint="@color/black"
+                android:id="@+id/statesBack"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Provinces"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:id="@+id/statesProvinceText"/>
+
+        </RelativeLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:id="@+id/statesLayout"
+            app:endIconMode="clear_text"
+            android:layout_below="@id/statesTopRelative">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/statesSearch"
+                android:drawablePadding="10dp"
+                android:hint="Search"
+                android:singleLine="true"
+                android:drawableTint="@color/black"
+                android:drawableStart="@drawable/ic_baseline_search_24"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/statesLayout"
+            android:id="@+id/statesLinear"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Province"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:layout_marginLeft="15dp"
+                android:textSize="18dp"
+                android:fontFamily="@font/aladin"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Affected"
+                android:textColor="@color/violet"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:fontFamily="@font/aladin"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Deaths"
+                android:textColor="@color/red"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:fontFamily="@font/aladin"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"/>
+
+        </RelativeLayout>
+
+        <TableRow
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/statesLinear"
+            android:background="#99000000" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/statesRecyclerView"
+            android:layout_below="@id/statesLinear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:layout_marginTop="1dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

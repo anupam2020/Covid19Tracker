@@ -158,7 +158,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
-                            android:text="Active Cases"
+                            android:text="Active"
                             android:textColor="@color/white"
                             android:textSize="15dp" />
 

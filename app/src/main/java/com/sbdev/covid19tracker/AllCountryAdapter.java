@@ -1,6 +1,7 @@
 package com.sbdev.covid19tracker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,17 @@ public class AllCountryAdapter extends RecyclerView.Adapter<AllCountryAdapter.Co
         holder.affected.setText(arrayList.get(holder.getAdapterPosition()).affected);
         holder.deaths.setText(arrayList.get(holder.getAdapterPosition()).deaths);
         holder.recovered.setText(arrayList.get(holder.getAdapterPosition()).recovered);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(context,StatesActivity.class);
+                intent.putExtra("countryName",arrayList.get(holder.getAdapterPosition()).location);
+                context.startActivity(intent);
+
+            }
+        });
 
     }
 
