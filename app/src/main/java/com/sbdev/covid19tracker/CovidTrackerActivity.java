@@ -58,8 +58,7 @@ public class CovidTrackerActivity extends AppCompatActivity {
 
     private NavigationView navigationView;
 
-    private ImageView menu;
-
+    private ImageView menu,notiImg;
 
 
     @Override
@@ -77,6 +76,7 @@ public class CovidTrackerActivity extends AppCompatActivity {
         navigationView=findViewById(R.id.navView);
 
         menu=findViewById(R.id.mainMenu);
+        notiImg=findViewById(R.id.covidNotifications);
 
         firebaseAuth=FirebaseAuth.getInstance();
 
@@ -88,6 +88,14 @@ public class CovidTrackerActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 drawer.openDrawer(GravityCompat.START);
+            }
+        });
+
+        notiImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(CovidTrackerActivity.this,NotificationsActivity.class));
             }
         });
 

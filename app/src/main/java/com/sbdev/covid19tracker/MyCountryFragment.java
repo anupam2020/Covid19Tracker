@@ -89,43 +89,48 @@ public class MyCountryFragment extends Fragment {
 
                     String res=response.body().string();
 
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                    if(getActivity()!=null)
+                    {
 
-                            try {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
-                                JSONArray jsonArray=new JSONArray(res);
-                                JSONObject jsonObject=jsonArray.getJSONObject(0);
+                                try {
 
-                                affCount=jsonObject.getInt("TotalCases");
-                                deathCount=jsonObject.getInt("TotalDeaths");
-                                recCount=jsonObject.getInt("TotalRecovered");
-                                actCount=jsonObject.getInt("ActiveCases");
-                                newAffCount=jsonObject.getInt("NewCases");
-                                newDeathCount=jsonObject.getInt("NewDeaths");
-                                newRecCount=jsonObject.getInt("NewRecovered");
-                                critCount=jsonObject.getInt("Serious_Critical");
+                                    JSONArray jsonArray=new JSONArray(res);
+                                    JSONObject jsonObject=jsonArray.getJSONObject(0);
 
-
-                                affected.setText(getFormattedAmount(affCount));
-                                death.setText(getFormattedAmount(deathCount));
-                                recovered.setText(getFormattedAmount(recCount));
-                                active.setText(getFormattedAmount(actCount));
-                                newAffected.setText(getFormattedAmount(newAffCount));
-                                newDeath.setText(getFormattedAmount(newDeathCount));
-                                newRecovered.setText(getFormattedAmount(newRecCount));
-                                critical.setText(getFormattedAmount(critCount));
+                                    affCount=jsonObject.getInt("TotalCases");
+                                    deathCount=jsonObject.getInt("TotalDeaths");
+                                    recCount=jsonObject.getInt("TotalRecovered");
+                                    actCount=jsonObject.getInt("ActiveCases");
+                                    newAffCount=jsonObject.getInt("NewCases");
+                                    newDeathCount=jsonObject.getInt("NewDeaths");
+                                    newRecCount=jsonObject.getInt("NewRecovered");
+                                    critCount=jsonObject.getInt("Serious_Critical");
 
 
-                                progressDialog.dismiss();
+                                    affected.setText(getFormattedAmount(affCount));
+                                    death.setText(getFormattedAmount(deathCount));
+                                    recovered.setText(getFormattedAmount(recCount));
+                                    active.setText(getFormattedAmount(actCount));
+                                    newAffected.setText(getFormattedAmount(newAffCount));
+                                    newDeath.setText(getFormattedAmount(newDeathCount));
+                                    newRecovered.setText(getFormattedAmount(newRecCount));
+                                    critical.setText(getFormattedAmount(critCount));
 
-                            } catch (JSONException e) {
-                                Log.e("Catch",e.getMessage());
+
+                                    progressDialog.dismiss();
+
+                                } catch (JSONException e) {
+                                    Log.e("Catch",e.getMessage());
+                                }
+
                             }
+                        });
 
-                        }
-                    });
+                    }
 
                 }
 

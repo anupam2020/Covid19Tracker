@@ -5,12 +5,42 @@
     android:layout_height="match_parent"
     tools:context=".NewsFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NEWS"
-        android:textSize="50dp"
-        android:textColor="@color/white"
-        android:layout_gravity="center"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainStats"
+            android:text="News"
+            android:layout_marginLeft="15dp"
+            android:textSize="25dp"
+            android:textColor="@color/black" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/mainStats"
+            android:layout_marginTop="30dp">
+
+            <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/covidTabLayout"
+                android:background="@drawable/white_corner_radius"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/covidViewPager2"
+                android:layout_below="@id/covidTabLayout"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </FrameLayout>
