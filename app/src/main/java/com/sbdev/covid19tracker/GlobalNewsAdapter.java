@@ -1,6 +1,7 @@
 package com.sbdev.covid19tracker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GlobalNewsAdapter extends RecyclerView.Adapter<GlobalNewsAdapter.GlobalNewsViewHolder> {
 
@@ -38,6 +41,17 @@ public class GlobalNewsAdapter extends RecyclerView.Adapter<GlobalNewsAdapter.Gl
         holder.title.setText(arrayList.get(holder.getAdapterPosition()).title);
         holder.des.setText(arrayList.get(holder.getAdapterPosition()).des);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(context,NewsWebviewActivity.class);
+                intent.putExtra("WebUrl",arrayList.get(holder.getAdapterPosition()).webURL);
+                context.startActivity(intent);
+
+            }
+        });
+
     }
 
     @Override
@@ -47,7 +61,7 @@ public class GlobalNewsAdapter extends RecyclerView.Adapter<GlobalNewsAdapter.Gl
 
     public class GlobalNewsViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView img;
+        private CircleImageView img;
         private TextView title,des;
 
         public GlobalNewsViewHolder(@NonNull View itemView) {

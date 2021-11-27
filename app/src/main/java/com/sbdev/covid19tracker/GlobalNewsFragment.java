@@ -34,7 +34,7 @@ public class GlobalNewsFragment extends Fragment {
 
     private GlobalNewsAdapter adapter;
 
-    private String title,des,url;
+    private String title,des,url,webURL;
 
     private ProgressDialog dialog;
 
@@ -92,16 +92,24 @@ public class GlobalNewsFragment extends Fragment {
                                 for(int i=0;i<newsArray.length();i++)
                                 {
 
-                                    JSONObject index=newsArray.getJSONObject(i);
-                                    title=index.getString("title");
-                                    des=index.getString("excerpt");
+                                    if(i==25 || i==7)
+                                    {
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        JSONObject index=newsArray.getJSONObject(i);
+                                        title=index.getString("title");
+                                        des=index.getString("excerpt");
+                                        webURL=index.getString("webUrl");
 
-//                                    JSONArray imagesArray=index.getJSONArray("images");
-//                                    JSONObject zero=imagesArray.getJSONObject(0);
-//
-//                                    url=zero.getString("url");
+                                        JSONArray imagesArray=index.getJSONArray("images");
+                                        JSONObject zero=imagesArray.getJSONObject(0);
 
-                                    arrayList.add(new GlobalNewsModel("",title,des));
+                                        url=zero.getString("url");
+
+                                        arrayList.add(new GlobalNewsModel(url,title,des,webURL));
+                                    }
 
                                 }
 

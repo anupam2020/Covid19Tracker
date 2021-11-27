@@ -5,11 +5,13 @@ public class GlobalNewsModel {
     String url;
     String title;
     String des;
+    String webURL;
 
-    public GlobalNewsModel(String url, String title, String des) {
+    public GlobalNewsModel(String url, String title, String des, String webURL) {
         this.url = url;
         this.title = title;
         this.des = des;
+        this.webURL=webURL;
     }
 
     public String getUrl() {
@@ -34,5 +36,13 @@ public class GlobalNewsModel {
 
     public void setDes(String des) {
         this.des = des;
+    }
+
+    public String getWebURL() {
+        return webURL;
+    }
+
+    public void setWebURL(String webURL) {
+        this.webURL = webURL;
     }
 }

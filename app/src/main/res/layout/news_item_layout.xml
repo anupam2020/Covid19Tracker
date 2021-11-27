@@ -20,11 +20,12 @@
             android:layout_gravity="center"
             android:layout_margin="5dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/ic_baseline_image_search_24"
-                android:id="@+id/newsItemImg" />
+                android:id="@+id/newsItemImg"
+                android:layout_centerVertical="true"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/newsItemImg"
                 android:orientation="vertical"
-                android:layout_marginLeft="5dp">
+                android:layout_marginLeft="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -46,7 +47,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="News Description"
+                    android:text="News\nDescription"
                     android:id="@+id/newsItemDes"
                     android:layout_marginTop="10dp"
                     android:textSize="15dp" />
