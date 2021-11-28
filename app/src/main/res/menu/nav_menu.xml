@@ -11,9 +11,14 @@
             android:id="@+id/profile"/>
 
         <item
-            android:title="Show All Country Data"
+            android:title="All Country Stats"
             android:icon="@drawable/ic_baseline_outlined_flag_24"
             android:id="@+id/showAll" />
+
+        <item
+            android:title="All Country Weather Report"
+            android:icon="@drawable/ic_outline_cloud_24"
+            android:id="@+id/weatherReport" />
 
     </group>
 
