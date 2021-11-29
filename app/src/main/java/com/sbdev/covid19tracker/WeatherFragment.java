@@ -1,6 +1,7 @@
 package com.sbdev.covid19tracker;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,23 +11,31 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.jaeger.library.StatusBarUtil;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -39,7 +48,9 @@ import okhttp3.Response;
 
 public class WeatherFragment extends Fragment {
 
-    private TextView locText;
+    private TextView locText,city,country,dateTime,temp,skyType,pressure,humidity,windSpeed;
+
+    private ImageView weather;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -47,13 +58,47 @@ public class WeatherFragment extends Fragment {
 
     private Request request;
 
-    String url;
+    private String url,dateString;
+
+    private SimpleDateFormat simpleDateFormat;
+
+    private Date date;
+
+    private ProgressDialog progressDialog;
+
+    private NestedScrollView nestedScrollView;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+//        nestedScrollView=view.findViewById(R.id.nestedScrollView);
+//        nestedScrollView.setBackground(getResources().getDrawable(R.drawable.night_mode));
+
         locText = view.findViewById(R.id.locationText);
+
+        city=view.findViewById(R.id.cityText);
+        country=view.findViewById(R.id.countryText);
+        dateTime=view.findViewById(R.id.dateTimeText);
+        temp=view.findViewById(R.id.tempText);
+        skyType=view.findViewById(R.id.skyTypeText);
+        pressure=view.findViewById(R.id.pressureValue);
+        humidity=view.findViewById(R.id.humidityValue);
+        windSpeed=view.findViewById(R.id.windValue);
+
+        weather=view.findViewById(R.id.weatherImg);
+
+        simpleDateFormat=new SimpleDateFormat("EEE, MMMM dd, hh:mm a");
+        date=new Date();
+        dateString=simpleDateFormat.format(date);
+
+
+        progressDialog=new ProgressDialog(getActivity());
+
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.loading_bg);
+        progressDialog.setCancelable(false);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         client=new OkHttpClient();
 
@@ -107,6 +152,10 @@ public class WeatherFragment extends Fragment {
                                 "Admin Area: "+addresses.get(0).getAdminArea()+"\n"+
                                 "Sub Admin Area: "+addresses.get(0).getSubAdminArea();
 
+                        city.setText(addresses.get(0).getLocality());
+                        country.setText(addresses.get(0).getAdminArea()+", "+addresses.get(0).getCountryName());
+                        dateTime.setText(dateString);
+
                         int lat= (int) addresses.get(0).getLatitude();
                         int lon= (int) addresses.get(0).getLongitude();
 
@@ -139,10 +188,80 @@ public class WeatherFragment extends Fragment {
                                             try {
 
                                                 JSONObject jsonObject=new JSONObject(res);
-                                                String timezone=jsonObject.getString("timezone");
 
-                                                locText.setText(timezone.substring(timezone.indexOf('/')+1)+"\n"
-                                                +addresses.get(0).getAdminArea()+", "+addresses.get(0).getCountryName());
+                                                String timezone=jsonObject.getString("timezone");
+                                                Log.d("Timezone",timezone.substring(timezone.indexOf('/')+1));
+                                                timezone=timezone.substring(timezone.indexOf('/')+1);
+
+                                                String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+timezone+"&aqi=no";
+
+                                                Request request1=new Request.Builder()
+                                                        .url(countryURL)
+                                                        .build();
+
+                                                client.newCall(request1).enqueue(new Callback() {
+                                                    @Override
+                                                    public void onFailure(Call call, IOException e) {
+
+                                                        Log.e("Inside onFailure",e.getMessage());
+
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(Call call, Response response) throws IOException {
+
+                                                        if(response.isSuccessful())
+                                                        {
+                                                            progressDialog.dismiss();
+
+                                                            String res1=response.body().string();
+
+                                                            getActivity().runOnUiThread(new Runnable() {
+                                                                @Override
+                                                                public void run() {
+
+                                                                    try {
+
+                                                                        JSONObject jsonObject1=new JSONObject(res1);
+                                                                        JSONObject current=jsonObject1.getJSONObject("current");
+                                                                        int temp_c= (int) current.getDouble("temp_c");
+
+                                                                        temp.setText(temp_c+"\u2103");
+
+                                                                        JSONObject condition=current.getJSONObject("condition");
+                                                                        String text=condition.getString("text");
+                                                                        skyType.setText(text);
+
+                                                                        if(text.equalsIgnoreCase("Mist"))
+                                                                        {
+                                                                            weather.setImageResource(R.drawable.mist);
+                                                                        }
+                                                                        else if(text.equalsIgnoreCase("Sunny"))
+                                                                        {
+                                                                            weather.setImageResource(R.drawable.sun);
+                                                                        }
+                                                                        else if(text.equalsIgnoreCase("Clear"))
+                                                                        {
+                                                                            weather.setImageResource(R.drawable.clear_sky);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            weather.setImageResource(R.drawable.cloudy);
+                                                                        }
+
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
+                                                                    }
+
+                                                                }
+                                                            });
+
+
+                                                        }
+
+                                                    }
+                                                });
+
 
                                             } catch (JSONException e) {
                                                 Log.e("Exception",e.getMessage());
@@ -169,6 +288,17 @@ public class WeatherFragment extends Fragment {
 
             }
         });
+
+    }
+
+    public static String epochToDate(long epoch)
+    {
+
+        SimpleDateFormat sdf=new SimpleDateFormat("EEE, MMMM dd hh:mm a");
+        Date date=new Date(epoch);
+        String newDate=sdf.format(date);
+
+        return newDate;
 
     }
 

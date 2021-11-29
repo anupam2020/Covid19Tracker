@@ -43,10 +43,7 @@
         <FrameLayout
             android:id="@+id/covidFrameLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/bottomNav"
-            android:layout_below="@id/topRelative"
-            android:layout_marginTop="30dp"/>
+            android:layout_height="match_parent" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="match_parent"

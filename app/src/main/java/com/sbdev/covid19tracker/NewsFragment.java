@@ -1,5 +1,6 @@
 package com.sbdev.covid19tracker;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
+import com.jaeger.library.StatusBarUtil;
 
 public class NewsFragment extends Fragment {
 
