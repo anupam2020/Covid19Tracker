@@ -117,8 +117,7 @@ public class CovidTrackerActivity extends AppCompatActivity {
                         break;
 
                     case R.id.weather:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new WeatherFragment()).commit();
-                        item.setChecked(true);
+                        startActivity(new Intent(CovidTrackerActivity.this,WeatherActivity.class));
                         break;
                 }
 

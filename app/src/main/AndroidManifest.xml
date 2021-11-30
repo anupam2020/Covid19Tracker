@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19Tracker">
         <activity
+            android:name=".WeatherActivity"
+            android:exported="false" />
+        <activity
             android:name=".NewsWebviewActivity"
             android:exported="false" />
         <activity

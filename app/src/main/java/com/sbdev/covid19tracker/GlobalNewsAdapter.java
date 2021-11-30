@@ -36,6 +36,8 @@ public class GlobalNewsAdapter extends RecyclerView.Adapter<GlobalNewsAdapter.Gl
     @Override
     public void onBindViewHolder(@NonNull GlobalNewsViewHolder holder, int position) {
 
+        holder.img.setImageResource(R.drawable.ic_baseline_image_search_24);
+
         Glide.with(context).load(arrayList.get(holder.getAdapterPosition()).url).into(holder.img);
 
         holder.title.setText(arrayList.get(holder.getAdapterPosition()).title);

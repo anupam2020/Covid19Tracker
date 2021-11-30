@@ -51,7 +51,7 @@ public class GlobalFragment extends Fragment {
 
         progressDialog=new ProgressDialog(getActivity());
 
-        progressDialog.show();
+        //progressDialog.show();
         progressDialog.setContentView(R.layout.loading_bg);
         progressDialog.setCancelable(false);
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);

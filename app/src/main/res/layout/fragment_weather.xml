@@ -13,197 +13,197 @@
 <!--        android:id="@+id/day_night_mode"-->
 <!--        android:scaleType="fitXY"/>-->
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/nestedScrollView">
+<!--    <androidx.core.widget.NestedScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:id="@+id/nestedScrollView">-->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kolkata"
-                android:textSize="25dp"
-                android:textColor="@color/black"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/cityText"/>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Kolkata"-->
+<!--                android:textSize="25dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:id="@+id/cityText"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="West Bengal, India"
-                android:textSize="18dp"
-                android:textColor="@color/grey"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/cityText"
-                android:id="@+id/countryText"/>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="West Bengal, India"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textColor="@color/grey"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_below="@id/cityText"-->
+<!--                android:id="@+id/countryText"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sat, January 02 10:00PM"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/countryText"
-                android:id="@+id/dateTimeText"
-                android:layout_marginTop="15dp"/>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Sat, January 02 10:00PM"-->
+<!--                android:textSize="20dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_below="@id/countryText"-->
+<!--                android:id="@+id/dateTimeText"-->
+<!--                android:layout_marginTop="15dp"/>-->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@id/dateTimeText"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:id="@+id/weatherLinear">
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_below="@id/dateTimeText"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:id="@+id/weatherLinear">-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1012 mb"
-                        android:textColor="@color/black"
-                        android:id="@+id/pressureValue"
-                        android:textSize="20dp"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="1012 mb"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:id="@+id/pressureValue"-->
+<!--                        android:textSize="20dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:textStyle="bold"/>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pressure"
-                        android:textColor="@color/grey"
-                        android:textSize="15dp"
-                        android:layout_gravity="center"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Pressure"-->
+<!--                        android:textColor="@color/grey"-->
+<!--                        android:textSize="15dp"-->
+<!--                        android:layout_gravity="center"/>-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="30dp">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:layout_marginLeft="30dp">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="48%"
-                        android:textColor="@color/black"
-                        android:id="@+id/humidityValue"
-                        android:textSize="20dp"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="48%"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:id="@+id/humidityValue"-->
+<!--                        android:textSize="20dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:textStyle="bold"/>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Humidity"
-                        android:textColor="@color/grey"
-                        android:textSize="15dp"
-                        android:layout_gravity="center"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Humidity"-->
+<!--                        android:textColor="@color/grey"-->
+<!--                        android:textSize="15dp"-->
+<!--                        android:layout_gravity="center"/>-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="30dp">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:layout_marginLeft="30dp">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="3.4 mph"
-                        android:textColor="@color/black"
-                        android:id="@+id/windValue"
-                        android:textSize="20dp"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="3.4 mph"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:id="@+id/windValue"-->
+<!--                        android:textSize="20dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:textStyle="bold"/>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Wind"
-                        android:textColor="@color/grey"
-                        android:textSize="15dp"
-                        android:layout_gravity="center"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Wind"-->
+<!--                        android:textColor="@color/grey"-->
+<!--                        android:textSize="15dp"-->
+<!--                        android:layout_gravity="center"/>-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/weatherLinear2"
-                android:layout_below="@id/weatherLinear">
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:id="@+id/weatherLinear2"-->
+<!--                android:layout_below="@id/weatherLinear">-->
 
-                <ImageView
-                    android:id="@+id/weatherImg"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_below="@id/weatherLinear"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
-                    android:src="@drawable/clear_sky"/>
+<!--                <ImageView-->
+<!--                    android:id="@+id/weatherImg"-->
+<!--                    android:layout_width="200dp"-->
+<!--                    android:layout_height="200dp"-->
+<!--                    android:layout_below="@id/weatherLinear"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:src="@drawable/clear_sky"/>-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginLeft="15dp">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="32&#xb0;C"
-                        android:textColor="@color/black"
-                        android:layout_centerHorizontal="true"
-                        android:textSize="50dp"
-                        android:layout_marginTop="5dp"
-                        android:id="@+id/tempText"
-                        android:layout_gravity="center"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="32&#xb0;C"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:layout_centerHorizontal="true"-->
+<!--                        android:textSize="50dp"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        android:id="@+id/tempText"-->
+<!--                        android:layout_gravity="center"/>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Clear"
-                        android:textSize="20dp"
-                        android:textColor="@color/black"
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/skyTypeText"
-                        android:layout_gravity="center"/>
-
-
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Clear"-->
+<!--                        android:textSize="20dp"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:layout_centerHorizontal="true"-->
+<!--                        android:id="@+id/skyTypeText"-->
+<!--                        android:layout_gravity="center"/>-->
 
 
-            </LinearLayout>
+<!--                </LinearLayout>-->
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:layout_gravity="center"
-                android:id="@+id/locationText"
-                android:gravity="center"/>
+<!--            </LinearLayout>-->
 
-        </RelativeLayout>
 
-    </androidx.core.widget.NestedScrollView>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text=""-->
+<!--                android:textSize="20dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:id="@+id/locationText"-->
+<!--                android:gravity="center"/>-->
+
+<!--        </RelativeLayout>-->
+
+<!--    </androidx.core.widget.NestedScrollView>-->
 
 </FrameLayout>

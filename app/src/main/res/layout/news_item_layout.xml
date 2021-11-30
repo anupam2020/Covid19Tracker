@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="News Title"
+                    android:text=""
                     android:id="@+id/newsItemTitle"
                     android:textColor="@color/black"
                     android:textSize="18dp"
@@ -47,7 +47,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:text="News\nDescription"
+                    android:text=""
                     android:id="@+id/newsItemDes"
                     android:layout_marginTop="10dp"
                     android:textSize="15dp" />
