@@ -104,14 +104,14 @@ public class NewsFragment extends Fragment {
 
         dialog.show();
         dialog.setContentView(R.layout.loading_bg);
-        dialog.setCancelable(false);
+        //dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
 
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://covid-19-news.p.rapidapi.com/v1/covid?q=covid&lang=en&media=True")
+                .url("https://covid-19-news.p.rapidapi.com/v1/covid?q=covid&lang=en&sort_by=date&media=True")
                 .get()
                 .addHeader("x-rapidapi-host", "covid-19-news.p.rapidapi.com")
                 .addHeader("x-rapidapi-key", "e8f6c57650msh666fef2e3a110b5p13b950jsn4359d608e124")

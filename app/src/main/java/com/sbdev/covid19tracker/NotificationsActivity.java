@@ -60,7 +60,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
         progressDialog.show();
         progressDialog.setContentView(R.layout.loading_bg);
-        progressDialog.setCancelable(false);
+        //progressDialog.setCancelable(false);
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         databaseReference.addValueEventListener(new ValueEventListener() {

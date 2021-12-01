@@ -145,7 +145,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         progressDialog.show();
         progressDialog.setContentView(R.layout.loading_bg);
-        progressDialog.setCancelable(false);
+        //progressDialog.setCancelable(false);
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         sp=getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
@@ -216,8 +216,8 @@ public class WeatherActivity extends AppCompatActivity {
                         country.setText(addresses.get(0).getAdminArea()+", "+addresses.get(0).getCountryName());
                         dateTime.setText(dateString);
 
-                        int lat= (int) addresses.get(0).getLatitude();
-                        int lon= (int) addresses.get(0).getLongitude();
+                        double lat= addresses.get(0).getLatitude();
+                        double lon= addresses.get(0).getLongitude();
 
                         url="https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=minutely&appid=66b871b322375297071a645567414648";
 
@@ -253,7 +253,7 @@ public class WeatherActivity extends AppCompatActivity {
                                                 Log.d("Timezone",timezone.substring(timezone.indexOf('/')+1));
                                                 timezone=timezone.substring(timezone.indexOf('/')+1);
 
-                                                String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+timezone+"&aqi=no";
+                                                String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+addresses.get(0).getSubAdminArea()+"&aqi=no";
 
                                                 Request request1=new Request.Builder()
                                                         .url(countryURL)
@@ -312,28 +312,33 @@ public class WeatherActivity extends AppCompatActivity {
                                                                         String text=condition.getString("text");
                                                                         skyType.setText(text);
 
-                                                                        if(text.equalsIgnoreCase("Mist"))
-                                                                        {
-                                                                            weather.setImageResource(R.drawable.mist);
-                                                                        }
-                                                                        else if(text.equalsIgnoreCase("Sunny"))
+                                                                        if(text.equalsIgnoreCase("Sunny"))
                                                                         {
                                                                             weather.setImageResource(R.drawable.sun);
                                                                         }
                                                                         else if(text.equalsIgnoreCase("Clear"))
                                                                         {
-                                                                            weather.setImageResource(R.drawable.clear_sky);
+                                                                            weather.setImageResource(R.drawable.moon_clear);
                                                                         }
                                                                         else
                                                                         {
-                                                                            weather.setImageResource(R.drawable.cloudy);
+                                                                            if(is_day==0)
+                                                                            {
+                                                                                weather.setImageResource(R.drawable.mist);
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                weather.setImageResource(R.drawable.cloudy);
+                                                                            }
                                                                         }
 
                                                                         String wind_mphSTR=current.getString("wind_mph");
                                                                         int pressure_mbSTR= (int) current.getDouble("pressure_mb");
                                                                         String humiditySTR=current.getString("humidity");
 
-                                                                        pressure.setText(pressure_mbSTR+" mb");
+                                                                        String pressure_two_decimal=String.format("%.2f",pressure_mbSTR*0.750062);
+
+                                                                        pressure.setText(pressure_two_decimal+" mmhg");
                                                                         humidity.setText(humiditySTR+"%");
                                                                         windSpeed.setText(wind_mphSTR+" mph");
 
@@ -397,13 +402,17 @@ public class WeatherActivity extends AppCompatActivity {
     {
 
         city.setTextColor(Color.BLACK);
-        country.setTextColor(Color.BLACK);
+        country.setTextColor(Color.DKGRAY);
         dateTime.setTextColor(Color.BLACK);
         temp.setTextColor(Color.BLACK);
         skyType.setTextColor(Color.BLACK);
         pressure.setTextColor(Color.BLACK);
         humidity.setTextColor(Color.BLACK);
         windSpeed.setTextColor(Color.BLACK);
+
+        presText.setTextColor(Color.DKGRAY);
+        humText.setTextColor(Color.DKGRAY);
+        windText.setTextColor(Color.DKGRAY);
 
     }
 

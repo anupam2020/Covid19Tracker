@@ -53,7 +53,7 @@ public class MyCountryNewsFragment extends Fragment {
 
         dialog.show();
         dialog.setContentView(R.layout.loading_bg);
-        dialog.setCancelable(false);
+        //dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
 

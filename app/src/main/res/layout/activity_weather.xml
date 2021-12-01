@@ -14,30 +14,26 @@
         android:id="@+id/day_night_mode"
         android:scaleType="fitXY"/>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/nestedScrollView"
-        android:layout_marginTop="50dp">
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="- -"
-                android:textSize="30dp"
+                android:textSize="40dp"
                 android:textColor="@color/black"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/cityText"/>
+                android:id="@+id/cityText"
+                android:fontFamily="@font/aladin"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="- -"
-                android:textSize="15dp"
+                android:textSize="16dp"
                 android:textColor="@color/grey"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/cityText"
@@ -76,14 +72,15 @@
                         android:id="@+id/pressureValue"
                         android:textSize="20dp"
                         android:layout_gravity="center"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:fontFamily="@font/aladin"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Pressure"
                         android:textColor="@color/grey"
-                        android:textSize="14dp"
+                        android:textSize="12dp"
                         android:layout_gravity="center"
                         android:id="@+id/pressureText"/>
 
@@ -93,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="30dp">
+                    android:layout_marginLeft="35dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -103,14 +100,15 @@
                         android:id="@+id/humidityValue"
                         android:textSize="20dp"
                         android:layout_gravity="center"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="@font/aladin"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Humidity"
                         android:textColor="@color/grey"
-                        android:textSize="14dp"
+                        android:textSize="12dp"
                         android:layout_gravity="center"
                         android:id="@+id/humidityText"/>
 
@@ -120,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="30dp">
+                    android:layout_marginLeft="35dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -130,14 +128,15 @@
                         android:id="@+id/windValue"
                         android:textSize="20dp"
                         android:layout_gravity="center"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:fontFamily="@font/aladin"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Wind"
                         android:textColor="@color/grey"
-                        android:textSize="14dp"
+                        android:textSize="12dp"
                         android:layout_gravity="center"
                         android:id="@+id/windText"/>
 
@@ -179,7 +178,8 @@
                         android:textSize="50dp"
                         android:layout_marginTop="5dp"
                         android:id="@+id/tempText"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/aladin"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -202,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/weatherLinear2"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="15dp">
 
                 <com.google.android.material.tabs.TabLayout
                     android:layout_width="match_parent"
@@ -225,8 +225,6 @@
             </RelativeLayout>
 
         </RelativeLayout>
-
-    </androidx.core.widget.NestedScrollView>
 
 
 </RelativeLayout>

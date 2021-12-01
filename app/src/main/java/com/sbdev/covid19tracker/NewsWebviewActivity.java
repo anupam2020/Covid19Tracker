@@ -23,6 +23,8 @@ public class NewsWebviewActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(Color.WHITE);
 
+        client=new WebViewClient();
+
         webView=findViewById(R.id.newsWebview);
         webView.setWebViewClient(client);
 
