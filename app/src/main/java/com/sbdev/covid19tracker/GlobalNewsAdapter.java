@@ -38,7 +38,11 @@ public class GlobalNewsAdapter extends RecyclerView.Adapter<GlobalNewsAdapter.Gl
 
         holder.img.setImageResource(R.drawable.ic_baseline_image_search_24);
 
-        Glide.with(context).load(arrayList.get(holder.getAdapterPosition()).url).into(holder.img);
+        Glide.with(context)
+                .load(arrayList.get(holder.getAdapterPosition()).url)
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.loading)
+                .into(holder.img);
 
         holder.title.setText(arrayList.get(holder.getAdapterPosition()).title);
         holder.des.setText(arrayList.get(holder.getAdapterPosition()).des);

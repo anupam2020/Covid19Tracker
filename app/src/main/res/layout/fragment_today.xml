@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".TodayFragment">
 
@@ -59,7 +59,7 @@
                                     android:layout_marginRight="10dp"
                                     android:text="- -&#xb0;C"
                                     android:textColor="@color/black"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
 
                                 <ImageView
                                     android:id="@+id/morningImg"
@@ -67,7 +67,7 @@
                                     android:layout_height="60dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/clear_sky" />
+                                    android:src="@drawable/ic_baseline_cloud_24"/>
 
                             </RelativeLayout>
 
@@ -103,7 +103,7 @@
                                     android:layout_marginRight="10dp"
                                     android:text="- -&#xb0;C"
                                     android:textColor="@color/black"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
 
                                 <ImageView
                                     android:id="@+id/afternoonImg"
@@ -111,7 +111,7 @@
                                     android:layout_height="60dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/sun" />
+                                    android:src="@drawable/ic_baseline_cloud_24" />
 
                             </RelativeLayout>
 
@@ -147,7 +147,7 @@
                                     android:layout_marginRight="10dp"
                                     android:text="- -&#xb0;C"
                                     android:textColor="@color/black"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
 
                                 <ImageView
                                     android:id="@+id/eveningImg"
@@ -155,7 +155,7 @@
                                     android:layout_height="60dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/cloudy" />
+                                    android:src="@drawable/ic_baseline_cloud_24"/>
 
                             </RelativeLayout>
 
@@ -191,7 +191,7 @@
                                     android:layout_marginRight="10dp"
                                     android:text="- -&#xb0;C"
                                     android:textColor="@color/black"
-                                    android:textStyle="bold"/>
+                                    android:textStyle="bold" />
 
                                 <ImageView
                                     android:id="@+id/nightImg"
@@ -199,7 +199,7 @@
                                     android:layout_height="60dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:src="@drawable/moon_clear" />
+                                    android:src="@drawable/ic_baseline_cloud_24"/>
 
                             </RelativeLayout>
 

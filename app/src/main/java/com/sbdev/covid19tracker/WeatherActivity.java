@@ -219,17 +219,173 @@ public class WeatherActivity extends AppCompatActivity {
                         double lat= addresses.get(0).getLatitude();
                         double lon= addresses.get(0).getLongitude();
 
-                        url="https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=minutely&appid=66b871b322375297071a645567414648";
+//                        url="https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=minutely&appid=66b871b322375297071a645567414648";
+//
+//                        request=new Request.Builder()
+//                                .url(url)
+//                                .build();
+//
+//                        client.newCall(request).enqueue(new Callback() {
+//                            @Override
+//                            public void onFailure(Call call, IOException e) {
+//
+//                                Log.e("On Failure",e.getMessage());
+//
+//                            }
+//
+//                            @Override
+//                            public void onResponse(Call call, Response response) throws IOException {
+//
+//                                if(response.isSuccessful())
+//                                {
+//
+//                                    String res=response.body().string();
+//
+//                                    WeatherActivity.this.runOnUiThread(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//
+//                                            try {
+//
+//                                                JSONObject jsonObject=new JSONObject(res);
+//
+//                                                String timezone=jsonObject.getString("timezone");
+//                                                Log.d("Timezone",timezone.substring(timezone.indexOf('/')+1));
+//                                                timezone=timezone.substring(timezone.indexOf('/')+1);
+//
+//                                                String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+addresses.get(0).getSubAdminArea()+"&aqi=no";
+//
+//                                                Request request1=new Request.Builder()
+//                                                        .url(countryURL)
+//                                                        .build();
+//
+//                                                client.newCall(request1).enqueue(new Callback() {
+//                                                    @Override
+//                                                    public void onFailure(Call call, IOException e) {
+//
+//                                                        Log.e("Inside onFailure",e.getMessage());
+//
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onResponse(Call call, Response response) throws IOException {
+//
+//                                                        if(response.isSuccessful())
+//                                                        {
+//
+//
+//                                                            String res1=response.body().string();
+//
+//                                                            WeatherActivity.this.runOnUiThread(new Runnable() {
+//                                                                @Override
+//                                                                public void run() {
+//
+//                                                                    try {
+//
+//                                                                        JSONObject jsonObject1=new JSONObject(res1);
+//                                                                        JSONObject current=jsonObject1.getJSONObject("current");
+//
+//                                                                        int is_day=current.getInt("is_day");
+//
+//                                                                        SharedPreferences.Editor editor=sp.edit();
+//                                                                        if(is_day==0)
+//                                                                        {
+//                                                                            dayNightMode.setImageResource(R.drawable.night_mode);
+//                                                                            nightMode();
+//
+//                                                                            editor.putString("bgMode","0");
+//                                                                        }
+//                                                                        else
+//                                                                        {
+//                                                                            dayNightMode.setImageResource(R.drawable.day_mode);
+//                                                                            dayMode();
+//
+//                                                                            editor.putString("bgMode","1");
+//                                                                        }
+//                                                                        editor.apply();
+//
+//                                                                        int temp_c= (int) current.getDouble("temp_c");
+//
+//                                                                        temp.setText(temp_c+"\u2103");
+//
+//                                                                        JSONObject condition=current.getJSONObject("condition");
+//                                                                        String text=condition.getString("text");
+//                                                                        skyType.setText(text);
+//
+//                                                                        if(text.equalsIgnoreCase("Sunny"))
+//                                                                        {
+//                                                                            weather.setImageResource(R.drawable.sun);
+//                                                                        }
+//                                                                        else if(text.equalsIgnoreCase("Clear"))
+//                                                                        {
+//                                                                            weather.setImageResource(R.drawable.moon_clear);
+//                                                                        }
+//                                                                        else
+//                                                                        {
+//                                                                            if(is_day==0)
+//                                                                            {
+//                                                                                weather.setImageResource(R.drawable.mist);
+//                                                                            }
+//                                                                            else
+//                                                                            {
+//                                                                                weather.setImageResource(R.drawable.cloudy);
+//                                                                            }
+//                                                                        }
+//
+//                                                                        String wind_mphSTR=current.getString("wind_mph");
+//                                                                        int pressure_mbSTR= (int) current.getDouble("pressure_mb");
+//                                                                        String humiditySTR=current.getString("humidity");
+//
+//                                                                        String pressure_two_decimal=String.format("%.2f",pressure_mbSTR*0.750062);
+//
+//                                                                        pressure.setText(pressure_two_decimal+" mmhg");
+//                                                                        humidity.setText(humiditySTR+"%");
+//                                                                        windSpeed.setText(wind_mphSTR+" mph");
+//
+//                                                                        progressDialog.dismiss();
+//
+//
+//                                                                    } catch (JSONException e) {
+//                                                                        e.printStackTrace();
+//                                                                    }
+//
+//                                                                }
+//                                                            });
+//
+//
+//                                                        }
+//
+//                                                    }
+//                                                });
+//
+//
+//                                            } catch (JSONException e) {
+//                                                Log.e("Exception",e.getMessage());
+//                                            }
+//
+//                                        }
+//                                    });
+//
+//                                }
+//
+//                            }
+//                        });
 
-                        request=new Request.Builder()
-                                .url(url)
+
+                        //locText.setText(details);
+
+
+                        String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+addresses.get(0).getSubAdminArea()+"&aqi=no";
+
+                        Request request=new Request.Builder()
+                                .url(countryURL)
                                 .build();
 
                         client.newCall(request).enqueue(new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
 
-                                Log.e("On Failure",e.getMessage());
+                                Log.e("Inside onFailure",e.getMessage());
 
                             }
 
@@ -239,6 +395,7 @@ public class WeatherActivity extends AppCompatActivity {
                                 if(response.isSuccessful())
                                 {
 
+
                                     String res=response.body().string();
 
                                     WeatherActivity.this.runOnUiThread(new Runnable() {
@@ -247,132 +404,95 @@ public class WeatherActivity extends AppCompatActivity {
 
                                             try {
 
-                                                JSONObject jsonObject=new JSONObject(res);
+                                                JSONObject jsonObject1=new JSONObject(res);
+                                                JSONObject current=jsonObject1.getJSONObject("current");
 
-                                                String timezone=jsonObject.getString("timezone");
-                                                Log.d("Timezone",timezone.substring(timezone.indexOf('/')+1));
-                                                timezone=timezone.substring(timezone.indexOf('/')+1);
+                                                int is_day=current.getInt("is_day");
 
-                                                String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+addresses.get(0).getSubAdminArea()+"&aqi=no";
+                                                SharedPreferences.Editor editor=sp.edit();
+                                                if(is_day==0)
+                                                {
+                                                    dayNightMode.setImageResource(R.drawable.night_mode);
+                                                    nightMode();
 
-                                                Request request1=new Request.Builder()
-                                                        .url(countryURL)
-                                                        .build();
+                                                    editor.putString("bgMode","0");
+                                                }
+                                                else
+                                                {
+                                                    dayNightMode.setImageResource(R.drawable.day_mode);
+                                                    dayMode();
 
-                                                client.newCall(request1).enqueue(new Callback() {
-                                                    @Override
-                                                    public void onFailure(Call call, IOException e) {
+                                                    editor.putString("bgMode","1");
+                                                }
+                                                editor.apply();
 
-                                                        Log.e("Inside onFailure",e.getMessage());
+                                                int temp_c= (int) current.getDouble("temp_c");
 
+                                                temp.setText(temp_c+"\u2103");
+
+                                                JSONObject condition=current.getJSONObject("condition");
+                                                String text=condition.getString("text");
+                                                skyType.setText(text);
+
+                                                if(text.equalsIgnoreCase("Sunny"))
+                                                {
+                                                    if(temp_c<=18)
+                                                    {
+                                                        weather.setImageResource(R.drawable.mist);
                                                     }
-
-                                                    @Override
-                                                    public void onResponse(Call call, Response response) throws IOException {
-
-                                                        if(response.isSuccessful())
-                                                        {
-
-
-                                                            String res1=response.body().string();
-
-                                                            WeatherActivity.this.runOnUiThread(new Runnable() {
-                                                                @Override
-                                                                public void run() {
-
-                                                                    try {
-
-                                                                        JSONObject jsonObject1=new JSONObject(res1);
-                                                                        JSONObject current=jsonObject1.getJSONObject("current");
-
-                                                                        int is_day=current.getInt("is_day");
-
-                                                                        SharedPreferences.Editor editor=sp.edit();
-                                                                        if(is_day==0)
-                                                                        {
-                                                                            dayNightMode.setImageResource(R.drawable.night_mode);
-                                                                            nightMode();
-
-                                                                            editor.putString("bgMode","0");
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            dayNightMode.setImageResource(R.drawable.day_mode);
-                                                                            dayMode();
-
-                                                                            editor.putString("bgMode","1");
-                                                                        }
-                                                                        editor.apply();
-
-                                                                        int temp_c= (int) current.getDouble("temp_c");
-
-                                                                        temp.setText(temp_c+"\u2103");
-
-                                                                        JSONObject condition=current.getJSONObject("condition");
-                                                                        String text=condition.getString("text");
-                                                                        skyType.setText(text);
-
-                                                                        if(text.equalsIgnoreCase("Sunny"))
-                                                                        {
-                                                                            weather.setImageResource(R.drawable.sun);
-                                                                        }
-                                                                        else if(text.equalsIgnoreCase("Clear"))
-                                                                        {
-                                                                            weather.setImageResource(R.drawable.moon_clear);
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            if(is_day==0)
-                                                                            {
-                                                                                weather.setImageResource(R.drawable.mist);
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                weather.setImageResource(R.drawable.cloudy);
-                                                                            }
-                                                                        }
-
-                                                                        String wind_mphSTR=current.getString("wind_mph");
-                                                                        int pressure_mbSTR= (int) current.getDouble("pressure_mb");
-                                                                        String humiditySTR=current.getString("humidity");
-
-                                                                        String pressure_two_decimal=String.format("%.2f",pressure_mbSTR*0.750062);
-
-                                                                        pressure.setText(pressure_two_decimal+" mmhg");
-                                                                        humidity.setText(humiditySTR+"%");
-                                                                        windSpeed.setText(wind_mphSTR+" mph");
-
-                                                                        progressDialog.dismiss();
-
-
-                                                                    } catch (JSONException e) {
-                                                                        e.printStackTrace();
-                                                                    }
-
-                                                                }
-                                                            });
-
-
-                                                        }
-
+                                                    else
+                                                    {
+                                                        weather.setImageResource(R.drawable.sun);
                                                     }
-                                                });
+                                                }
+                                                else if(text.equalsIgnoreCase("Clear"))
+                                                {
+                                                    if(temp_c<=18)
+                                                    {
+                                                        weather.setImageResource(R.drawable.mist);
+                                                    }
+                                                    else
+                                                    {
+                                                        weather.setImageResource(R.drawable.moon_clear);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if(is_day==0)
+                                                    {
+                                                        weather.setImageResource(R.drawable.mist);
+                                                    }
+                                                    else
+                                                    {
+                                                        weather.setImageResource(R.drawable.cloudy);
+                                                    }
+                                                }
+
+                                                String wind_mphSTR=current.getString("wind_mph");
+                                                int pressure_mbSTR= (int) current.getDouble("pressure_mb");
+                                                String humiditySTR=current.getString("humidity");
+
+                                                String pressure_two_decimal=String.format("%.2f",pressure_mbSTR*0.750062);
+
+                                                pressure.setText(pressure_two_decimal+" mmhg");
+                                                humidity.setText(humiditySTR+"%");
+                                                windSpeed.setText(wind_mphSTR+" mph");
+
+                                                progressDialog.dismiss();
 
 
                                             } catch (JSONException e) {
-                                                Log.e("Exception",e.getMessage());
+                                                e.printStackTrace();
                                             }
 
                                         }
                                     });
 
+
                                 }
 
                             }
                         });
-
-
-                        //locText.setText(details);
 
                         Log.d("Details",details);
 

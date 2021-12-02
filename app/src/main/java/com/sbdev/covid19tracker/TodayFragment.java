@@ -177,6 +177,42 @@ public class TodayFragment extends Fragment {
                                                 eveningTemp.setText(eTemp+"\u2103");
                                                 nightTemp.setText(nTemp+"\u2103");
 
+                                                if(mTemp<=18)
+                                                {
+                                                    morningImg.setImageResource(R.drawable.mist);
+                                                }
+                                                else
+                                                {
+                                                    morningImg.setImageResource(R.drawable.clear_sky);
+                                                }
+
+                                                if(aTemp<=20)
+                                                {
+                                                    afternoonImg.setImageResource(R.drawable.cloudy);
+                                                }
+                                                else
+                                                {
+                                                    afternoonImg.setImageResource(R.drawable.sun);
+                                                }
+
+                                                if(eTemp<=20)
+                                                {
+                                                    eveningImg.setImageResource(R.drawable.mist);
+                                                }
+                                                else
+                                                {
+                                                    eveningImg.setImageResource(R.drawable.cloudy);
+                                                }
+
+                                                if(nTemp<=18)
+                                                {
+                                                    nightImg.setImageResource(R.drawable.mist);
+                                                }
+                                                else
+                                                {
+                                                    nightImg.setImageResource(R.drawable.moon_clear);
+                                                }
+
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
