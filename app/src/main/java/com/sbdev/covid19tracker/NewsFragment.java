@@ -132,6 +132,11 @@ public class NewsFragment extends Fragment {
 
                     String res=response.body().string();
 
+                    if(getActivity()==null)
+                    {
+                        return;
+                    }
+
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

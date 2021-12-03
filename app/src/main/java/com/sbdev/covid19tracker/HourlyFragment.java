@@ -86,14 +86,8 @@ public class HourlyFragment extends Fragment {
 
     private void getLocation() {
 
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
             return;
         }
         fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
@@ -121,7 +115,7 @@ public class HourlyFragment extends Fragment {
                         double lon = addresses.get(0).getLongitude();
 
 
-                        url="https://api.weatherapi.com/v1/forecast.json?key=5660084f7fdd4f4cb80140903212811&q="+addresses.get(0).getSubAdminArea()+"&days=1&aqi=no&alerts=no";
+                        url="https://api.weatherapi.com/v1/forecast.json?key=5660084f7fdd4f4cb80140903212811&q="+lat+","+lon+"&days=1&aqi=no&alerts=no";
 
                         request=new Request.Builder()
                                 .url(url)
@@ -167,9 +161,9 @@ public class HourlyFragment extends Fragment {
                                                     int isDay=hourObject.getInt("is_day");
 
                                                     JSONObject condition=hourObject.getJSONObject("condition");
-                                                    String icon=condition.getString("icon");
+                                                    String text=condition.getString("text");
 
-                                                    arrayList.add(new HourlyModel(time.substring(11),isDay,temp_c));
+                                                    arrayList.add(new HourlyModel(time.substring(11),isDay,temp_c,text));
 
                                                 }
 

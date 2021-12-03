@@ -50,6 +50,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/bottom_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/country_item_layout.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/country_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/daily_item_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/fragment_all_country.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/fragment_daily.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/fragment_feedback.xml" value="0.24010416666666667" />
@@ -67,7 +68,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/fragment_today.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/fragment_weather.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/header_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/hourly_item_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/hourly_item_layout.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/loading_bg.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/main_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Covid19Tracker/app/src/main/res/layout/news_item_layout.xml" value="0.25416666666666665" />

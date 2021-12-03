@@ -6,11 +6,13 @@ public class HourlyModel {
     String imageURL;
     int temp;
     int isDay;
+    String text;
 
-    public HourlyModel(String time, int isDay, int temp) {
+    public HourlyModel(String time, int isDay, int temp,String text) {
         this.time = time;
         this.isDay = isDay;
         this.temp = temp;
+        this.text=text;
     }
 
     public int getIsDay() {
@@ -43,5 +45,13 @@ public class HourlyModel {
 
     public void setTemp(int temp) {
         this.temp = temp;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

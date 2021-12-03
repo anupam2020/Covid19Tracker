@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -375,7 +376,7 @@ public class WeatherActivity extends AppCompatActivity {
                         //locText.setText(details);
 
 
-                        String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+addresses.get(0).getSubAdminArea()+"&aqi=no";
+                        String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+lat+","+lon+"&aqi=no";
 
                         Request request=new Request.Builder()
                                 .url(countryURL)
@@ -404,8 +405,13 @@ public class WeatherActivity extends AppCompatActivity {
 
                                             try {
 
-                                                JSONObject jsonObject1=new JSONObject(res);
-                                                JSONObject current=jsonObject1.getJSONObject("current");
+                                                JSONObject jsonObject=new JSONObject(res);
+
+                                                JSONObject location=jsonObject.getJSONObject("location");
+                                                String name=location.getString("name");
+                                                Log.d("NAME",name);
+
+                                                JSONObject current=jsonObject.getJSONObject("current");
 
                                                 int is_day=current.getInt("is_day");
 
@@ -427,7 +433,10 @@ public class WeatherActivity extends AppCompatActivity {
                                                 editor.apply();
 
                                                 int temp_c= (int) current.getDouble("temp_c");
+                                                Typeface face = Typeface.createFromAsset(getAssets(),
+                                                        "font/aladin.ttf");
 
+                                                temp.setTypeface(face);
                                                 temp.setText(temp_c+"\u2103");
 
                                                 JSONObject condition=current.getJSONObject("condition");
@@ -436,7 +445,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                                 if(text.equalsIgnoreCase("Sunny"))
                                                 {
-                                                    if(temp_c<=18)
+                                                    if(temp_c<=22)
                                                     {
                                                         weather.setImageResource(R.drawable.mist);
                                                     }
@@ -447,13 +456,35 @@ public class WeatherActivity extends AppCompatActivity {
                                                 }
                                                 else if(text.equalsIgnoreCase("Clear"))
                                                 {
-                                                    if(temp_c<=18)
+                                                    if(temp_c<=20)
                                                     {
                                                         weather.setImageResource(R.drawable.mist);
                                                     }
                                                     else
                                                     {
                                                         weather.setImageResource(R.drawable.moon_clear);
+                                                    }
+                                                }
+                                                else if(text.contains("drizzle"))
+                                                {
+                                                    if(is_day==0)
+                                                    {
+                                                        weather.setImageResource(R.drawable.drizzle_night);
+                                                    }
+                                                    else
+                                                    {
+                                                        weather.setImageResource(R.drawable.drizzle_morning);
+                                                    }
+                                                }
+                                                else if(text.contains("rain"))
+                                                {
+                                                    if(is_day==0)
+                                                    {
+                                                        weather.setImageResource(R.drawable.night_rain);
+                                                    }
+                                                    else
+                                                    {
+                                                        weather.setImageResource(R.drawable.rain);
                                                     }
                                                 }
                                                 else

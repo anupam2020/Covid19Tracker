@@ -177,7 +177,7 @@ public class TodayFragment extends Fragment {
                                                 eveningTemp.setText(eTemp+"\u2103");
                                                 nightTemp.setText(nTemp+"\u2103");
 
-                                                if(mTemp<=18)
+                                                if(mTemp<=22)
                                                 {
                                                     morningImg.setImageResource(R.drawable.mist);
                                                 }
@@ -186,7 +186,7 @@ public class TodayFragment extends Fragment {
                                                     morningImg.setImageResource(R.drawable.clear_sky);
                                                 }
 
-                                                if(aTemp<=20)
+                                                if(aTemp<=25)
                                                 {
                                                     afternoonImg.setImageResource(R.drawable.cloudy);
                                                 }
@@ -204,7 +204,7 @@ public class TodayFragment extends Fragment {
                                                     eveningImg.setImageResource(R.drawable.cloudy);
                                                 }
 
-                                                if(nTemp<=18)
+                                                if(nTemp<=20)
                                                 {
                                                     nightImg.setImageResource(R.drawable.mist);
                                                 }

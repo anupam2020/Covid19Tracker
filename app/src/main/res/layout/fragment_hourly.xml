@@ -15,7 +15,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -23,8 +24,7 @@
                 android:id="@+id/hourlyRecycler"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
-                android:background="@color/white"
-                android:layout_centerVertical="true"/>
+                android:background="@color/white" />
 
         </RelativeLayout>
 

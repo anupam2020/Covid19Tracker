@@ -39,6 +39,7 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
 
         //Glide.with(context).load(arrayList.get(holder.getAdapterPosition()).imageURL).into(holder.weather);
 
+        String textCondition=arrayList.get(holder.getAdapterPosition()).text;
         String subTime=arrayList.get(holder.getAdapterPosition()).time.substring(0,2);
         if(Integer.parseInt(subTime)<=11)
         {
@@ -71,32 +72,49 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
             holder.cardView.setBackgroundResource(R.drawable.night_mode);
             holder.time.setTextColor(context.getResources().getColor(R.color.white));
             holder.temp.setTextColor(context.getResources().getColor(R.color.white));
-            if(arrayList.get(holder.getAdapterPosition()).temp<=18)
+
+            if(textCondition.contains("Cloudy") || textCondition.contains("Mist"))
             {
                 holder.weather.setImageResource(R.drawable.mist);
+            }
+            else if(textCondition.contains("rain"))
+            {
+                holder.weather.setImageResource(R.drawable.night_rain);
+            }
+            else if(textCondition.contains("drizzle"))
+            {
+                holder.weather.setImageResource(R.drawable.drizzle_night);
             }
             else
             {
                 holder.weather.setImageResource(R.drawable.moon_clear);
             }
+
         }
         else
         {
             holder.cardView.setBackgroundResource(R.drawable.day_mode);
             holder.time.setTextColor(context.getResources().getColor(R.color.black));
             holder.temp.setTextColor(context.getResources().getColor(R.color.black));
-            if(arrayList.get(holder.getAdapterPosition()).temp<=18)
-            {
-                holder.weather.setImageResource(R.drawable.mist);
-            }
-            else if(arrayList.get(holder.getAdapterPosition()).temp>18 && arrayList.get(holder.getAdapterPosition()).temp<=24)
+
+            textCondition=textCondition.toLowerCase();
+            if(textCondition.contains("cloudy"))
             {
                 holder.weather.setImageResource(R.drawable.cloudy);
+            }
+            else if(textCondition.contains("rain"))
+            {
+                holder.weather.setImageResource(R.drawable.rain);
+            }
+            else if(textCondition.contains("drizzle"))
+            {
+                holder.weather.setImageResource(R.drawable.drizzle_morning);
             }
             else
             {
                 holder.weather.setImageResource(R.drawable.sun);
             }
+
         }
 
 
