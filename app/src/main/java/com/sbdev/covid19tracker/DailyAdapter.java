@@ -36,19 +36,36 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
 
         String weatherType=arrayList.get(holder.getAdapterPosition()).type;
 
-        switch (weatherType) {
-            case "Clouds":
-                holder.weather.setImageResource(R.drawable.cloudy);
-                break;
-            case "Rain":
-                holder.weather.setImageResource(R.drawable.rain);
-                break;
-            case "Clear":
-                holder.weather.setImageResource(R.drawable.clear_sky);
-                break;
-            default:
-                holder.weather.setImageResource(R.drawable.sun);
-                break;
+        weatherType=weatherType.toLowerCase();
+        if(weatherType.contains("rain"))
+        {
+            if(weatherType.contains("light"))
+            {
+                holder.weather.setImageResource(R.drawable.light_rain);
+            }
+            else if(weatherType.contains("moderate"))
+            {
+                holder.weather.setImageResource(R.drawable.moderate_rain);
+            }
+            else
+            {
+                if(weatherType.equals("heavy"))
+                {
+                    holder.weather.setImageResource(R.drawable.heavy_rain);
+                }
+            }
+        }
+        else if(weatherType.contains("clear"))
+        {
+            holder.weather.setImageResource(R.drawable.clear_sky);
+        }
+        else if(weatherType.contains("mist"))
+        {
+            holder.weather.setImageResource(R.drawable.mist);
+        }
+        else
+        {
+            holder.weather.setImageResource(R.drawable.cloudy);
         }
 
     }

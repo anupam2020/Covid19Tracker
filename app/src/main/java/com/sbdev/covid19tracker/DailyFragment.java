@@ -176,7 +176,7 @@ public class DailyFragment extends Fragment {
                                                     JSONArray weather=index.getJSONArray("weather");
                                                     JSONObject weatherType=weather.getJSONObject(0);
 
-                                                    String type=weatherType.getString("main");
+                                                    String type=weatherType.getString("description");
 
                                                     arrayList.add(new DailyModel(epochToDate(dt*1000),maxTemp+"\u2103"+" / "+minTemp+"\u2103",type));
 

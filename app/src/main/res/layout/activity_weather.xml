@@ -151,7 +151,9 @@
                 android:layout_centerHorizontal="true"
                 android:id="@+id/weatherLinear2"
                 android:layout_below="@id/weatherLinear"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
 
                 <ImageView
                     android:id="@+id/weatherImg"
@@ -167,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp">
+                    android:layout_marginLeft="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -177,7 +179,9 @@
                         android:layout_centerHorizontal="true"
                         android:textSize="50dp"
                         android:id="@+id/tempText"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -187,7 +191,8 @@
                         android:textColor="@color/black"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/skyTypeText"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:textAlignment="center"/>
 
 
                 </LinearLayout>

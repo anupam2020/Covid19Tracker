@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
@@ -72,6 +73,8 @@ public class WeatherActivity extends AppCompatActivity {
     private ViewPager2 WeatherviewPager2;
     private WeatherStateAdapter Weatheradapter;
 
+    //private SwipeRefreshLayout swipe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +97,8 @@ public class WeatherActivity extends AppCompatActivity {
 
         weather=findViewById(R.id.weatherImg);
         dayNightMode=findViewById(R.id.day_night_mode);
+
+        //swipe=findViewById(R.id.swipeToRefresh);
 
         WeathertabLayout=findViewById(R.id.weatherTabLayout);
         WeatherviewPager2=findViewById(R.id.weatherViewPager2);
@@ -176,6 +181,17 @@ public class WeatherActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(WeatherActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
+
+//        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//
+////                setValues();
+//
+//                swipe.setRefreshing(false);
+//
+//            }
+//        });
 
     }
 
@@ -377,6 +393,7 @@ public class WeatherActivity extends AppCompatActivity {
 
 
                         String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+lat+","+lon+"&aqi=no";
+                        Log.d("countryURL",countryURL);
 
                         Request request=new Request.Builder()
                                 .url(countryURL)
@@ -442,8 +459,9 @@ public class WeatherActivity extends AppCompatActivity {
                                                 JSONObject condition=current.getJSONObject("condition");
                                                 String text=condition.getString("text");
                                                 skyType.setText(text);
+                                                text=text.toLowerCase();
 
-                                                if(text.equalsIgnoreCase("Sunny"))
+                                                if(text.contains("sunny"))
                                                 {
                                                     if(temp_c<=22)
                                                     {
@@ -454,7 +472,7 @@ public class WeatherActivity extends AppCompatActivity {
                                                         weather.setImageResource(R.drawable.sun);
                                                     }
                                                 }
-                                                else if(text.equalsIgnoreCase("Clear"))
+                                                else if(text.equalsIgnoreCase("clear"))
                                                 {
                                                     if(temp_c<=20)
                                                     {
@@ -480,11 +498,39 @@ public class WeatherActivity extends AppCompatActivity {
                                                 {
                                                     if(is_day==0)
                                                     {
-                                                        weather.setImageResource(R.drawable.night_rain);
+                                                        if(text.contains("light"))
+                                                        {
+                                                            weather.setImageResource(R.drawable.light_rain_night);
+                                                        }
+                                                        else if(text.contains("moderate"))
+                                                        {
+                                                            weather.setImageResource(R.drawable.moderate_rain_night);
+                                                        }
+                                                        else
+                                                        {
+                                                            if(text.contains("heavy"))
+                                                            {
+                                                                weather.setImageResource(R.drawable.heavy_rain_night);
+                                                            }
+                                                        }
                                                     }
                                                     else
                                                     {
-                                                        weather.setImageResource(R.drawable.rain);
+                                                        if(text.contains("light"))
+                                                        {
+                                                            weather.setImageResource(R.drawable.light_rain);
+                                                        }
+                                                        else if(text.contains("moderate"))
+                                                        {
+                                                            weather.setImageResource(R.drawable.moderate_rain);
+                                                        }
+                                                        else
+                                                        {
+                                                            if(text.contains("heavy"))
+                                                            {
+                                                                weather.setImageResource(R.drawable.heavy_rain);
+                                                            }
+                                                        }
                                                     }
                                                 }
                                                 else
