@@ -73,7 +73,7 @@ public class WeatherActivity extends AppCompatActivity {
     private ViewPager2 WeatherviewPager2;
     private WeatherStateAdapter Weatheradapter;
 
-    //private SwipeRefreshLayout swipe;
+    private SwipeRefreshLayout swipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class WeatherActivity extends AppCompatActivity {
         weather=findViewById(R.id.weatherImg);
         dayNightMode=findViewById(R.id.day_night_mode);
 
-        //swipe=findViewById(R.id.swipeToRefresh);
+        swipe=findViewById(R.id.swipeToRefresh);
 
         WeathertabLayout=findViewById(R.id.weatherTabLayout);
         WeatherviewPager2=findViewById(R.id.weatherViewPager2);
@@ -142,11 +142,6 @@ public class WeatherActivity extends AppCompatActivity {
 
 
 
-        simpleDateFormat=new SimpleDateFormat("MMMM dd, EEEE hh:mm a");
-        date=new Date();
-        dateString=simpleDateFormat.format(date);
-
-
         progressDialog=new ProgressDialog(WeatherActivity.this);
 
         progressDialog.show();
@@ -182,16 +177,16 @@ public class WeatherActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
 
-//        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//
-////                setValues();
-//
-//                swipe.setRefreshing(false);
-//
-//            }
-//        });
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                getLocation();
+
+                swipe.setRefreshing(false);
+
+            }
+        });
 
     }
 
@@ -228,6 +223,10 @@ public class WeatherActivity extends AppCompatActivity {
                                 "Lon: "+(float)addresses.get(0).getLongitude()+"\n"+
                                 "Admin Area: "+addresses.get(0).getAdminArea()+"\n"+
                                 "Sub Admin Area: "+addresses.get(0).getSubAdminArea();
+
+                        simpleDateFormat=new SimpleDateFormat("MMMM dd, EEEE hh:mm a");
+                        date=new Date();
+                        dateString=simpleDateFormat.format(date);
 
                         city.setText(addresses.get(0).getLocality());
                         country.setText(addresses.get(0).getAdminArea()+", "+addresses.get(0).getCountryName());
@@ -395,187 +394,194 @@ public class WeatherActivity extends AppCompatActivity {
                         String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+lat+","+lon+"&aqi=no";
                         Log.d("countryURL",countryURL);
 
-                        Request request=new Request.Builder()
-                                .url(countryURL)
-                                .build();
-
-                        client.newCall(request).enqueue(new Callback() {
-                            @Override
-                            public void onFailure(Call call, IOException e) {
-
-                                Log.e("Inside onFailure",e.getMessage());
-
-                            }
-
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-
-                                if(response.isSuccessful())
-                                {
-
-
-                                    String res=response.body().string();
-
-                                    WeatherActivity.this.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-
-                                            try {
-
-                                                JSONObject jsonObject=new JSONObject(res);
-
-                                                JSONObject location=jsonObject.getJSONObject("location");
-                                                String name=location.getString("name");
-                                                Log.d("NAME",name);
-
-                                                JSONObject current=jsonObject.getJSONObject("current");
-
-                                                int is_day=current.getInt("is_day");
-
-                                                SharedPreferences.Editor editor=sp.edit();
-                                                if(is_day==0)
-                                                {
-                                                    dayNightMode.setImageResource(R.drawable.night_mode);
-                                                    nightMode();
-
-                                                    editor.putString("bgMode","0");
-                                                }
-                                                else
-                                                {
-                                                    dayNightMode.setImageResource(R.drawable.day_mode);
-                                                    dayMode();
-
-                                                    editor.putString("bgMode","1");
-                                                }
-                                                editor.apply();
-
-                                                int temp_c= (int) current.getDouble("temp_c");
-                                                Typeface face = Typeface.createFromAsset(getAssets(),
-                                                        "font/aladin.ttf");
-
-                                                temp.setTypeface(face);
-                                                temp.setText(temp_c+"\u2103");
-
-                                                JSONObject condition=current.getJSONObject("condition");
-                                                String text=condition.getString("text");
-                                                skyType.setText(text);
-                                                text=text.toLowerCase();
-
-                                                if(text.contains("sunny"))
-                                                {
-                                                    if(temp_c<=22)
-                                                    {
-                                                        weather.setImageResource(R.drawable.mist);
-                                                    }
-                                                    else
-                                                    {
-                                                        weather.setImageResource(R.drawable.sun);
-                                                    }
-                                                }
-                                                else if(text.equalsIgnoreCase("clear"))
-                                                {
-                                                    if(temp_c<=20)
-                                                    {
-                                                        weather.setImageResource(R.drawable.mist);
-                                                    }
-                                                    else
-                                                    {
-                                                        weather.setImageResource(R.drawable.moon_clear);
-                                                    }
-                                                }
-                                                else if(text.contains("drizzle"))
-                                                {
-                                                    if(is_day==0)
-                                                    {
-                                                        weather.setImageResource(R.drawable.drizzle_night);
-                                                    }
-                                                    else
-                                                    {
-                                                        weather.setImageResource(R.drawable.drizzle_morning);
-                                                    }
-                                                }
-                                                else if(text.contains("rain"))
-                                                {
-                                                    if(is_day==0)
-                                                    {
-                                                        if(text.contains("light"))
-                                                        {
-                                                            weather.setImageResource(R.drawable.light_rain_night);
-                                                        }
-                                                        else if(text.contains("moderate"))
-                                                        {
-                                                            weather.setImageResource(R.drawable.moderate_rain_night);
-                                                        }
-                                                        else
-                                                        {
-                                                            if(text.contains("heavy"))
-                                                            {
-                                                                weather.setImageResource(R.drawable.heavy_rain_night);
-                                                            }
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if(text.contains("light"))
-                                                        {
-                                                            weather.setImageResource(R.drawable.light_rain);
-                                                        }
-                                                        else if(text.contains("moderate"))
-                                                        {
-                                                            weather.setImageResource(R.drawable.moderate_rain);
-                                                        }
-                                                        else
-                                                        {
-                                                            if(text.contains("heavy"))
-                                                            {
-                                                                weather.setImageResource(R.drawable.heavy_rain);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    if(is_day==0)
-                                                    {
-                                                        weather.setImageResource(R.drawable.mist);
-                                                    }
-                                                    else
-                                                    {
-                                                        weather.setImageResource(R.drawable.cloudy);
-                                                    }
-                                                }
-
-                                                String wind_mphSTR=current.getString("wind_mph");
-                                                int pressure_mbSTR= (int) current.getDouble("pressure_mb");
-                                                String humiditySTR=current.getString("humidity");
-
-                                                String pressure_two_decimal=String.format("%.2f",pressure_mbSTR*0.750062);
-
-                                                pressure.setText(pressure_two_decimal+" mmhg");
-                                                humidity.setText(humiditySTR+"%");
-                                                windSpeed.setText(wind_mphSTR+" mph");
-
-                                                progressDialog.dismiss();
-
-
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-
-                                        }
-                                    });
-
-
-                                }
-
-                            }
-                        });
+                        setValues(countryURL);
 
                         Log.d("Details",details);
 
                     } catch (IOException e) {
                         Log.e("Exception",e.getMessage());
                     }
+
+                }
+
+            }
+        });
+
+    }
+
+    public void setValues(String url)
+    {
+
+        Request request=new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+                Log.e("Inside onFailure",e.getMessage());
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                if(response.isSuccessful())
+                {
+
+
+                    String res=response.body().string();
+
+                    WeatherActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            try {
+
+                                JSONObject jsonObject=new JSONObject(res);
+
+                                JSONObject location=jsonObject.getJSONObject("location");
+                                String name=location.getString("name");
+                                Log.d("NAME",name);
+
+                                JSONObject current=jsonObject.getJSONObject("current");
+
+                                int is_day=current.getInt("is_day");
+
+                                SharedPreferences.Editor editor=sp.edit();
+                                if(is_day==0)
+                                {
+                                    dayNightMode.setImageResource(R.drawable.night_mode);
+                                    nightMode();
+
+                                    editor.putString("bgMode","0");
+                                }
+                                else
+                                {
+                                    dayNightMode.setImageResource(R.drawable.day_mode);
+                                    dayMode();
+
+                                    editor.putString("bgMode","1");
+                                }
+                                editor.apply();
+
+                                int temp_c= (int) current.getDouble("temp_c");
+                                Typeface face = Typeface.createFromAsset(getAssets(),
+                                        "font/aladin.ttf");
+
+                                temp.setTypeface(face);
+                                temp.setText(temp_c+"\u2103");
+
+                                JSONObject condition=current.getJSONObject("condition");
+                                String text=condition.getString("text");
+                                skyType.setText(text);
+                                text=text.toLowerCase();
+
+                                if(text.contains("sunny"))
+                                {
+                                    if(temp_c<=22)
+                                    {
+                                        weather.setImageResource(R.drawable.mist);
+                                    }
+                                    else
+                                    {
+                                        weather.setImageResource(R.drawable.sun);
+                                    }
+                                }
+                                else if(text.equalsIgnoreCase("clear"))
+                                {
+                                    if(temp_c<=20)
+                                    {
+                                        weather.setImageResource(R.drawable.mist);
+                                    }
+                                    else
+                                    {
+                                        weather.setImageResource(R.drawable.moon_clear);
+                                    }
+                                }
+                                else if(text.contains("drizzle"))
+                                {
+                                    if(is_day==0)
+                                    {
+                                        weather.setImageResource(R.drawable.drizzle_night);
+                                    }
+                                    else
+                                    {
+                                        weather.setImageResource(R.drawable.drizzle_morning);
+                                    }
+                                }
+                                else if(text.contains("rain"))
+                                {
+                                    if(is_day==0)
+                                    {
+                                        if(text.contains("light"))
+                                        {
+                                            weather.setImageResource(R.drawable.light_rain_night);
+                                        }
+                                        else if(text.contains("moderate"))
+                                        {
+                                            weather.setImageResource(R.drawable.moderate_rain_night);
+                                        }
+                                        else
+                                        {
+                                            if(text.contains("heavy"))
+                                            {
+                                                weather.setImageResource(R.drawable.heavy_rain_night);
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if(text.contains("light"))
+                                        {
+                                            weather.setImageResource(R.drawable.light_rain);
+                                        }
+                                        else if(text.contains("moderate"))
+                                        {
+                                            weather.setImageResource(R.drawable.moderate_rain);
+                                        }
+                                        else
+                                        {
+                                            if(text.contains("heavy"))
+                                            {
+                                                weather.setImageResource(R.drawable.heavy_rain);
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if(is_day==0)
+                                    {
+                                        weather.setImageResource(R.drawable.mist);
+                                    }
+                                    else
+                                    {
+                                        weather.setImageResource(R.drawable.cloudy);
+                                    }
+                                }
+
+                                String wind_mphSTR=current.getString("wind_mph");
+                                int pressure_mbSTR= (int) current.getDouble("pressure_mb");
+                                String humiditySTR=current.getString("humidity");
+
+                                String pressure_two_decimal=String.format("%.2f",pressure_mbSTR*0.750062);
+
+                                pressure.setText(pressure_two_decimal+" mmhg");
+                                humidity.setText(humiditySTR+"%");
+                                windSpeed.setText(wind_mphSTR+" mph");
+
+                                progressDialog.dismiss();
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+
 
                 }
 
