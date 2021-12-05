@@ -2,6 +2,7 @@ package com.sbdev.covid19tracker;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -17,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -55,6 +58,8 @@ public class TodayFragment extends Fragment {
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
+    private RelativeLayout mCard,aCard,eCard,nCard;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -74,6 +79,11 @@ public class TodayFragment extends Fragment {
         nightText=view.findViewById(R.id.nightText);
         nightTemp=view.findViewById(R.id.nightTemp);
         nightImg=view.findViewById(R.id.nightImg);
+
+        mCard=view.findViewById(R.id.morningCard);
+        aCard=view.findViewById(R.id.afternoonCard);
+        eCard=view.findViewById(R.id.eveningCard);
+        nCard=view.findViewById(R.id.nightCard);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
@@ -128,7 +138,7 @@ public class TodayFragment extends Fragment {
                         double lat = addresses.get(0).getLatitude();
                         double lon = addresses.get(0).getLongitude();
 
-                        url="https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=minutely,hourly&appid=66b871b322375297071a645567414648";
+                        url="https://api.weatherapi.com/v1/forecast.json?key=5660084f7fdd4f4cb80140903212811&q="+lat+","+lon+"&days=1&aqi=no&alerts=no";
 
                         request=new Request.Builder()
                                 .url(url)
@@ -137,7 +147,7 @@ public class TodayFragment extends Fragment {
                         client.newCall(request).enqueue(new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
-                                Log.e("on Failure",e.getMessage());
+                                Log.e("onFailure",e.getMessage());
                             }
 
                             @Override
@@ -155,68 +165,205 @@ public class TodayFragment extends Fragment {
                                             try {
 
                                                 JSONObject jsonObject=new JSONObject(res);
-                                                JSONArray daily=jsonObject.getJSONArray("daily");
-                                                Log.d("Daily Size", String.valueOf(daily.length()));
 
-                                                JSONObject zero=daily.getJSONObject(0);
+                                                JSONObject forecast=jsonObject.getJSONObject("forecast");
 
-                                                JSONObject temp=zero.getJSONObject("temp");
+                                                JSONArray forecastday=forecast.getJSONArray("forecastday");
 
-                                                double morning=temp.getDouble("morn");
-                                                double afternoon=temp.getDouble("max");
-                                                double evening=temp.getDouble("eve");
-                                                double night=temp.getDouble("night");
+                                                JSONObject forecastdayObject=forecastday.getJSONObject(0);
 
-                                                int mTemp=(int)(morning-273.15);
-                                                int aTemp=(int)(afternoon-273.15);
-                                                int eTemp=(int)(evening-273.15);
-                                                int nTemp=(int)(night-273.15);
+                                                JSONArray hour=forecastdayObject.getJSONArray("hour");
 
-                                                morningTemp.setText(mTemp+"\u2103");
-                                                afternoonTemp.setText(aTemp+"\u2103");
-                                                eveningTemp.setText(eTemp+"\u2103");
-                                                nightTemp.setText(nTemp+"\u2103");
-
-                                                if(mTemp<=22)
+                                                for(int i=0;i<hour.length();i++)
                                                 {
-                                                    morningImg.setImageResource(R.drawable.mist);
-                                                }
-                                                else
-                                                {
-                                                    morningImg.setImageResource(R.drawable.clear_sky);
-                                                }
+                                                    JSONObject hourObject=hour.getJSONObject(i);
+                                                    int temp_c= (int) hourObject.getDouble("temp_c");
+                                                    int isDay=hourObject.getInt("is_day");
 
-                                                if(aTemp<=25)
-                                                {
-                                                    afternoonImg.setImageResource(R.drawable.cloudy);
-                                                }
-                                                else
-                                                {
-                                                    afternoonImg.setImageResource(R.drawable.sun);
-                                                }
+                                                    JSONObject condition=hourObject.getJSONObject("condition");
+                                                    String text=condition.getString("text");
+                                                    text=text.toLowerCase();
 
-                                                if(eTemp<=20)
-                                                {
-                                                    eveningImg.setImageResource(R.drawable.mist);
-                                                }
-                                                else
-                                                {
-                                                    eveningImg.setImageResource(R.drawable.cloudy);
-                                                }
+                                                    if(i==7)
+                                                    {
+                                                        mCard.setBackgroundResource(R.drawable.day_mode);
+                                                        if(text.contains("rain"))
+                                                        {
+                                                            if(text.contains("light"))
+                                                            {
+                                                                morningImg.setImageResource(R.drawable.light_rain);
+                                                            }
+                                                            else if(text.contains("moderate"))
+                                                            {
+                                                                morningImg.setImageResource(R.drawable.moderate_rain);
+                                                            }
+                                                            else
+                                                            {
+                                                                if(text.contains("heavy"))
+                                                                {
+                                                                    morningImg.setImageResource(R.drawable.heavy_rain);
+                                                                }
+                                                            }
+                                                        }
+                                                        else if(text.contains("drizzle"))
+                                                        {
+                                                            morningImg.setImageResource(R.drawable.morning_drizzle);
+                                                        }
+                                                        else if(text.contains("cloudy"))
+                                                        {
+                                                            if(temp_c<=22)
+                                                            {
+                                                                morningImg.setImageResource(R.drawable.mist);
+                                                            }
+                                                            else
+                                                            {
+                                                                morningImg.setImageResource(R.drawable.cloudy);
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            morningImg.setImageResource(R.drawable.sun);
+                                                        }
+                                                        morningTemp.setText(temp_c+"\u2103");
+                                                    }
+                                                    if(i==12)
+                                                    {
+                                                        aCard.setBackgroundResource(R.drawable.day_mode);
+                                                        if(text.contains("rain"))
+                                                        {
+                                                            if(text.contains("light"))
+                                                            {
+                                                                afternoonImg.setImageResource(R.drawable.light_rain);
+                                                            }
+                                                            else if(text.contains("moderate"))
+                                                            {
+                                                                afternoonImg.setImageResource(R.drawable.moderate_rain);
+                                                            }
+                                                            else
+                                                            {
+                                                                if(text.contains("heavy"))
+                                                                {
+                                                                    afternoonImg.setImageResource(R.drawable.heavy_rain);
+                                                                }
+                                                            }
+                                                        }
+                                                        else if(text.contains("drizzle"))
+                                                        {
+                                                            afternoonImg.setImageResource(R.drawable.morning_drizzle);
+                                                        }
+                                                        else if(text.contains("cloudy"))
+                                                        {
+                                                            if(temp_c<=25)
+                                                            {
+                                                                afternoonImg.setImageResource(R.drawable.mist);
+                                                            }
+                                                            else
+                                                            {
+                                                                afternoonImg.setImageResource(R.drawable.cloudy);
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            afternoonImg.setImageResource(R.drawable.sun);
+                                                        }
+                                                        afternoonTemp.setText(temp_c+"\u2103");
+                                                    }
+                                                    if(i==17)
+                                                    {
+                                                        eCard.setBackgroundResource(R.drawable.night_mode);
+                                                        if(text.contains("rain"))
+                                                        {
+                                                            if(text.contains("light"))
+                                                            {
+                                                                eveningImg.setImageResource(R.drawable.light_rain_night);
+                                                            }
+                                                            else if(text.contains("moderate"))
+                                                            {
+                                                                eveningImg.setImageResource(R.drawable.moderate_rain_night);
+                                                            }
+                                                            else
+                                                            {
+                                                                if(text.contains("heavy"))
+                                                                {
+                                                                    eveningImg.setImageResource(R.drawable.heavy_rain_night);
+                                                                }
+                                                            }
+                                                        }
+                                                        else if(text.contains("drizzle"))
+                                                        {
+                                                            eveningImg.setImageResource(R.drawable.drizzle_night);
+                                                        }
+                                                        else if(text.contains("cloudy"))
+                                                        {
+                                                            if(temp_c<=20)
+                                                            {
+                                                                eveningImg.setImageResource(R.drawable.mist);
+                                                            }
+                                                            else
+                                                            {
+                                                                eveningImg.setImageResource(R.drawable.moon_clear);
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            eveningImg.setImageResource(R.drawable.moon_clear);
+                                                        }
+                                                        eveningTemp.setText(temp_c+"\u2103");
+                                                        eveningTemp.setTextColor(Color.WHITE);
+                                                        eveningText.setTextColor(Color.WHITE);
 
-                                                if(nTemp<=20)
-                                                {
-                                                    nightImg.setImageResource(R.drawable.mist);
-                                                }
-                                                else
-                                                {
-                                                    nightImg.setImageResource(R.drawable.moon_clear);
+                                                    }
+                                                    if(i==21)
+                                                    {
+                                                        nCard.setBackgroundResource(R.drawable.night_mode);
+                                                        if(text.contains("rain"))
+                                                        {
+                                                            if(text.contains("light"))
+                                                            {
+                                                                nightImg.setImageResource(R.drawable.light_rain_night);
+                                                            }
+                                                            else if(text.contains("moderate"))
+                                                            {
+                                                                nightImg.setImageResource(R.drawable.moderate_rain_night);
+                                                            }
+                                                            else
+                                                            {
+                                                                if(text.contains("heavy"))
+                                                                {
+                                                                    nightImg.setImageResource(R.drawable.heavy_rain_night);
+                                                                }
+                                                            }
+                                                        }
+                                                        else if(text.contains("drizzle"))
+                                                        {
+                                                            nightImg.setImageResource(R.drawable.drizzle_night);
+                                                        }
+                                                        else if(text.contains("cloudy"))
+                                                        {
+                                                            if(temp_c<=20)
+                                                            {
+                                                                nightImg.setImageResource(R.drawable.mist);
+                                                            }
+                                                            else
+                                                            {
+                                                                nightImg.setImageResource(R.drawable.moon_clear);
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            nightImg.setImageResource(R.drawable.moon_clear);
+                                                        }
+                                                        nightTemp.setText(temp_c+"\u2103");
+                                                        nightTemp.setTextColor(Color.WHITE);
+                                                        nightText.setTextColor(Color.WHITE);
+
+                                                    }
+
                                                 }
 
                                             } catch (JSONException e) {
-                                                e.printStackTrace();
+                                                Log.e("CATCH",e.getMessage());
                                             }
-
 
                                         }
                                     });
@@ -228,7 +375,7 @@ public class TodayFragment extends Fragment {
 
 
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Log.e("CATCH",e.getMessage());
                     }
 
 

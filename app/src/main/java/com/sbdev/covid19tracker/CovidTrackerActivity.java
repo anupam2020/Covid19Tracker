@@ -32,6 +32,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import org.json.JSONArray;
@@ -60,6 +65,12 @@ public class CovidTrackerActivity extends AppCompatActivity {
 
     private ImageView menu,notiImg;
 
+    private View view;
+
+    private TextView headerName,headerEmail;
+
+    private DatabaseReference reference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +89,13 @@ public class CovidTrackerActivity extends AppCompatActivity {
         menu=findViewById(R.id.mainMenu);
         notiImg=findViewById(R.id.covidNotifications);
 
+        view=navigationView.getHeaderView(0);
+        headerName=view.findViewById(R.id.headerNameText);
+        headerEmail=view.findViewById(R.id.headerEmailText);
+
         firebaseAuth=FirebaseAuth.getInstance();
+
+        reference= FirebaseDatabase.getInstance().getReference("Users");
 
         getSupportFragmentManager().beginTransaction().replace(R.id.covidFrameLayout,new HomeFragment()).commit();
         navigationView.setCheckedItem(R.id.home);
@@ -96,6 +113,32 @@ public class CovidTrackerActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 startActivity(new Intent(CovidTrackerActivity.this,NotificationsActivity.class));
+            }
+        });
+
+
+        reference.child(firebaseAuth.getCurrentUser().getUid()).child("Profile")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                {
+                    if(dataSnapshot.getKey().equals("Name"))
+                    {
+                        headerName.setText(dataSnapshot.getValue().toString());
+                    }
+                    if(dataSnapshot.getKey().equals("Email"))
+                    {
+                        headerEmail.setText(dataSnapshot.getValue().toString());
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Error",error.getMessage());
             }
         });
 

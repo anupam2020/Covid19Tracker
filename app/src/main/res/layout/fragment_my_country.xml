@@ -24,7 +24,8 @@
                 android:columnCount="2"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:paddingBottom="75dp">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="140dp"
@@ -331,12 +332,6 @@
                 </androidx.cardview.widget.CardView>
 
             </GridLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="75dp"
-                android:layout_below="@id/countryGridTop"
-                android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
 

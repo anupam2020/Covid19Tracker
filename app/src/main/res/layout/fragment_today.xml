@@ -39,27 +39,33 @@
                             app:cardElevation="5dp">
 
                             <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_margin="5dp">
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/morningCard">
 
-                                <TextView
-                                    android:id="@+id/morningText"
-                                    android:layout_width="wrap_content"
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:text="Morning"
-                                    android:textColor="@color/black" />
+                                    android:layout_margin="5dp">
 
-                                <TextView
-                                    android:id="@+id/morningTemp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="10dp"
-                                    android:text="- -&#xb0;C"
-                                    android:textColor="@color/black"
-                                    android:textStyle="bold" />
+                                    <TextView
+                                        android:id="@+id/morningText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:text="Morning"
+                                        android:textColor="@color/black" />
+
+                                    <TextView
+                                        android:id="@+id/morningTemp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="- -&#xb0;C"
+                                        android:layout_alignParentRight="true"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                </RelativeLayout>
 
                                 <ImageView
                                     android:id="@+id/morningImg"
@@ -85,25 +91,31 @@
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_margin="5dp">
+                                android:id="@+id/afternoonCard">
 
-                                <TextView
-                                    android:id="@+id/afternoonText"
-                                    android:layout_width="wrap_content"
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:text="Afternoon"
-                                    android:textColor="@color/black" />
+                                    android:layout_margin="5dp">
 
-                                <TextView
-                                    android:id="@+id/afternoonTemp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="10dp"
-                                    android:text="- -&#xb0;C"
-                                    android:textColor="@color/black"
-                                    android:textStyle="bold" />
+                                    <TextView
+                                        android:id="@+id/afternoonText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:text="Afternoon"
+                                        android:textColor="@color/black" />
+
+                                    <TextView
+                                        android:id="@+id/afternoonTemp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:text="- -&#xb0;C"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                </RelativeLayout>
 
                                 <ImageView
                                     android:id="@+id/afternoonImg"
@@ -129,25 +141,31 @@
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_margin="5dp">
+                                android:id="@+id/eveningCard">
 
-                                <TextView
-                                    android:id="@+id/eveningText"
-                                    android:layout_width="wrap_content"
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:text="Evening"
-                                    android:textColor="@color/black" />
+                                    android:layout_margin="5dp">
 
-                                <TextView
-                                    android:id="@+id/eveningTemp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="10dp"
-                                    android:text="- -&#xb0;C"
-                                    android:textColor="@color/black"
-                                    android:textStyle="bold" />
+                                    <TextView
+                                        android:id="@+id/eveningText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:text="Evening"
+                                        android:textColor="@color/black" />
+
+                                    <TextView
+                                        android:id="@+id/eveningTemp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:text="- -&#xb0;C"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                </RelativeLayout>
 
                                 <ImageView
                                     android:id="@+id/eveningImg"
@@ -173,25 +191,31 @@
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_margin="5dp">
+                                android:id="@+id/nightCard">
 
-                                <TextView
-                                    android:id="@+id/nightText"
-                                    android:layout_width="wrap_content"
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:text="Night"
-                                    android:textColor="@color/black" />
+                                    android:layout_margin="5dp">
 
-                                <TextView
-                                    android:id="@+id/nightTemp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="10dp"
-                                    android:text="- -&#xb0;C"
-                                    android:textColor="@color/black"
-                                    android:textStyle="bold" />
+                                    <TextView
+                                        android:id="@+id/nightText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:text="Night"
+                                        android:textColor="@color/black" />
+
+                                    <TextView
+                                        android:id="@+id/nightTemp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:text="- -&#xb0;C"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold" />
+
+                                </RelativeLayout>
 
                                 <ImageView
                                     android:id="@+id/nightImg"

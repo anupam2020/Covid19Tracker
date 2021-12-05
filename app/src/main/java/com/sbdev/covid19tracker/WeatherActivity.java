@@ -9,7 +9,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -17,11 +21,13 @@ import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -44,9 +50,12 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class WeatherActivity extends AppCompatActivity {
 
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
     private TextView city,country,dateTime,temp,skyType,pressure,humidity,windSpeed,presText,humText,windText;
 
     private ImageView weather,dayNightMode;
@@ -65,7 +74,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    private SharedPreferences sp;
+    private SharedPreferences sp,sp2;
 
     private String SHARED_PREFS="SHARED_PREFS";
 
@@ -74,6 +83,8 @@ public class WeatherActivity extends AppCompatActivity {
     private WeatherStateAdapter Weatheradapter;
 
     private SwipeRefreshLayout swipe;
+
+    private int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +152,8 @@ public class WeatherActivity extends AppCompatActivity {
         });
 
 
+        sp=getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        sp2=getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
 
         progressDialog=new ProgressDialog(WeatherActivity.this);
 
@@ -149,7 +162,6 @@ public class WeatherActivity extends AppCompatActivity {
         //progressDialog.setCancelable(false);
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-        sp=getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
 
         String mode=sp.getString("bgMode","1");
         if(mode.equals("0"))
@@ -181,7 +193,8 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
 
-                getLocation();
+                finish();
+                startActivity(getIntent());
 
                 swipe.setRefreshing(false);
 
@@ -189,6 +202,8 @@ public class WeatherActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private void getLocation() {
 
@@ -600,6 +615,7 @@ public class WeatherActivity extends AppCompatActivity {
         return newDate;
 
     }
+
 
     public void dayMode()
     {

@@ -22,7 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MoreFragment extends Fragment {
 
-    RelativeLayout layout1,layout2,layout3,layout4,layout5;
+    RelativeLayout layout1,layout2,layout3,layout4,layout5,layout6;
 
     TextView about,terms,policy,rate,share;
 
@@ -39,24 +39,25 @@ public class MoreFragment extends Fragment {
         layout3=view.findViewById(R.id.moreRelative3);
         layout4=view.findViewById(R.id.moreRelative4);
         layout5=view.findViewById(R.id.moreRelative5);
+        layout6=view.findViewById(R.id.moreRelative6);
 
-        about=view.findViewById(R.id.moreAboutUs);
-        terms=view.findViewById(R.id.moreTermsAndCond);
-        policy=view.findViewById(R.id.morePrivacyPolicy);
-        rate=view.findViewById(R.id.moreRateUs);
-        share=view.findViewById(R.id.moreShareApp);
-
-        imgAbout=view.findViewById(R.id.moreUser);
-        imgTerms=view.findViewById(R.id.moreTerms);
-        imgPolicy=view.findViewById(R.id.morePrivacy);
-        imgRate=view.findViewById(R.id.moreRate);
-        imgShare=view.findViewById(R.id.moreShare);
-
-        arrow1=view.findViewById(R.id.arrowAbout);
-        arrow2=view.findViewById(R.id.arrowTerms);
-        arrow3=view.findViewById(R.id.arrowPrivacy);
-        arrow4=view.findViewById(R.id.arrowRate);
-        arrow5=view.findViewById(R.id.arrowShare);
+//        about=view.findViewById(R.id.moreAboutUs);
+//        terms=view.findViewById(R.id.moreTermsAndCond);
+//        policy=view.findViewById(R.id.morePrivacyPolicy);
+//        rate=view.findViewById(R.id.moreRateUs);
+//        share=view.findViewById(R.id.moreShareApp);
+//
+//        imgAbout=view.findViewById(R.id.moreUser);
+//        imgTerms=view.findViewById(R.id.moreTerms);
+//        imgPolicy=view.findViewById(R.id.morePrivacy);
+//        imgRate=view.findViewById(R.id.moreRate);
+//        imgShare=view.findViewById(R.id.moreShare);
+//
+//        arrow1=view.findViewById(R.id.arrowAbout);
+//        arrow2=view.findViewById(R.id.arrowTerms);
+//        arrow3=view.findViewById(R.id.arrowPrivacy);
+//        arrow4=view.findViewById(R.id.arrowRate);
+//        arrow5=view.findViewById(R.id.arrowShare);
 
 
         layout1.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +109,26 @@ public class MoreFragment extends Fragment {
                     startActivity(sendIntent);
                 } catch(Exception e) {
                     DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
+                }
+
+            }
+        });
+
+
+        layout6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String urlString = "https://linktr.ee/anupambasak";
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(urlString));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setPackage("com.android.chrome");
+                try {
+                    getActivity().startActivity(intent);
+                } catch (ActivityNotFoundException ex) {
+                    // Chrome browser presumably not installed so allow user to choose instead
+                    intent.setPackage(null);
+                    getActivity().startActivity(intent);
                 }
 
             }

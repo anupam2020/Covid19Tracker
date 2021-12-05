@@ -9,11 +9,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class NewsWebviewActivity extends AppCompatActivity {
 
     private WebView webView;
     private WebViewClient client;
+
+    private ProgressDialog progressDialog;
+
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +29,27 @@ public class NewsWebviewActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(Color.WHITE);
 
-        client=new WebViewClient();
+        progressBar=findViewById(R.id.progressBar);
+
+        /*progressDialog=new ProgressDialog(this);
+
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.loading_bg);
+        //progressDialog.setCancelable(false);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);*/
+
+        client=new WebViewClient()
+        {
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                //progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
+
+            }
+
+        };
 
         webView=findViewById(R.id.newsWebview);
         webView.setWebViewClient(client);
