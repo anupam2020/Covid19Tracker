@@ -1,6 +1,7 @@
 package com.sbdev.covid19tracker;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,21 +38,25 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
         String weatherType=arrayList.get(holder.getAdapterPosition()).type;
 
         weatherType=weatherType.toLowerCase();
+        Log.d("Weather + Temp",arrayList.get(holder.getAdapterPosition()).temp + " , " + weatherType);
         if(weatherType.contains("rain"))
         {
             if(weatherType.contains("light"))
             {
                 holder.weather.setImageResource(R.drawable.light_rain);
+                Log.d("Type","LIGHT RAIN!!!!!");
             }
             else if(weatherType.contains("moderate"))
             {
                 holder.weather.setImageResource(R.drawable.moderate_rain);
+                Log.d("Type","MODERATE RAIN!!!!!");
             }
             else
             {
-                if(weatherType.equals("heavy"))
+                if(weatherType.contains("heavy"))
                 {
                     holder.weather.setImageResource(R.drawable.heavy_rain);
+                    Log.d("Type","HEAVY RAIN!!!!!");
                 }
             }
         }
@@ -66,6 +71,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
         else
         {
             holder.weather.setImageResource(R.drawable.cloudy);
+            Log.d("Type","CLOUDY!!!!!");
         }
 
     }
