@@ -508,7 +508,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        weather.setImageResource(R.drawable.drizzle_morning);
+                                        weather.setImageResource(R.drawable.morning_drizzle);
                                     }
                                 }
                                 else if(text.contains("rain"))
