@@ -41,22 +41,19 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
         Log.d("Weather + Temp",arrayList.get(holder.getAdapterPosition()).temp + " , " + weatherType);
         if(weatherType.contains("rain"))
         {
-            if(weatherType.contains("light"))
+            if(weatherType.contains("light") || weatherType.contains("patchy"))
             {
                 holder.weather.setImageResource(R.drawable.light_rain);
-                Log.d("Type","LIGHT RAIN!!!!!");
             }
             else if(weatherType.contains("moderate"))
             {
                 holder.weather.setImageResource(R.drawable.moderate_rain);
-                Log.d("Type","MODERATE RAIN!!!!!");
             }
             else
             {
                 if(weatherType.contains("heavy"))
                 {
                     holder.weather.setImageResource(R.drawable.heavy_rain);
-                    Log.d("Type","HEAVY RAIN!!!!!");
                 }
             }
         }
@@ -64,14 +61,13 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
         {
             holder.weather.setImageResource(R.drawable.clear_sky);
         }
-        else if(weatherType.contains("mist"))
+        else if(weatherType.contains("mist") || weatherType.contains("fog"))
         {
             holder.weather.setImageResource(R.drawable.mist);
         }
         else
         {
             holder.weather.setImageResource(R.drawable.cloudy);
-            Log.d("Type","CLOUDY!!!!!");
         }
 
     }

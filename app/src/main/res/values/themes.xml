@@ -19,4 +19,11 @@
         <item name="colorPrimary">@color/black</item>
 
     </style>
+
+    <style name="WhiteBox" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/white</item>
+
+    </style>
+
 </resources>

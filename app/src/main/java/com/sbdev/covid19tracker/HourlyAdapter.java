@@ -83,7 +83,7 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
             }
             else if(textCondition.contains("rain"))
             {
-                if(textCondition.contains("light"))
+                if(textCondition.contains("light") || textCondition.contains("patchy"))
                 {
                     holder.weather.setImageResource(R.drawable.light_rain_night);
                 }
@@ -120,9 +120,13 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
             {
                 holder.weather.setImageResource(R.drawable.cloudy);
             }
+            else if(textCondition.contains("mist") || textCondition.contains("fog"))
+            {
+                holder.weather.setImageResource(R.drawable.mist);
+            }
             else if(textCondition.contains("rain"))
             {
-                if(textCondition.contains("light"))
+                if(textCondition.contains("light") || textCondition.contains("patchy"))
                 {
                     holder.weather.setImageResource(R.drawable.light_rain);
                 }
@@ -144,7 +148,14 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
             }
             else
             {
-                holder.weather.setImageResource(R.drawable.sun);
+                if(arrayList.get(holder.getAdapterPosition()).temp <25)
+                {
+                    holder.weather.setImageResource(R.drawable.mist);
+                }
+                else
+                {
+                    holder.weather.setImageResource(R.drawable.sun);
+                }
             }
 
         }

@@ -189,7 +189,7 @@ public class TodayFragment extends Fragment {
                                                         mCard.setBackgroundResource(R.drawable.day_mode);
                                                         if(text.contains("rain"))
                                                         {
-                                                            if(text.contains("light"))
+                                                            if(text.contains("light") || text.contains("patchy"))
                                                             {
                                                                 morningImg.setImageResource(R.drawable.light_rain);
                                                             }
@@ -220,6 +220,10 @@ public class TodayFragment extends Fragment {
                                                                 morningImg.setImageResource(R.drawable.cloudy);
                                                             }
                                                         }
+                                                        else if(text.contains("mist"))
+                                                        {
+                                                            morningImg.setImageResource(R.drawable.mist);
+                                                        }
                                                         else
                                                         {
                                                             morningImg.setImageResource(R.drawable.sun);
@@ -231,7 +235,7 @@ public class TodayFragment extends Fragment {
                                                         aCard.setBackgroundResource(R.drawable.day_mode);
                                                         if(text.contains("rain"))
                                                         {
-                                                            if(text.contains("light"))
+                                                            if(text.contains("light") || text.contains("patchy"))
                                                             {
                                                                 afternoonImg.setImageResource(R.drawable.light_rain);
                                                             }
@@ -262,6 +266,10 @@ public class TodayFragment extends Fragment {
                                                                 afternoonImg.setImageResource(R.drawable.cloudy);
                                                             }
                                                         }
+                                                        else if(text.contains("mist"))
+                                                        {
+                                                            afternoonImg.setImageResource(R.drawable.mist);
+                                                        }
                                                         else
                                                         {
                                                             afternoonImg.setImageResource(R.drawable.sun);
@@ -273,7 +281,7 @@ public class TodayFragment extends Fragment {
                                                         eCard.setBackgroundResource(R.drawable.night_mode);
                                                         if(text.contains("rain"))
                                                         {
-                                                            if(text.contains("light"))
+                                                            if(text.contains("light") || text.contains("patchy"))
                                                             {
                                                                 eveningImg.setImageResource(R.drawable.light_rain_night);
                                                             }
@@ -304,6 +312,10 @@ public class TodayFragment extends Fragment {
                                                                 eveningImg.setImageResource(R.drawable.moon_clear);
                                                             }
                                                         }
+                                                        else if(text.contains("mist"))
+                                                        {
+                                                            eveningImg.setImageResource(R.drawable.mist);
+                                                        }
                                                         else
                                                         {
                                                             eveningImg.setImageResource(R.drawable.moon_clear);
@@ -318,7 +330,7 @@ public class TodayFragment extends Fragment {
                                                         nCard.setBackgroundResource(R.drawable.night_mode);
                                                         if(text.contains("rain"))
                                                         {
-                                                            if(text.contains("light"))
+                                                            if(text.contains("light") || text.contains("patchy"))
                                                             {
                                                                 nightImg.setImageResource(R.drawable.light_rain_night);
                                                             }
@@ -348,6 +360,10 @@ public class TodayFragment extends Fragment {
                                                             {
                                                                 nightImg.setImageResource(R.drawable.moon_clear);
                                                             }
+                                                        }
+                                                        else if(text.contains("mist") || text.contains("fog"))
+                                                        {
+                                                            nightImg.setImageResource(R.drawable.mist);
                                                         }
                                                         else
                                                         {
