@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
 import com.jaeger.library.StatusBarUtil;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -120,8 +121,14 @@ public class NewsFragment extends Fragment {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                dialog.dismiss();
                 Log.e("OnFailure",e.getMessage());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
+                    }
+                });
             }
 
             @Override
@@ -169,9 +176,22 @@ public class NewsFragment extends Fragment {
 
                             } catch (JSONException e) {
                                 Log.e("CATCH",e.getMessage());
+                                dialog.dismiss();
+                                DynamicToast.makeWarning(getActivity(),e.getMessage(),2000).show();
                             }
 
 
+                        }
+                    });
+
+                }
+                else
+                {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.dismiss();
+                            DynamicToast.makeError(getActivity(),response.message(),2000).show();
                         }
                     });
 

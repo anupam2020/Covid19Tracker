@@ -15,6 +15,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -131,6 +132,9 @@ public class AllCountryWeather extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                InputMethodManager imm = (InputMethodManager) AllCountryWeather.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
                 dialog.show();
                 dialog.setContentView(R.layout.loading_bg);
                 dialog.setCancelable(false);
@@ -165,7 +169,14 @@ public class AllCountryWeather extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                dialog.dismiss();
                 Log.e("onFailure",e.getMessage());
+                AllCountryWeather.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        DynamicToast.makeError(AllCountryWeather.this,e.getMessage(),2000).show();
+                    }
+                });
             }
 
             @Override
@@ -204,14 +215,14 @@ public class AllCountryWeather extends AppCompatActivity {
                                 SharedPreferences.Editor editor=sp.edit();
                                 if(is_day==0)
                                 {
-                                    weather.setImageResource(R.drawable.night_mode);
+                                    day_night_mode.setImageResource(R.drawable.night_mode);
                                     nightMode();
 
                                     editor.putString("bgMode","0");
                                 }
                                 else
                                 {
-                                    weather.setImageResource(R.drawable.day_mode);
+                                    day_night_mode.setImageResource(R.drawable.day_mode);
                                     dayMode();
 
                                     editor.putString("bgMode","1");
@@ -326,12 +337,27 @@ public class AllCountryWeather extends AppCompatActivity {
                                 dialog.dismiss();
 
                             } catch (JSONException e) {
+                                dialog.dismiss();
                                 Log.e("CATCH",e.getMessage());
+                                DynamicToast.makeWarning(AllCountryWeather.this,e.getMessage(),2000).show();
                             }
 
                         }
                     });
 
+                }
+                else
+                {
+
+                    AllCountryWeather.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            dialog.dismiss();
+                            DynamicToast.makeError(AllCountryWeather.this,response.message(),2000).show();
+
+                        }
+                    });
                 }
 
             }

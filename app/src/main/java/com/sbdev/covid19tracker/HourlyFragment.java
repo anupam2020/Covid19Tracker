@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -56,12 +57,16 @@ public class HourlyFragment extends Fragment {
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
+    private ProgressBar progressBar;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
 
         recyclerView=view.findViewById(R.id.hourlyRecycler);
+        progressBar=view.findViewById(R.id.hourlyProgress);
+
 
         arrayList=new ArrayList<>();
 
@@ -168,6 +173,8 @@ public class HourlyFragment extends Fragment {
                                                 }
 
                                                 adapter.notifyDataSetChanged();
+
+                                                progressBar.setVisibility(View.GONE);
 
                                             } catch (JSONException e) {
                                                 e.printStackTrace();

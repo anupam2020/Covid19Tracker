@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,6 +61,8 @@ public class TodayFragment extends Fragment {
 
     private RelativeLayout mCard,aCard,eCard,nCard;
 
+    private ProgressBar progressBar;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -84,6 +87,8 @@ public class TodayFragment extends Fragment {
         aCard=view.findViewById(R.id.afternoonCard);
         eCard=view.findViewById(R.id.eveningCard);
         nCard=view.findViewById(R.id.nightCard);
+
+        progressBar=view.findViewById(R.id.todayProgress);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
@@ -372,6 +377,8 @@ public class TodayFragment extends Fragment {
                                                         nightTemp.setText(temp_c+"\u2103");
                                                         nightTemp.setTextColor(Color.WHITE);
                                                         nightText.setTextColor(Color.WHITE);
+
+                                                        progressBar.setVisibility(View.GONE);
 
                                                     }
 

@@ -26,6 +26,12 @@
                 app:spanCount="2"
                 android:background="@color/white" />
 
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hourlyProgress"
+                android:layout_centerHorizontal="true"/>
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

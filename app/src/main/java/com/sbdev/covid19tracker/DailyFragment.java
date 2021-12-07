@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -59,12 +60,15 @@ public class DailyFragment extends Fragment {
 
     private TextView dateRange;
 
+    private ProgressBar progressBar;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView=view.findViewById(R.id.dailyRecycler);
         dateRange=view.findViewById(R.id.dailyText);
+        progressBar=view.findViewById(R.id.dailyProgress);
 
         arrayList=new ArrayList<>();
 
@@ -186,6 +190,8 @@ public class DailyFragment extends Fragment {
 
                                                 dateRange.setText(start+" - "+end);
 
+                                                progressBar.setVisibility(View.GONE);
+                                                
                                             } catch (JSONException e) {
                                                 Log.e("CATCH",e.getMessage());
                                             }

@@ -17,8 +17,6 @@ public class NewsWebviewActivity extends AppCompatActivity {
     private WebView webView;
     private WebViewClient client;
 
-    private ProgressDialog progressDialog;
-
     private ProgressBar progressBar;
 
     @Override
@@ -31,20 +29,12 @@ public class NewsWebviewActivity extends AppCompatActivity {
 
         progressBar=findViewById(R.id.progressBar);
 
-        /*progressDialog=new ProgressDialog(this);
-
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.loading_bg);
-        //progressDialog.setCancelable(false);
-        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);*/
-
         client=new WebViewClient()
         {
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                //progressDialog.dismiss();
                 progressBar.setVisibility(View.GONE);
 
             }

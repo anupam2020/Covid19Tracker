@@ -65,15 +65,15 @@
                                         android:textColor="@color/black"
                                         android:textStyle="bold" />
 
-                                </RelativeLayout>
+                                    <ImageView
+                                        android:id="@+id/morningImg"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_centerHorizontal="true"
+                                        android:src="@drawable/ic_baseline_cloud_24" />
 
-                                <ImageView
-                                    android:id="@+id/morningImg"
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:src="@drawable/ic_baseline_cloud_24" />
+                                </RelativeLayout>
 
                             </RelativeLayout>
 
@@ -115,15 +115,15 @@
                                         android:textColor="@color/black"
                                         android:textStyle="bold" />
 
-                                </RelativeLayout>
+                                    <ImageView
+                                        android:id="@+id/afternoonImg"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_centerHorizontal="true"
+                                        android:src="@drawable/ic_baseline_cloud_24" />
 
-                                <ImageView
-                                    android:id="@+id/afternoonImg"
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:src="@drawable/ic_baseline_cloud_24" />
+                                </RelativeLayout>
 
                             </RelativeLayout>
 
@@ -165,15 +165,15 @@
                                         android:textColor="@color/black"
                                         android:textStyle="bold" />
 
-                                </RelativeLayout>
+                                    <ImageView
+                                        android:id="@+id/eveningImg"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_centerHorizontal="true"
+                                        android:src="@drawable/ic_baseline_cloud_24"/>
 
-                                <ImageView
-                                    android:id="@+id/eveningImg"
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:src="@drawable/ic_baseline_cloud_24"/>
+                                </RelativeLayout>
 
                             </RelativeLayout>
 
@@ -215,15 +215,15 @@
                                         android:textColor="@color/black"
                                         android:textStyle="bold" />
 
-                                </RelativeLayout>
+                                    <ImageView
+                                        android:id="@+id/nightImg"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_centerHorizontal="true"
+                                        android:src="@drawable/ic_baseline_cloud_24"/>
 
-                                <ImageView
-                                    android:id="@+id/nightImg"
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_centerHorizontal="true"
-                                    android:src="@drawable/ic_baseline_cloud_24"/>
+                                </RelativeLayout>
 
                             </RelativeLayout>
 
@@ -236,6 +236,12 @@
             </RelativeLayout>
 
             </androidx.core.widget.NestedScrollView>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/todayProgress"
+                android:layout_gravity="center"/>
 
         </androidx.cardview.widget.CardView>
 

@@ -6,9 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".RegisterFragment">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="25dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -198,6 +200,6 @@
 
         </RelativeLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

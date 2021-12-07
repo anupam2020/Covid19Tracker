@@ -41,7 +41,9 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/moreNoteVersion">
+                android:layout_below="@id/moreNoteVersion"
+                android:requiresFadingEdge="vertical"
+                android:fadingEdgeLength="25dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"

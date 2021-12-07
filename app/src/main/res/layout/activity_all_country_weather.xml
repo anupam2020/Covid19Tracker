@@ -13,10 +13,16 @@
         android:scaleType="fitXY"
         android:src="@drawable/day_mode" />
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="25dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100dp">
+            android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -34,7 +40,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Search"
-                    android:id="@+id/allWeatherEditText"/>
+                    android:id="@+id/allWeatherEditText"
+                    android:singleLine="true"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -45,7 +52,7 @@
                 android:layout_height="50dp"
                 android:layout_below="@id/allWeatherSwipeRelative"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:background="@drawable/button_bg_black"
                 android:text="SEARCH"
                 android:textColor="@color/white"
@@ -224,5 +231,7 @@
             </RelativeLayout>
 
         </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>
