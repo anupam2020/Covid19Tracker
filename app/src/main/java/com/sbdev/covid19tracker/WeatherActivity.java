@@ -649,7 +649,7 @@ public class WeatherActivity extends AppCompatActivity {
                                         }
                                     }
                                 }
-                                if(text.contains("cloudy"))
+                                else if(text.contains("cloudy"))
                                 {
                                     if(is_day==0)
                                     {
@@ -674,17 +674,6 @@ public class WeatherActivity extends AppCompatActivity {
                                         }
                                     }
 
-                                }
-                                else
-                                {
-                                    if(is_day==0)
-                                    {
-                                        weather.setImageResource(R.drawable.moon_clear);
-                                    }
-                                    else
-                                    {
-                                        weather.setImageResource(R.drawable.cloudy);
-                                    }
                                 }
 
                                 String wind_mphSTR=current.getString("wind_mph");
