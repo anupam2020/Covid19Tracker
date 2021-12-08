@@ -77,9 +77,20 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
             holder.temp.setTextColor(context.getResources().getColor(R.color.white));
 
             textCondition=textCondition.toLowerCase();
-            if(textCondition.equals("cloudy") || textCondition.contains("mist"))
+            if(textCondition.contains("fog") || textCondition.contains("mist"))
             {
                 holder.weather.setImageResource(R.drawable.mist);
+            }
+            else if(textCondition.contains("clear"))
+            {
+                if(arrayList.get(holder.getAdapterPosition()).temp<=20)
+                {
+                    holder.weather.setImageResource(R.drawable.mist);
+                }
+                else
+                {
+                    holder.weather.setImageResource(R.drawable.moon_clear);
+                }
             }
             else if(textCondition.contains("rain"))
             {
@@ -103,9 +114,16 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
             {
                 holder.weather.setImageResource(R.drawable.drizzle_night);
             }
-            else
+            else if(textCondition.contains("cloudy"))
             {
-                holder.weather.setImageResource(R.drawable.moon_clear);
+                if(arrayList.get(holder.getAdapterPosition()).temp<=20)
+                {
+                    holder.weather.setImageResource(R.drawable.mist);
+                }
+                else
+                {
+                    holder.weather.setImageResource(R.drawable.moon_clear);
+                }
             }
 
         }
@@ -118,7 +136,25 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
             textCondition=textCondition.toLowerCase();
             if(textCondition.contains("cloudy"))
             {
-                holder.weather.setImageResource(R.drawable.cloudy);
+                if(arrayList.get(holder.getAdapterPosition()).temp<=25)
+                {
+                    holder.weather.setImageResource(R.drawable.mist);
+                }
+                else
+                {
+                    holder.weather.setImageResource(R.drawable.cloudy);
+                }
+            }
+            if(textCondition.contains("sunny"))
+            {
+                if(arrayList.get(holder.getAdapterPosition()).temp<=20)
+                {
+                    holder.weather.setImageResource(R.drawable.mist);
+                }
+                else
+                {
+                    holder.weather.setImageResource(R.drawable.sun);
+                }
             }
             else if(textCondition.contains("mist") || textCondition.contains("fog"))
             {
@@ -145,17 +181,6 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
             else if(textCondition.contains("drizzle"))
             {
                 holder.weather.setImageResource(R.drawable.morning_drizzle);
-            }
-            else
-            {
-                if(arrayList.get(holder.getAdapterPosition()).temp <25)
-                {
-                    holder.weather.setImageResource(R.drawable.mist);
-                }
-                else
-                {
-                    holder.weather.setImageResource(R.drawable.sun);
-                }
             }
 
         }

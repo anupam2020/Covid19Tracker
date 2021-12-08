@@ -582,14 +582,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                 if(text.contains("sunny"))
                                 {
-                                    if(temp_c<=22)
-                                    {
-                                        weather.setImageResource(R.drawable.mist);
-                                    }
-                                    else
-                                    {
-                                        weather.setImageResource(R.drawable.sun);
-                                    }
+                                    weather.setImageResource(R.drawable.sun);
                                 }
                                 else if(text.contains("mist") || text.contains("fog"))
                                 {
@@ -656,11 +649,37 @@ public class WeatherActivity extends AppCompatActivity {
                                         }
                                     }
                                 }
+                                if(text.contains("cloudy"))
+                                {
+                                    if(is_day==0)
+                                    {
+                                        if(temp_c<=20)
+                                        {
+                                            weather.setImageResource(R.drawable.mist);
+                                        }
+                                        else
+                                        {
+                                            weather.setImageResource(R.drawable.moon_clear);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if(temp_c<=25)
+                                        {
+                                            weather.setImageResource(R.drawable.mist);
+                                        }
+                                        else
+                                        {
+                                            weather.setImageResource(R.drawable.cloudy);
+                                        }
+                                    }
+
+                                }
                                 else
                                 {
                                     if(is_day==0)
                                     {
-                                        weather.setImageResource(R.drawable.mist);
+                                        weather.setImageResource(R.drawable.moon_clear);
                                     }
                                     else
                                     {
