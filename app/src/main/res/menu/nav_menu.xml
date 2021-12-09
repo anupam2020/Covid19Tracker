@@ -25,7 +25,7 @@
 
         <item
             android:title="All Country Stats"
-            android:icon="@drawable/ic_baseline_outlined_flag_24"
+            android:icon="@drawable/ic_baseline_language_24"
             android:id="@+id/showAll" />
 
         <item

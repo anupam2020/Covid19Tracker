@@ -30,9 +30,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create Account!"
-                android:textSize="25dp"
+                android:textSize="35dp"
                 android:textColor="@color/blue"
-                android:fontFamily="@font/algerian"
+                android:fontFamily="@font/aladin"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/registerNoteIcon"
                 android:id="@+id/registerText"
@@ -124,9 +124,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/button_bg_blue"
-                android:text="CREATE"
+                android:text="Create"
                 android:textColor="@color/white"
-                android:textSize="18dp" />
+                android:textSize="22dp"
+                android:fontFamily="@font/aladin"
+                android:textAllCaps="false"/>
 
             <TextView
                 android:layout_width="wrap_content"

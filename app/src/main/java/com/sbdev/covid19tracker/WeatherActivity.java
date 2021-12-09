@@ -45,6 +45,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.jaeger.library.StatusBarUtil;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -522,7 +523,16 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
 
-                Log.e("Inside onFailure",e.getMessage());
+                WeatherActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        progressDialog.dismiss();
+                        Log.e("onFailure",e.getMessage());
+                        DynamicToast.makeError(WeatherActivity.this,e.getMessage(),2000).show();
+
+                    }
+                });
 
             }
 
@@ -582,7 +592,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                 if(text.contains("sunny"))
                                 {
-                                    weather.setImageResource(R.drawable.sun);
+                                    weather.setImageResource(R.drawable.clear_sky);
                                 }
                                 else if(text.contains("mist") || text.contains("fog"))
                                 {
@@ -698,6 +708,21 @@ public class WeatherActivity extends AppCompatActivity {
 
 
                 }
+                else
+                {
+
+                    WeatherActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            progressDialog.dismiss();
+                            Log.e("OnFailure",response.message());
+                            DynamicToast.makeError(WeatherActivity.this,response.message(),2000).show();
+
+                        }
+                    });
+                }
+
 
             }
         });

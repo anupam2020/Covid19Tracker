@@ -50,6 +50,8 @@
         android:layout_height="match_parent"
         android:id="@+id/privacyWebView"
         android:layout_below="@id/policyText3"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="15dp"/>
 
 </RelativeLayout>

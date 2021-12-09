@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+
 import org.eazegraph.lib.charts.BarChart;
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.charts.ValueLineChart;
@@ -59,7 +61,7 @@ public class MyCountryFragment extends Fragment {
 
         progressDialog=new ProgressDialog(getActivity());
 
-        //progressDialog.show();
+        progressDialog.show();
         progressDialog.setContentView(R.layout.loading_bg);
         //progressDialog.setCancelable(false);
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -78,7 +80,22 @@ public class MyCountryFragment extends Fragment {
             @Override
             public void onFailure(Call call, IOException e) {
 
-                Log.e("OnFailure",e.getMessage());
+                if(getActivity()==null)
+                {
+                    return;
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        progressDialog.dismiss();
+                        Log.e("OnFailure",e.getMessage());
+                        DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
+
+                    }
+                });
+
             }
 
             @Override
@@ -89,49 +106,72 @@ public class MyCountryFragment extends Fragment {
 
                     String res=response.body().string();
 
-                    if(getActivity()!=null)
+                    if(getActivity()==null)
                     {
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                try {
-
-                                    JSONArray jsonArray=new JSONArray(res);
-                                    JSONObject jsonObject=jsonArray.getJSONObject(0);
-
-                                    affCount=jsonObject.getInt("TotalCases");
-                                    deathCount=jsonObject.getInt("TotalDeaths");
-                                    recCount=jsonObject.getInt("TotalRecovered");
-                                    actCount=jsonObject.getInt("ActiveCases");
-                                    newAffCount=jsonObject.getInt("NewCases");
-                                    newDeathCount=jsonObject.getInt("NewDeaths");
-                                    newRecCount=jsonObject.getInt("NewRecovered");
-                                    critCount=jsonObject.getInt("Serious_Critical");
-
-
-                                    affected.setText(getFormattedAmount(affCount));
-                                    death.setText(getFormattedAmount(deathCount));
-                                    recovered.setText(getFormattedAmount(recCount));
-                                    active.setText(getFormattedAmount(actCount));
-                                    newAffected.setText(getFormattedAmount(newAffCount));
-                                    newDeath.setText(getFormattedAmount(newDeathCount));
-                                    newRecovered.setText(getFormattedAmount(newRecCount));
-                                    critical.setText(getFormattedAmount(critCount));
-
-
-                                    progressDialog.dismiss();
-
-                                } catch (JSONException e) {
-                                    Log.e("Catch",e.getMessage());
-                                }
-
-                            }
-                        });
-
+                        return;
                     }
 
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            try {
+
+                                JSONArray jsonArray=new JSONArray(res);
+                                JSONObject jsonObject=jsonArray.getJSONObject(0);
+
+                                affCount=jsonObject.getInt("TotalCases");
+                                deathCount=jsonObject.getInt("TotalDeaths");
+                                recCount=jsonObject.getInt("TotalRecovered");
+                                actCount=jsonObject.getInt("ActiveCases");
+                                newAffCount=jsonObject.getInt("NewCases");
+                                newDeathCount=jsonObject.getInt("NewDeaths");
+                                newRecCount=jsonObject.getInt("NewRecovered");
+                                critCount=jsonObject.getInt("Serious_Critical");
+
+
+                                affected.setText(getFormattedAmount(affCount));
+                                death.setText(getFormattedAmount(deathCount));
+                                recovered.setText(getFormattedAmount(recCount));
+                                active.setText(getFormattedAmount(actCount));
+                                newAffected.setText(getFormattedAmount(newAffCount));
+                                newDeath.setText(getFormattedAmount(newDeathCount));
+                                newRecovered.setText(getFormattedAmount(newRecCount));
+                                critical.setText(getFormattedAmount(critCount));
+
+
+                                progressDialog.dismiss();
+
+                            } catch (JSONException e) {
+
+                                progressDialog.dismiss();
+                                Log.e("OnFailure",e.getMessage());
+                                DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
+
+                            }
+
+                        }
+                    });
+
+                }
+                else
+                {
+
+                    if(getActivity()==null)
+                    {
+                        return;
+                    }
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            progressDialog.dismiss();
+                            Log.e("OnFailure",response.message());
+                            DynamicToast.makeError(getActivity(),response.message(),2000).show();
+
+                        }
+                    });
                 }
 
             }

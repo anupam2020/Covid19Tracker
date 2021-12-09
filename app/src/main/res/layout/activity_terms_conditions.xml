@@ -50,6 +50,8 @@
         android:layout_height="match_parent"
         android:id="@+id/termsWebView"
         android:layout_below="@id/termsText3"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="15dp"/>
 
 </RelativeLayout>

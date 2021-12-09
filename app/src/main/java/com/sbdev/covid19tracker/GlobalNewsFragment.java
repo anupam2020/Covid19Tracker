@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +36,7 @@ public class GlobalNewsFragment extends Fragment {
 
     private GlobalNewsAdapter adapter;
 
-    private String title,des,url,webURL;
+    private String title,des,imgURL,webURL;
 
     private ProgressDialog dialog;
 
@@ -56,12 +58,13 @@ public class GlobalNewsFragment extends Fragment {
         //dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
+
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://coronavirus-smartable.p.rapidapi.com/news/v1/global/")
+                .url("https://covid-19-news.p.rapidapi.com/v1/covid?q=covid&lang=en&sort_by=date&media=True")
                 .get()
-                .addHeader("x-rapidapi-host", "coronavirus-smartable.p.rapidapi.com")
+                .addHeader("x-rapidapi-host", "covid-19-news.p.rapidapi.com")
                 .addHeader("x-rapidapi-key", "e8f6c57650msh666fef2e3a110b5p13b950jsn4359d608e124")
                 .build();
 
@@ -69,7 +72,20 @@ public class GlobalNewsFragment extends Fragment {
             @Override
             public void onFailure(Call call, IOException e) {
 
-                Log.e("OnFailure",e.getMessage());
+                if(getActivity()==null)
+                {
+                    return;
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        dialog.dismiss();
+                        Log.e("OnFailure",e.getMessage());
+                        DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
+                    }
+                });
             }
 
             @Override
@@ -80,6 +96,11 @@ public class GlobalNewsFragment extends Fragment {
 
                     String res=response.body().string();
 
+                    if(getActivity()==null)
+                    {
+                        return;
+                    }
+
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -87,29 +108,21 @@ public class GlobalNewsFragment extends Fragment {
                             try {
 
                                 JSONObject jsonObject=new JSONObject(res);
-                                JSONArray newsArray=jsonObject.getJSONArray("news");
+                                JSONArray articles=jsonObject.getJSONArray("articles");
 
-                                for(int i=0;i<newsArray.length();i++)
+                                Log.d("Articles Size", String.valueOf(articles.length()));
+
+                                for(int i=0;i<articles.length();i++)
                                 {
 
-                                    if(i==25 || i==7)
-                                    {
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        JSONObject index=newsArray.getJSONObject(i);
-                                        title=index.getString("title");
-                                        des=index.getString("excerpt");
-                                        webURL=index.getString("webUrl");
+                                    JSONObject index=articles.getJSONObject(i);
 
-                                        JSONArray imagesArray=index.getJSONArray("images");
-                                        JSONObject zero=imagesArray.getJSONObject(0);
+                                    title=index.getString("title");
+                                    des=index.getString("summary");
+                                    imgURL=index.getString("media");
+                                    webURL=index.getString("link");
 
-                                        url=zero.getString("url");
-
-                                        arrayList.add(new GlobalNewsModel(url,title,des,webURL));
-                                    }
+                                    arrayList.add(new GlobalNewsModel(imgURL,title,des,webURL));
 
                                 }
 
@@ -120,6 +133,8 @@ public class GlobalNewsFragment extends Fragment {
 
                             } catch (JSONException e) {
                                 Log.e("CATCH",e.getMessage());
+                                dialog.dismiss();
+                                DynamicToast.makeWarning(getActivity(),e.getMessage(),2000).show();
                             }
 
 
@@ -127,9 +142,101 @@ public class GlobalNewsFragment extends Fragment {
                     });
 
                 }
+                else
+                {
+                    if(getActivity()==null)
+                    {
+                        return;
+                    }
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.dismiss();
+                            DynamicToast.makeError(getActivity(),response.message(),2000).show();
+                        }
+                    });
+
+                }
 
             }
         });
+
+
+//        OkHttpClient client = new OkHttpClient();
+//
+//        Request request = new Request.Builder()
+//                .url("https://coronavirus-smartable.p.rapidapi.com/news/v1/global/")
+//                .get()
+//                .addHeader("x-rapidapi-host", "coronavirus-smartable.p.rapidapi.com")
+//                .addHeader("x-rapidapi-key", "e8f6c57650msh666fef2e3a110b5p13b950jsn4359d608e124")
+//                .build();
+//
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//
+//                Log.e("OnFailure",e.getMessage());
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//
+//                if(response.isSuccessful())
+//                {
+//
+//                    String res=response.body().string();
+//
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//
+//                            try {
+//
+//                                JSONObject jsonObject=new JSONObject(res);
+//                                JSONArray newsArray=jsonObject.getJSONArray("news");
+//
+//                                for(int i=0;i<newsArray.length();i++)
+//                                {
+//
+//                                    if(i==25 || i==7)
+//                                    {
+//                                        continue;
+//                                    }
+//                                    else
+//                                    {
+//                                        JSONObject index=newsArray.getJSONObject(i);
+//                                        title=index.getString("title");
+//                                        des=index.getString("excerpt");
+//                                        webURL=index.getString("webUrl");
+//
+//                                        JSONArray imagesArray=index.getJSONArray("images");
+//                                        JSONObject zero=imagesArray.getJSONObject(0);
+//
+//                                        url=zero.getString("url");
+//
+//                                        arrayList.add(new GlobalNewsModel(url,title,des,webURL));
+//                                    }
+//
+//                                }
+//
+//                                adapter.notifyDataSetChanged();
+//
+//                                dialog.dismiss();
+//
+//
+//                            } catch (JSONException e) {
+//                                Log.e("CATCH",e.getMessage());
+//                            }
+//
+//
+//                        }
+//                    });
+//
+//                }
+//
+//            }
+//        });
 
     }
 

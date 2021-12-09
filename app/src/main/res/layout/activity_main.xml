@@ -14,22 +14,22 @@
         android:id="@+id/rootLayout">
 
         <TextView
+            android:id="@+id/mainText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stop the"
-            android:layout_marginTop="15dp"
-            android:textSize="40dp"
-            android:fontFamily="@font/algerian"
-            android:textColor="@color/blue"
             android:layout_centerHorizontal="true"
-            android:id="@+id/mainText1"/>
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/aladin"
+            android:text="Stop the"
+            android:textColor="@color/blue"
+            android:textSize="40dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="spread of"
-            android:textSize="28dp"
-            android:fontFamily="@font/algerian"
+            android:textSize="30dp"
+            android:fontFamily="@font/aladin"
             android:textColor="@color/blue"
             android:layout_centerHorizontal="true"
             android:id="@+id/mainText2"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="Germs!"
             android:textSize="25dp"
-            android:fontFamily="@font/algerian"
+            android:fontFamily="@font/aladin"
             android:textColor="@color/blue"
             android:layout_centerHorizontal="true"
             android:id="@+id/mainText3"
@@ -155,16 +155,18 @@
         </GridLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/mainLetsGoButton"
             android:layout_width="300dp"
             android:layout_height="60dp"
-            android:background="@drawable/button_bg_blue"
-            android:layout_marginTop="15dp"
-            android:text="LET'S  GO"
-            android:textSize="18dp"
-            android:textColor="@color/white"
-            android:id="@+id/mainLetsGoButton"
+            android:layout_below="@id/gridLayout"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/gridLayout"/>
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_bg_blue"
+            android:fontFamily="@font/aladin"
+            android:text="Let's Go"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textAllCaps="false"/>
 
     </RelativeLayout>
 

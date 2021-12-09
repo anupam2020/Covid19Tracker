@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,7 +77,23 @@ public class AllCountryFragment extends Fragment {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("onFailure",e.getMessage());
+
+                if(getActivity()==null)
+                {
+                    return;
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        dialog.dismiss();
+                        Log.e("OnFailure",e.getMessage());
+                        DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
+
+                    }
+                });
+
             }
 
             @Override
@@ -86,6 +103,11 @@ public class AllCountryFragment extends Fragment {
                 {
 
                     String res=response.body().string();
+
+                    if(getActivity()==null)
+                    {
+                        return;
+                    }
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -125,6 +147,25 @@ public class AllCountryFragment extends Fragment {
                         }
                     });
 
+                }
+                else
+                {
+
+                    if(getActivity()==null)
+                    {
+                        return;
+                    }
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            dialog.dismiss();
+                            Log.e("OnFailure",response.message());
+                            DynamicToast.makeError(getActivity(),response.message(),2000).show();
+
+                        }
+                    });
                 }
 
             }

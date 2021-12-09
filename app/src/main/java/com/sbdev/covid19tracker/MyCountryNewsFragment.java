@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,9 +36,13 @@ public class MyCountryNewsFragment extends Fragment {
 
     private GlobalNewsAdapter adapter;
 
-    private String title,des,url,webURL;
+    private String title,des,webURL,imgURL,url;
 
     private ProgressDialog dialog;
+
+    private OkHttpClient client;
+
+    private Request request;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -46,8 +52,15 @@ public class MyCountryNewsFragment extends Fragment {
 
         arrayList=new ArrayList<>();
 
+        client=new OkHttpClient();
+
         adapter=new GlobalNewsAdapter(getActivity(),arrayList);
         recyclerView.setAdapter(adapter);
+
+        url="https://newsapi.in/newsapi/news.php?key=kyDsI3QproB74VUSmqPIMaqNay0Q1x&category=bengali_state";
+        request=new Request.Builder()
+                .url(url)
+                .build();
 
         dialog=new ProgressDialog(getActivity());
 
@@ -57,20 +70,26 @@ public class MyCountryNewsFragment extends Fragment {
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
 
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url("https://coronavirus-smartable.p.rapidapi.com/news/v1/IN/")
-                .get()
-                .addHeader("x-rapidapi-host", "coronavirus-smartable.p.rapidapi.com")
-                .addHeader("x-rapidapi-key", "e8f6c57650msh666fef2e3a110b5p13b950jsn4359d608e124")
-                .build();
-
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
-                Log.e("OnFailure",e.getMessage());
+                if(getActivity()==null)
+                {
+                    return;
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        dialog.dismiss();
+                        Log.e("OnFailure",e.getMessage());
+                        DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
+
+                    }
+                });
+
             }
 
             @Override
@@ -81,6 +100,11 @@ public class MyCountryNewsFragment extends Fragment {
 
                     String res=response.body().string();
 
+                    if(getActivity()==null)
+                    {
+                        return;
+                    }
+
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -88,29 +112,18 @@ public class MyCountryNewsFragment extends Fragment {
                             try {
 
                                 JSONObject jsonObject=new JSONObject(res);
-                                JSONArray newsArray=jsonObject.getJSONArray("news");
-
-                                for(int i=0;i<newsArray.length();i++)
+                                JSONArray News=jsonObject.getJSONArray("News");
+                                for(int i=0;i<News.length();i++)
                                 {
 
-                                    if(i==1 || i==9 || i==22)
-                                    {
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        JSONObject index=newsArray.getJSONObject(i);
-                                        title=index.getString("title");
-                                        des=index.getString("excerpt");
-                                        webURL=index.getString("webUrl");
+                                    JSONObject index=News.getJSONObject(i);
 
-                                        JSONArray imagesArray=index.getJSONArray("images");
-                                        JSONObject zero=imagesArray.getJSONObject(0);
+                                    title= index.getString("title");
+                                    des= index.getString("description");
+                                    imgURL= index.getString("image");;
+                                    webURL=index.getString("url");
 
-                                        url=zero.getString("url");
-
-                                        arrayList.add(new GlobalNewsModel(url,title,des,webURL));
-                                    }
+                                    arrayList.add(new GlobalNewsModel(imgURL,title,des,webURL));
 
                                 }
 
@@ -120,9 +133,33 @@ public class MyCountryNewsFragment extends Fragment {
 
 
                             } catch (JSONException e) {
+
+                                dialog.dismiss();
                                 Log.e("CATCH",e.getMessage());
+                                DynamicToast.makeWarning(getActivity(),e.getMessage(),2000).show();
+
                             }
 
+
+                        }
+                    });
+
+                }
+                else
+                {
+
+                    if(getActivity()==null)
+                    {
+                        return;
+                    }
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            dialog.dismiss();
+                            Log.e("OnFailure",response.message());
+                            DynamicToast.makeError(getActivity(),response.message(),2000).show();
 
                         }
                     });
@@ -131,7 +168,6 @@ public class MyCountryNewsFragment extends Fragment {
 
             }
         });
-
 
     }
 

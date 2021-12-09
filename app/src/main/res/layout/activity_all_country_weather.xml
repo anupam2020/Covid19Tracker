@@ -54,9 +54,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/button_bg_black"
-                android:text="SEARCH"
+                android:fontFamily="@font/aladin"
+                android:text="Search"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="18dp" />
+                android:textSize="22dp" />
 
 
             <RelativeLayout

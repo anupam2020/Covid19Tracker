@@ -24,6 +24,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -134,7 +135,18 @@ public class DailyFragment extends Fragment {
                         client.newCall(request).enqueue(new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
-                                Log.e("onFailure",e.getMessage());
+
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        progressBar.setVisibility(View.GONE);
+                                        Log.e("OnFailure",e.getMessage());
+                                        DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
+
+                                    }
+                                });
+
                             }
 
                             @Override
@@ -146,6 +158,11 @@ public class DailyFragment extends Fragment {
                                     Log.d("Response","Successful");
 
                                     String res=response.body().string();
+
+                                    if(getActivity()==null)
+                                    {
+                                        return;
+                                    }
 
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
@@ -202,7 +219,22 @@ public class DailyFragment extends Fragment {
                                 }
                                 else
                                 {
-                                    Log.d("Response","Failed!");
+
+                                    if(getActivity()==null)
+                                    {
+                                        return;
+                                    }
+
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            progressBar.setVisibility(View.GONE);
+                                            Log.e("OnFailure",response.message());
+                                            DynamicToast.makeError(getActivity(),response.message(),2000).show();
+
+                                        }
+                                    });
                                 }
 
                             }

@@ -65,8 +65,8 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
                 holder.time.setText(diff+arrayList.get(holder.getAdapterPosition()).time.substring(2)+" PM");
             }
         }
-        Log.d("Time",arrayList.get(holder.getAdapterPosition()).time);
-        Log.d("Text Condition",textCondition);
+        //Log.d("Time",arrayList.get(holder.getAdapterPosition()).time);
+        //Log.d("Text Condition",textCondition);
 
         holder.temp.setText(arrayList.get(holder.getAdapterPosition()).temp+"\u2103");
 
@@ -153,7 +153,7 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
                 }
                 else
                 {
-                    holder.weather.setImageResource(R.drawable.sun);
+                    holder.weather.setImageResource(R.drawable.clear_sky);
                 }
             }
             else if(textCondition.contains("mist") || textCondition.contains("fog"))

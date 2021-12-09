@@ -242,7 +242,7 @@ public class AllCountryWeather extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        weather.setImageResource(R.drawable.sun);
+                                        weather.setImageResource(R.drawable.clear_sky);
                                     }
                                 }
                                 else if(text.contains("mist") || text.contains("fog"))

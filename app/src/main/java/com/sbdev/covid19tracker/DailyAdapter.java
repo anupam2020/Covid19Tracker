@@ -38,7 +38,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
         String weatherType=arrayList.get(holder.getAdapterPosition()).type;
 
         weatherType=weatherType.toLowerCase();
-        Log.d("Weather + Temp",arrayList.get(holder.getAdapterPosition()).temp + " , " + weatherType);
+        //Log.d("Weather + Temp",arrayList.get(holder.getAdapterPosition()).temp + " , " + weatherType);
         if(weatherType.contains("rain"))
         {
             if(weatherType.contains("light") || weatherType.contains("patchy"))

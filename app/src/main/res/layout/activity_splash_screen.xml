@@ -8,15 +8,15 @@
     android:id="@+id/splashRelative">
 
     <TextView
+        android:id="@+id/splashText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Covid19Tracker"
-        android:layout_marginTop="50dp"
-        android:textSize="30dp"
-        android:fontFamily="@font/algerian"
-        android:textColor="@color/blue"
         android:layout_centerHorizontal="true"
-        android:id="@+id/splashText"/>
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/aladin"
+        android:text="Covid19Tracker"
+        android:textColor="@color/blue"
+        android:textSize="40dp" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="350dp"

@@ -18,9 +18,9 @@ public class NewsFragmentAdapter extends FragmentStateAdapter {
         switch (position)
         {
             case 0:
-                return new MyCountryNewsFragment();
-            case 1:
                 return new GlobalNewsFragment();
+            case 1:
+                return new MyCountryNewsFragment();
         }
 
         return null;

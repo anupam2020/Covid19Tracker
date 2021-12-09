@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +53,7 @@ public class GlobalFragment extends Fragment {
 
         progressDialog=new ProgressDialog(getActivity());
 
-        //progressDialog.show();
+        progressDialog.show();
         progressDialog.setContentView(R.layout.loading_bg);
         //progressDialog.setCancelable(false);
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -69,7 +71,21 @@ public class GlobalFragment extends Fragment {
             @Override
             public void onFailure(Call call, IOException e) {
 
-                Log.e("OnFailure",e.getMessage());
+                if(getActivity()==null)
+                {
+                    return;
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        progressDialog.dismiss();
+                        Log.e("OnFailure",e.getMessage());
+                        DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
+
+                    }
+                });
             }
 
             @Override
@@ -79,6 +95,11 @@ public class GlobalFragment extends Fragment {
                 {
 
                     String res=response.body().string();
+
+                    if(getActivity()==null)
+                    {
+                        return;
+                    }
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -112,12 +133,35 @@ public class GlobalFragment extends Fragment {
                                 progressDialog.dismiss();
 
                             } catch (JSONException e) {
-                                Log.e("Catch",e.getMessage());
+
+                                progressDialog.dismiss();
+                                Log.e("OnFailure",e.getMessage());
+                                DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
+
                             }
 
                         }
                     });
 
+                }
+                else
+                {
+
+                    if(getActivity()==null)
+                    {
+                        return;
+                    }
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            progressDialog.dismiss();
+                            Log.e("OnFailure",response.message());
+                            DynamicToast.makeError(getActivity(),response.message(),2000).show();
+
+                        }
+                    });
                 }
 
             }
