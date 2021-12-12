@@ -10,8 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.Collections;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AllCountryAdapter extends RecyclerView.Adapter<AllCountryAdapter.CountryViewHolder> {
 
@@ -37,6 +41,8 @@ public class AllCountryAdapter extends RecyclerView.Adapter<AllCountryAdapter.Co
         holder.deaths.setText(arrayList.get(holder.getAdapterPosition()).deaths);
         holder.recovered.setText(arrayList.get(holder.getAdapterPosition()).recovered);
 
+        Glide.with(context).load(arrayList.get(holder.getAdapterPosition()).flagURL).into(holder.imageView);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +65,7 @@ public class AllCountryAdapter extends RecyclerView.Adapter<AllCountryAdapter.Co
     {
 
         TextView location,affected,deaths,recovered;
+        CircleImageView imageView;
 
         public CountryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +74,7 @@ public class AllCountryAdapter extends RecyclerView.Adapter<AllCountryAdapter.Co
             affected=itemView.findViewById(R.id.textAffected);
             deaths=itemView.findViewById(R.id.textDeath);
             recovered=itemView.findViewById(R.id.textRecovered);
+            imageView=itemView.findViewById(R.id.itemImg);
 
         }
     }

@@ -248,7 +248,14 @@ public class TodayFragment extends Fragment {
                                                         }
                                                         else
                                                         {
-                                                            morningImg.setImageResource(R.drawable.clear_sky);
+                                                            if(temp_c<=20)
+                                                            {
+                                                                morningImg.setImageResource(R.drawable.mist);
+                                                            }
+                                                            else
+                                                            {
+                                                                morningImg.setImageResource(R.drawable.clear_sky);
+                                                            }
                                                         }
                                                         morningTemp.setText(temp_c+"\u2103");
                                                     }
@@ -294,7 +301,14 @@ public class TodayFragment extends Fragment {
                                                         }
                                                         else
                                                         {
-                                                            afternoonImg.setImageResource(R.drawable.clear_sky);
+                                                            if(temp_c<=20)
+                                                            {
+                                                                afternoonImg.setImageResource(R.drawable.mist);
+                                                            }
+                                                            else
+                                                            {
+                                                                afternoonImg.setImageResource(R.drawable.clear_sky);
+                                                            }
                                                         }
                                                         afternoonTemp.setText(temp_c+"\u2103");
                                                     }
@@ -340,7 +354,14 @@ public class TodayFragment extends Fragment {
                                                         }
                                                         else
                                                         {
-                                                            eveningImg.setImageResource(R.drawable.moon_clear);
+                                                            if(temp_c<=20)
+                                                            {
+                                                                eveningImg.setImageResource(R.drawable.mist);
+                                                            }
+                                                            else
+                                                            {
+                                                                eveningImg.setImageResource(R.drawable.moon_clear);
+                                                            }
                                                         }
                                                         eveningTemp.setText(temp_c+"\u2103");
                                                         eveningTemp.setTextColor(Color.WHITE);
@@ -389,7 +410,14 @@ public class TodayFragment extends Fragment {
                                                         }
                                                         else
                                                         {
-                                                            nightImg.setImageResource(R.drawable.moon_clear);
+                                                            if(temp_c<=20)
+                                                            {
+                                                                nightImg.setImageResource(R.drawable.mist);
+                                                            }
+                                                            else
+                                                            {
+                                                                nightImg.setImageResource(R.drawable.moon_clear);
+                                                            }
                                                         }
                                                         nightTemp.setText(temp_c+"\u2103");
                                                         nightTemp.setTextColor(Color.WHITE);

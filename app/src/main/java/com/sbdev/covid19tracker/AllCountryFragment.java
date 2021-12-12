@@ -45,6 +45,8 @@ public class AllCountryFragment extends Fragment {
 
     private ProgressDialog dialog;
 
+    private String url;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -54,6 +56,8 @@ public class AllCountryFragment extends Fragment {
 
         arrayList=new ArrayList<>();
         filterList=new ArrayList<>();
+
+        url="https://corona.lmao.ninja/v2/countries?sort";
 
         dialog=new ProgressDialog(getActivity());
 
@@ -67,11 +71,16 @@ public class AllCountryFragment extends Fragment {
 
         OkHttpClient client = new OkHttpClient();
 
-        Request request = new Request.Builder()
-                .url("https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/")
-                .get()
-                .addHeader("x-rapidapi-host", "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com")
-                .addHeader("x-rapidapi-key", "e8f6c57650msh666fef2e3a110b5p13b950jsn4359d608e124")
+//        Request request = new Request.Builder()
+//                .url("https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/")
+//                .get()
+//                .addHeader("x-rapidapi-host", "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com")
+//                .addHeader("x-rapidapi-key", "e8f6c57650msh666fef2e3a110b5p13b950jsn4359d608e124")
+//                .build();
+
+
+        Request request=new Request.Builder()
+                .url(url)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -121,16 +130,20 @@ public class AllCountryFragment extends Fragment {
                                 {
                                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                                        String country = jsonObject.getString("Country");
+                                        String country = jsonObject.getString("country");
+
+                                        JSONObject countryInfo=jsonObject.getJSONObject("countryInfo");
+                                        String flag=countryInfo.getString("flag");
+
                                         if(country.equals("Total:"))
                                         {
                                             country="World";
                                         }
-                                        String active = jsonObject.getString("TotalCases");
-                                        String deaths = jsonObject.getString("TotalDeaths");
-                                        String recovered = jsonObject.getString("TotalRecovered");
+                                        String active = jsonObject.getString("cases");
+                                        String deaths = jsonObject.getString("deaths");
+                                        String recovered = jsonObject.getString("recovered");
 
-                                        arrayList.add(new CountryModel(country, getFormattedAmount(Integer.parseInt(active)), getFormattedAmount(Integer.parseInt(deaths)), getFormattedAmount(Integer.parseInt(recovered))));
+                                        arrayList.add(new CountryModel(country, getFormattedAmount(Integer.parseInt(active)), getFormattedAmount(Integer.parseInt(deaths)), getFormattedAmount(Integer.parseInt(recovered)),flag));
 
                                 }
 

@@ -6,7 +6,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="75dp"
         app:cardCornerRadius="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -16,57 +16,84 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/countryLinear"
-            android:layout_gravity="center"
-            android:layout_margin="5dp">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
 
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:text="Location"
-                android:textColor="@color/black"
-                android:id="@+id/textLocation"
-                android:textAlignment="center"
-                android:fontFamily="@font/aladin"
-                android:textSize="15dp"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:id="@+id/itemRelative1">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_gravity="center_vertical">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/itemImg"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_baseline_world_24" />
 
                 <TextView
-                    android:layout_width="80dp"
+                    android:id="@+id/textLocation"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/itemImg"
+                    android:fontFamily="@font/aladin"
+                    android:text="Country"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/itemRelative2"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:id="@+id/textAffected"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/aladin"
                     android:text="Affected"
                     android:textColor="@color/violet"
-                    android:id="@+id/textAffected"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/aladin"/>
+                    android:textSize="15dp"
+                    android:textAlignment="center"/>
 
                 <TextView
-                    android:layout_width="80dp"
+                    android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:text="Deaths"
+                    android:textSize="15dp"
                     android:textColor="@color/red"
+                    android:fontFamily="@font/aladin"
+                    android:layout_gravity="center"
                     android:id="@+id/textDeath"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/aladin"/>
+                    android:layout_centerHorizontal="true"
+                    android:textAlignment="center"/>
 
                 <TextView
-                    android:layout_width="80dp"
+                    android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:text="Recovered"
-                    android:textColor="#00C853"
+                    android:textSize="15dp"
+                    android:textColor="@color/recovered_green"
+                    android:fontFamily="@font/aladin"
+                    android:layout_gravity="center"
                     android:id="@+id/textRecovered"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/aladin"/>
+                    android:layout_alignParentRight="true"
+                    android:textAlignment="center"/>
 
-            </LinearLayout>
+            </RelativeLayout>
+
 
         </LinearLayout>
 

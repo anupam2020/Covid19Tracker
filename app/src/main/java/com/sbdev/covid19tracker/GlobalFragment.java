@@ -38,6 +38,8 @@ public class GlobalFragment extends Fragment {
 
     private ProgressDialog progressDialog;
 
+    private String url;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -51,6 +53,8 @@ public class GlobalFragment extends Fragment {
         newRecovered=view.findViewById(R.id.textNewRecoveredCountGlobal);
         critical=view.findViewById(R.id.textCriticalCountGlobal);
 
+        url="https://corona.lmao.ninja/v2/all?yesterday";
+
         progressDialog=new ProgressDialog(getActivity());
 
         progressDialog.show();
@@ -60,11 +64,15 @@ public class GlobalFragment extends Fragment {
 
         OkHttpClient client = new OkHttpClient();
 
-        Request request = new Request.Builder()
-                .url("https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/world")
-                .get()
-                .addHeader("x-rapidapi-host", "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com")
-                .addHeader("x-rapidapi-key", "e8f6c57650msh666fef2e3a110b5p13b950jsn4359d608e124")
+//        Request request = new Request.Builder()
+//                .url("https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/world")
+//                .get()
+//                .addHeader("x-rapidapi-host", "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com")
+//                .addHeader("x-rapidapi-key", "e8f6c57650msh666fef2e3a110b5p13b950jsn4359d608e124")
+//                .build();
+
+        Request request=new Request.Builder()
+                .url(url)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -107,17 +115,16 @@ public class GlobalFragment extends Fragment {
 
                             try {
 
-                                JSONArray jsonArray=new JSONArray(res);
-                                JSONObject jsonObject=jsonArray.getJSONObject(0);
+                                JSONObject jsonObject=new JSONObject(res);
 
-                                affCount=jsonObject.getInt("TotalCases");
-                                deathCount=jsonObject.getInt("TotalDeaths");
-                                recCount=jsonObject.getInt("TotalRecovered");
-                                actCount=jsonObject.getInt("ActiveCases");
-                                newAffCount=jsonObject.getInt("NewCases");
-                                newDeathCount=jsonObject.getInt("NewDeaths");
-                                newRecCount=jsonObject.getInt("NewRecovered");
-                                critCount=jsonObject.getInt("Serious_Critical");
+                                affCount=jsonObject.getInt("cases");
+                                deathCount=jsonObject.getInt("deaths");
+                                recCount=jsonObject.getInt("recovered");
+                                actCount=jsonObject.getInt("active");
+                                newAffCount=jsonObject.getInt("todayCases");
+                                newDeathCount=jsonObject.getInt("todayDeaths");
+                                newRecCount=jsonObject.getInt("todayRecovered");
+                                critCount=jsonObject.getInt("critical");
 
 
 
