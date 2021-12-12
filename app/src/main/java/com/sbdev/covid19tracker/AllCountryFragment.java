@@ -57,7 +57,7 @@ public class AllCountryFragment extends Fragment {
         arrayList=new ArrayList<>();
         filterList=new ArrayList<>();
 
-        url="https://corona.lmao.ninja/v2/countries?sort";
+        url="https://disease.sh/v3/covid-19/countries";
 
         dialog=new ProgressDialog(getActivity());
 

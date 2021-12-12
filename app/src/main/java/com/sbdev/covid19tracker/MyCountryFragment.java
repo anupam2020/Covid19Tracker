@@ -61,7 +61,7 @@ public class MyCountryFragment extends Fragment {
         newRecovered=view.findViewById(R.id.textNewRecoveredCountCountry);
         critical=view.findViewById(R.id.textCriticalCountCountry);
 
-        url="https://corona.lmao.ninja/v2/countries/India?yesterday=true&strict=true&query";
+        url="https://disease.sh/v3/covid-19/countries/India?yesterday=India&twoDaysAgo=India&strict=India&allowNull=India";
 
         progressDialog=new ProgressDialog(getActivity());
 

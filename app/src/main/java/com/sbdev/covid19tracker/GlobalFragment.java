@@ -53,7 +53,7 @@ public class GlobalFragment extends Fragment {
         newRecovered=view.findViewById(R.id.textNewRecoveredCountGlobal);
         critical=view.findViewById(R.id.textCriticalCountGlobal);
 
-        url="https://corona.lmao.ninja/v2/all?yesterday";
+        url="https://disease.sh/v3/covid-19/all";
 
         progressDialog=new ProgressDialog(getActivity());
 
