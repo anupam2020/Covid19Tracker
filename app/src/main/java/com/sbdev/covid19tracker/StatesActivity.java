@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,8 +23,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
+import ir.mahozad.android.PieChart;
+import ir.mahozad.android.PieChartKt;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -80,7 +84,6 @@ public class StatesActivity extends AppCompatActivity {
         Log.d("Country Name",country);
 
         provinceText.setText("Provinces of "+country);
-
 
         OkHttpClient client = new OkHttpClient();
 

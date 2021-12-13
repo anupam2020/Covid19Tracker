@@ -66,7 +66,8 @@
                         android:text="Country"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
 
                 </RelativeLayout>
 
@@ -87,7 +88,8 @@
                         android:text="Affected"
                         android:textAlignment="center"
                         android:textColor="@color/violet"
-                        android:textSize="18dp"/>
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="75dp"
@@ -99,7 +101,8 @@
                         android:layout_gravity="center"
                         android:textAlignment="center"
                         android:id="@+id/textDeath"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_centerHorizontal="true"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="75dp"
@@ -111,7 +114,8 @@
                         android:layout_gravity="center"
                         android:textAlignment="center"
                         android:id="@+id/textRecovered"
-                        android:layout_alignParentRight="true"/>
+                        android:layout_alignParentRight="true"
+                        android:textStyle="bold"/>
 
                 </RelativeLayout>
 
