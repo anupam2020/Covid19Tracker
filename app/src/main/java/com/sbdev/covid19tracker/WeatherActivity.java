@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -100,6 +101,8 @@ public class WeatherActivity extends AppCompatActivity {
     private LocationRequest locationRequest;
 
     public static final int REQUEST_CHECK_SETTINGS = 1001;
+
+    public static final int REQUEST_CODE = 44;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,11 +202,20 @@ public class WeatherActivity extends AppCompatActivity {
 
         if (ActivityCompat.checkSelfPermission(WeatherActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            getLocation();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    getLocation();
+
+                }
+            },2000);
 
         } else {
             ActivityCompat.requestPermissions(WeatherActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+
         }
 
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -219,6 +231,44 @@ public class WeatherActivity extends AppCompatActivity {
         });
 
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(WeatherActivity.this,
+                            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                    {
+                        DynamicToast.make(WeatherActivity.this, "Permission Granted!", getResources().getDrawable(R.drawable.ic_baseline_check_circle_outline_24),
+                                getResources().getColor(R.color.white), getResources().getColor(R.color.black), 2000).show();
+                        finish();
+                        startActivity(getIntent());
+                    }
+                }
+            }
+        }
+    }
+
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//
+//        if(requestCode==REQUEST_CODE)
+//        {
+//
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+//            {
+//                finish();
+//                startActivity(getIntent());
+//            }
+//        }
+//
+//    }
 
     private void grantPermission() {
 
@@ -240,8 +290,20 @@ public class WeatherActivity extends AppCompatActivity {
 
                 try {
                     LocationSettingsResponse response = task.getResult(ApiException.class);
-                    Toast.makeText(WeatherActivity.this, "GPS is already turned on", Toast.LENGTH_SHORT).show();
-                    getLocation();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+//                            finish();
+//                            startActivity(getIntent());
+
+                            getLocation();
+
+                        }
+                    },2000);
+
+
 
                 } catch (ApiException e) {
 
@@ -274,7 +336,8 @@ public class WeatherActivity extends AppCompatActivity {
 
             switch (resultCode) {
                 case Activity.RESULT_OK:
-                    Toast.makeText(this, "GPS is turned on", Toast.LENGTH_SHORT).show();
+                    DynamicToast.make(WeatherActivity.this,"GPS is turned on!",R.drawable.ic_baseline_gps_fixed_24_black).show();
+                    //Toast.makeText(this, "GPS is turned on", Toast.LENGTH_SHORT).show();
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -287,7 +350,9 @@ public class WeatherActivity extends AppCompatActivity {
                     },2000);
 
                 case Activity.RESULT_CANCELED:
-                    Toast.makeText(this, "GPS required to be turned on", Toast.LENGTH_SHORT).show();
+                    DynamicToast.make(WeatherActivity.this,"GPS is required!",R.drawable.ic_baseline_gps_fixed_24_black).show();
+                    //Toast.makeText(this, "GPS required to be turned on", Toast.LENGTH_SHORT).show();
+
             }
         }
     }
@@ -303,8 +368,11 @@ public class WeatherActivity extends AppCompatActivity {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+            progressDialog.dismiss();
+            DynamicToast.makeError(WeatherActivity.this,"Permission Denied!",2000).show();
             return;
         }
+
         fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {

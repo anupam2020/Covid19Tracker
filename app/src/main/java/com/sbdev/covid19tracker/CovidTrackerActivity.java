@@ -95,7 +95,7 @@ public class CovidTrackerActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(Color.WHITE);
 
-        getLocation();
+        //getLocation();
 
         drawer=findViewById(R.id.covidTrackerDrawer);
 
@@ -241,66 +241,66 @@ public class CovidTrackerActivity extends AppCompatActivity {
 
     }
 
-    private void getLocation() {
-
-        locationRequest=LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(2000);
-
-        LocationSettingsRequest.Builder builder=new LocationSettingsRequest.Builder()
-                .addLocationRequest(locationRequest);
-        builder.setAlwaysShow(true);
-
-        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(getApplicationContext())
-                .checkLocationSettings(builder.build());
-
-        result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
-            @Override
-            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
-
-                try {
-                    LocationSettingsResponse response = task.getResult(ApiException.class);
-                    Toast.makeText(CovidTrackerActivity.this, "GPS is already turned on", Toast.LENGTH_SHORT).show();
-
-                } catch (ApiException e) {
-
-                    switch (e.getStatusCode()) {
-                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-
-                            try {
-                                ResolvableApiException resolvableApiException = (ResolvableApiException)e;
-                                resolvableApiException.startResolutionForResult(CovidTrackerActivity.this,REQUEST_CHECK_SETTINGS);
-                            } catch (IntentSender.SendIntentException ex) {
-                                ex.printStackTrace();
-                            }
-                            break;
-
-                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                            //Device does not have location
-                            break;
-                    }
-                }
-            }
-        });
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_CHECK_SETTINGS) {
-
-            switch (resultCode) {
-                case Activity.RESULT_OK:
-                    Toast.makeText(this, "GPS is turned on", Toast.LENGTH_SHORT).show();
-
-                case Activity.RESULT_CANCELED:
-                    Toast.makeText(this, "GPS required to be turned on", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+//    private void getLocation() {
+//
+//        locationRequest=LocationRequest.create();
+//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        locationRequest.setInterval(5000);
+//        locationRequest.setFastestInterval(2000);
+//
+//        LocationSettingsRequest.Builder builder=new LocationSettingsRequest.Builder()
+//                .addLocationRequest(locationRequest);
+//        builder.setAlwaysShow(true);
+//
+//        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(getApplicationContext())
+//                .checkLocationSettings(builder.build());
+//
+//        result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
+//            @Override
+//            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+//
+//                try {
+//                    LocationSettingsResponse response = task.getResult(ApiException.class);
+//                    Toast.makeText(CovidTrackerActivity.this, "GPS is already turned on", Toast.LENGTH_SHORT).show();
+//
+//                } catch (ApiException e) {
+//
+//                    switch (e.getStatusCode()) {
+//                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+//
+//                            try {
+//                                ResolvableApiException resolvableApiException = (ResolvableApiException)e;
+//                                resolvableApiException.startResolutionForResult(CovidTrackerActivity.this,REQUEST_CHECK_SETTINGS);
+//                            } catch (IntentSender.SendIntentException ex) {
+//                                ex.printStackTrace();
+//                            }
+//                            break;
+//
+//                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+//                            //Device does not have location
+//                            break;
+//                    }
+//                }
+//            }
+//        });
+//
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == REQUEST_CHECK_SETTINGS) {
+//
+//            switch (resultCode) {
+//                case Activity.RESULT_OK:
+//                    Toast.makeText(this, "GPS is turned on", Toast.LENGTH_SHORT).show();
+//
+//                case Activity.RESULT_CANCELED:
+//                    Toast.makeText(this, "GPS required to be turned on", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
 
     public void shareMyApp()
     {
