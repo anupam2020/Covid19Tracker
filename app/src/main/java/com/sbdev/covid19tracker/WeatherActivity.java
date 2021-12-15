@@ -753,6 +753,33 @@ public class WeatherActivity extends AppCompatActivity {
                                     }
 
                                 }
+                                else
+                                {
+
+                                    if(is_day==0)
+                                    {
+                                        if(temp_c<=20)
+                                        {
+                                            weather.setImageResource(R.drawable.mist);
+                                        }
+                                        else
+                                        {
+                                            weather.setImageResource(R.drawable.moon_clear);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if(temp_c<=25)
+                                        {
+                                            weather.setImageResource(R.drawable.mist);
+                                        }
+                                        else
+                                        {
+                                            weather.setImageResource(R.drawable.cloudy);
+                                        }
+                                    }
+
+                                }
 
                                 String wind_mphSTR=current.getString("wind_mph");
                                 int pressure_mbSTR= (int) current.getDouble("pressure_mb");

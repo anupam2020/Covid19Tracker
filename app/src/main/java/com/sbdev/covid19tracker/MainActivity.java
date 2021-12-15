@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -36,9 +37,12 @@ public class MainActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(Color.WHITE);
 
+        showDialog();
+
         rootLayout=findViewById(R.id.rootLayout);
         gridLayout=findViewById(R.id.gridLayout);
         button=findViewById(R.id.mainLetsGoButton);
+
 
         card1=findViewById(R.id.cardView1);
         card2=findViewById(R.id.cardView2);
@@ -98,6 +102,33 @@ public class MainActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    public void showDialog()
+    {
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Location");
+        builder.setMessage("Covid19Tracker collects location data to fetch the Weather details of the current location only when the app is opened or in use.");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
+
     }
 
 }
