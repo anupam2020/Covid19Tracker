@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 
+import com.facebook.share.Share;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
+    private SharedPreferences sp;
+
+    private String PREF="PREF";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +43,17 @@ public class MainActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getWindow().setStatusBarColor(Color.WHITE);
 
-        showDialog();
+        sp=getSharedPreferences(PREF,MODE_PRIVATE);
+
+        String count=sp.getString("dialogCount","0");
+        if(count.equals("0"))
+        {
+            showDialog();
+        }
 
         rootLayout=findViewById(R.id.rootLayout);
         gridLayout=findViewById(R.id.gridLayout);
         button=findViewById(R.id.mainLetsGoButton);
-
 
         card1=findViewById(R.id.cardView1);
         card2=findViewById(R.id.cardView2);
@@ -106,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void showDialog()
     {
+
+        SharedPreferences.Editor editor=sp.edit();
+        editor.putString("dialogCount","1");
+        editor.apply();
 
         AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Location");
