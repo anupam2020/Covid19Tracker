@@ -317,7 +317,7 @@ public class CovidTrackerActivity extends AppCompatActivity {
 
     public void openAppInGooglePlay() {
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/anupam2020/APKFiles/blob/main/Covid19Tracker/app/apk")));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/anupam2020/APKFiles/blob/main/Covid19Tracker/app/apk/Covid19Tracker.apk")));
         } catch (android.content.ActivityNotFoundException e) { // if there is no Google Play on device
             DynamicToast.makeError(CovidTrackerActivity.this,e.getMessage(),2000).show();
         }
