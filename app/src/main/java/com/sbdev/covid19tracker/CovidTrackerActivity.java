@@ -305,10 +305,9 @@ public class CovidTrackerActivity extends AppCompatActivity {
     public void shareMyApp()
     {
         try {
-            final String appPackageName = CovidTrackerActivity.this.getPackageName();
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out the App at: https://play.google.com/store/apps/details?id=" + appPackageName);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out the App at: https://github.com/anupam2020/APKFiles/blob/main/Covid19Tracker/app/apk");
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
         } catch(Exception e) {
@@ -317,11 +316,10 @@ public class CovidTrackerActivity extends AppCompatActivity {
     }
 
     public void openAppInGooglePlay() {
-        final String appPackageName = getPackageName();
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/anupam2020/APKFiles/blob/main/Covid19Tracker/app/apk")));
         } catch (android.content.ActivityNotFoundException e) { // if there is no Google Play on device
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            DynamicToast.makeError(CovidTrackerActivity.this,e.getMessage(),2000).show();
         }
     }
 

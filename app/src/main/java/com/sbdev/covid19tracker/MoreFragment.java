@@ -22,7 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MoreFragment extends Fragment {
 
-    RelativeLayout layout1,layout2,layout3,layout4,layout5,layout6;
+    RelativeLayout layout1,layout2,layout3,layout5,layout6;
 
     TextView about,terms,policy,rate,share;
 
@@ -37,7 +37,6 @@ public class MoreFragment extends Fragment {
         layout1=view.findViewById(R.id.moreRelative1);
         layout2=view.findViewById(R.id.moreRelative2);
         layout3=view.findViewById(R.id.moreRelative3);
-        layout4=view.findViewById(R.id.moreRelative4);
         layout5=view.findViewById(R.id.moreRelative5);
         layout6=view.findViewById(R.id.moreRelative6);
 
@@ -87,24 +86,14 @@ public class MoreFragment extends Fragment {
         });
 
 
-        layout4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                launchMarket();
-            }
-        });
-
-
         layout5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 try {
-                    final String appPackageName = getActivity().getPackageName();
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out the App at: https://play.google.com/store/apps/details?id=" + appPackageName);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out the App at: https://github.com/anupam2020/APKFiles/blob/main/Covid19Tracker/app/apk");
                     sendIntent.setType("text/plain");
                     startActivity(sendIntent);
                 } catch(Exception e) {
@@ -134,16 +123,6 @@ public class MoreFragment extends Fragment {
             }
         });
 
-    }
-
-    private void launchMarket() {
-        Uri uri = Uri.parse("market://details?id=" + getActivity().getPackageName());
-        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
-        try {
-            startActivity(myAppLinkToMarket);
-        } catch (ActivityNotFoundException e) {
-            DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
-        }
     }
 
     @Override
