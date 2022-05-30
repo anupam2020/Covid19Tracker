@@ -348,6 +348,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                         }
                     },2000);
+                    break;
 
                 case Activity.RESULT_CANCELED:
                     DynamicToast.make(WeatherActivity.this,"GPS is required!",R.drawable.ic_baseline_gps_fixed_24_black).show();

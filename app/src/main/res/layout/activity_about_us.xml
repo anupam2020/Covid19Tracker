@@ -59,17 +59,17 @@
         android:layout_below="@id/aboutUsText3" />
 
     <TextView
+        android:id="@+id/aboutUsText5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/aboutUsText4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:autoLink="email"
+        android:focusable="true"
         android:text="@string/author_email"
         android:textColor="@color/black"
-        android:layout_centerHorizontal="true"
-        android:textSize="18dp"
-        android:id="@+id/aboutUsText5"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/aboutUsText4"
         android:textIsSelectable="true"
-        android:focusable="true"
-        android:autoLink="email" />
+        android:textSize="18dp" />
 
 </RelativeLayout>

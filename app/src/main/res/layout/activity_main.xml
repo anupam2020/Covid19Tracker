@@ -165,9 +165,9 @@
             android:background="@drawable/button_bg_blue"
             android:fontFamily="@font/aladin"
             android:text="Let's Go"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="25dp"
-            android:textAllCaps="false"/>
+            android:textSize="25dp" />
 
     </RelativeLayout>
 
