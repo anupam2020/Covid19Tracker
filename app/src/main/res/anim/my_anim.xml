@@ -8,5 +8,4 @@
         android:interpolator="@android:anim/linear_interpolator"
         />
 
-
 </set>

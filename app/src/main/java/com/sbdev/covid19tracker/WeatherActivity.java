@@ -24,7 +24,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.GpsStatus;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,12 +39,15 @@ import android.widget.Toast;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.jaeger.library.StatusBarUtil;
@@ -65,12 +70,12 @@ import okhttp3.Response;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends AppCompatActivity implements LocationListener {
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
-    private TextView city,country,dateTime,temp,skyType,pressure,humidity,windSpeed,presText,humText,windText;
+    private TextView city, country, dateTime, temp, skyType, pressure, humidity, windSpeed, presText, humText, windText;
 
-    private ImageView weather,dayNightMode;
+    private ImageView weather, dayNightMode;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -78,7 +83,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     private Request request;
 
-    private String url,dateString;
+    private String url, dateString;
 
     private SimpleDateFormat simpleDateFormat;
 
@@ -86,9 +91,9 @@ public class WeatherActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    private SharedPreferences sp,sp2;
+    private SharedPreferences sp, sp2;
 
-    private String SHARED_PREFS="SHARED_PREFS";
+    private String SHARED_PREFS = "SHARED_PREFS";
 
     private TabLayout WeathertabLayout;
     private ViewPager2 WeatherviewPager2;
@@ -96,7 +101,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipe;
 
-    private int count=0;
+    private int count = 0;
 
     private LocationRequest locationRequest;
 
@@ -104,14 +109,21 @@ public class WeatherActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 44;
 
+    public LocationManager locationManager;
+
+    public double latitude;
+    public double longitude;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        StatusBarUtil.setTransparentForImageView(WeatherActivity.this,null);
+        StatusBarUtil.setTransparentForImageView(WeatherActivity.this, null);
 
         grantPermission();
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         city=findViewById(R.id.cityText);
         country=findViewById(R.id.countryText);
@@ -137,7 +149,6 @@ public class WeatherActivity extends AppCompatActivity {
         FragmentManager fm=getSupportFragmentManager();
         Weatheradapter=new WeatherStateAdapter(fm,getLifecycle());
         WeatherviewPager2.setAdapter(Weatheradapter);
-
 
         WeathertabLayout.addTab(WeathertabLayout.newTab().setText("Today"));
         WeathertabLayout.addTab(WeathertabLayout.newTab().setText("Hourly"));
@@ -336,7 +347,8 @@ public class WeatherActivity extends AppCompatActivity {
 
             switch (resultCode) {
                 case Activity.RESULT_OK:
-                    DynamicToast.make(WeatherActivity.this,"GPS is turned on!",R.drawable.ic_baseline_gps_fixed_24_black).show();
+
+                    //DynamicToast.make(WeatherActivity.this,"GPS is turned on!",R.drawable.ic_baseline_gps_fixed_24_black).show();
                     //Toast.makeText(this, "GPS is turned on", Toast.LENGTH_SHORT).show();
 
                     new Handler().postDelayed(new Runnable() {
@@ -347,19 +359,18 @@ public class WeatherActivity extends AppCompatActivity {
                             startActivity(getIntent());
 
                         }
-                    },2000);
+                    },1000);
                     break;
 
                 case Activity.RESULT_CANCELED:
-                    DynamicToast.make(WeatherActivity.this,"GPS is required!",R.drawable.ic_baseline_gps_fixed_24_black).show();
+                    progressDialog.dismiss();
                     //Toast.makeText(this, "GPS required to be turned on", Toast.LENGTH_SHORT).show();
 
             }
         }
     }
 
-
-    private void getLocation() {
+    public void getLocation() {
 
         if (ActivityCompat.checkSelfPermission(WeatherActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(WeatherActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -370,214 +381,84 @@ public class WeatherActivity extends AppCompatActivity {
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             progressDialog.dismiss();
-            DynamicToast.makeError(WeatherActivity.this,"Permission Denied!",2000).show();
             return;
         }
 
-        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 100, this);
 
-                Location location=task.getResult();
+//        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Location> task) {
+//
+//
+//
+//            }
+//        });
 
-                if(location!=null)
-                {
+        Location location = locationManager
+                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-                    Geocoder geocoder=new Geocoder(WeatherActivity.this, Locale.getDefault());
+        if(location!=null)
+        {
+            Log.d("Outer Location", String.valueOf(location));
+            Log.d("Latitude", String.valueOf(location.getLatitude()));
+            latitude=location.getLatitude();
+            Log.d("Longitude", String.valueOf(location.getLongitude()));
+            longitude=location.getLongitude();
 
-                    try {
+            Geocoder geocoder=new Geocoder(WeatherActivity.this, Locale.getDefault());
 
-                        List<Address> addresses=geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+            try {
 
-                        String details="Country Name: "+addresses.get(0).getCountryName()+"\n"+
-                                "Locality: "+addresses.get(0).getLocality()+"\n"+
-                                "Lat: "+(float)addresses.get(0).getLatitude()+"\n"+
-                                "Lon: "+(float)addresses.get(0).getLongitude()+"\n"+
-                                "Admin Area: "+addresses.get(0).getAdminArea()+"\n"+
-                                "Sub Admin Area: "+addresses.get(0).getSubAdminArea();
+                List<Address> addresses=geocoder.getFromLocation(latitude,longitude,1);
 
-                        simpleDateFormat=new SimpleDateFormat("MMMM dd, EEEE hh:mm a");
-                        date=new Date();
-                        dateString=simpleDateFormat.format(date);
+                String details="Country Name: "+addresses.get(0).getCountryName()+"\n"+
+                        "Locality: "+addresses.get(0).getLocality()+"\n"+
+                        "Lat: "+(float)addresses.get(0).getLatitude()+"\n"+
+                        "Lon: "+(float)addresses.get(0).getLongitude()+"\n"+
+                        "Admin Area: "+addresses.get(0).getAdminArea()+"\n"+
+                        "Sub Admin Area: "+addresses.get(0).getSubAdminArea();
 
-                        city.setText(addresses.get(0).getLocality());
-                        country.setText(addresses.get(0).getAdminArea()+", "+addresses.get(0).getCountryName());
-                        dateTime.setText(dateString);
+                simpleDateFormat=new SimpleDateFormat("MMMM dd, EEEE hh:mm a");
+                date=new Date();
+                dateString=simpleDateFormat.format(date);
 
-                        double lat= addresses.get(0).getLatitude();
-                        double lon= addresses.get(0).getLongitude();
+                city.setText(addresses.get(0).getLocality());
+                country.setText(addresses.get(0).getAdminArea()+", "+addresses.get(0).getCountryName());
+                dateTime.setText(dateString);
 
-//                        url="https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=minutely&appid=66b871b322375297071a645567414648";
-//
-//                        request=new Request.Builder()
-//                                .url(url)
-//                                .build();
-//
-//                        client.newCall(request).enqueue(new Callback() {
-//                            @Override
-//                            public void onFailure(Call call, IOException e) {
-//
-//                                Log.e("On Failure",e.getMessage());
-//
-//                            }
-//
-//                            @Override
-//                            public void onResponse(Call call, Response response) throws IOException {
-//
-//                                if(response.isSuccessful())
-//                                {
-//
-//                                    String res=response.body().string();
-//
-//                                    WeatherActivity.this.runOnUiThread(new Runnable() {
-//                                        @Override
-//                                        public void run() {
-//
-//                                            try {
-//
-//                                                JSONObject jsonObject=new JSONObject(res);
-//
-//                                                String timezone=jsonObject.getString("timezone");
-//                                                Log.d("Timezone",timezone.substring(timezone.indexOf('/')+1));
-//                                                timezone=timezone.substring(timezone.indexOf('/')+1);
-//
-//                                                String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+addresses.get(0).getSubAdminArea()+"&aqi=no";
-//
-//                                                Request request1=new Request.Builder()
-//                                                        .url(countryURL)
-//                                                        .build();
-//
-//                                                client.newCall(request1).enqueue(new Callback() {
-//                                                    @Override
-//                                                    public void onFailure(Call call, IOException e) {
-//
-//                                                        Log.e("Inside onFailure",e.getMessage());
-//
-//                                                    }
-//
-//                                                    @Override
-//                                                    public void onResponse(Call call, Response response) throws IOException {
-//
-//                                                        if(response.isSuccessful())
-//                                                        {
-//
-//
-//                                                            String res1=response.body().string();
-//
-//                                                            WeatherActivity.this.runOnUiThread(new Runnable() {
-//                                                                @Override
-//                                                                public void run() {
-//
-//                                                                    try {
-//
-//                                                                        JSONObject jsonObject1=new JSONObject(res1);
-//                                                                        JSONObject current=jsonObject1.getJSONObject("current");
-//
-//                                                                        int is_day=current.getInt("is_day");
-//
-//                                                                        SharedPreferences.Editor editor=sp.edit();
-//                                                                        if(is_day==0)
-//                                                                        {
-//                                                                            dayNightMode.setImageResource(R.drawable.night_mode);
-//                                                                            nightMode();
-//
-//                                                                            editor.putString("bgMode","0");
-//                                                                        }
-//                                                                        else
-//                                                                        {
-//                                                                            dayNightMode.setImageResource(R.drawable.day_mode);
-//                                                                            dayMode();
-//
-//                                                                            editor.putString("bgMode","1");
-//                                                                        }
-//                                                                        editor.apply();
-//
-//                                                                        int temp_c= (int) current.getDouble("temp_c");
-//
-//                                                                        temp.setText(temp_c+"\u2103");
-//
-//                                                                        JSONObject condition=current.getJSONObject("condition");
-//                                                                        String text=condition.getString("text");
-//                                                                        skyType.setText(text);
-//
-//                                                                        if(text.equalsIgnoreCase("Sunny"))
-//                                                                        {
-//                                                                            weather.setImageResource(R.drawable.sun);
-//                                                                        }
-//                                                                        else if(text.equalsIgnoreCase("Clear"))
-//                                                                        {
-//                                                                            weather.setImageResource(R.drawable.moon_clear);
-//                                                                        }
-//                                                                        else
-//                                                                        {
-//                                                                            if(is_day==0)
-//                                                                            {
-//                                                                                weather.setImageResource(R.drawable.mist);
-//                                                                            }
-//                                                                            else
-//                                                                            {
-//                                                                                weather.setImageResource(R.drawable.cloudy);
-//                                                                            }
-//                                                                        }
-//
-//                                                                        String wind_mphSTR=current.getString("wind_mph");
-//                                                                        int pressure_mbSTR= (int) current.getDouble("pressure_mb");
-//                                                                        String humiditySTR=current.getString("humidity");
-//
-//                                                                        String pressure_two_decimal=String.format("%.2f",pressure_mbSTR*0.750062);
-//
-//                                                                        pressure.setText(pressure_two_decimal+" mmhg");
-//                                                                        humidity.setText(humiditySTR+"%");
-//                                                                        windSpeed.setText(wind_mphSTR+" mph");
-//
-//                                                                        progressDialog.dismiss();
-//
-//
-//                                                                    } catch (JSONException e) {
-//                                                                        e.printStackTrace();
-//                                                                    }
-//
-//                                                                }
-//                                                            });
-//
-//
-//                                                        }
-//
-//                                                    }
-//                                                });
-//
-//
-//                                            } catch (JSONException e) {
-//                                                Log.e("Exception",e.getMessage());
-//                                            }
-//
-//                                        }
-//                                    });
-//
-//                                }
-//
-//                            }
-//                        });
+                double lat= addresses.get(0).getLatitude();
+                double lon= addresses.get(0).getLongitude();
 
+                String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+lat+","+lon+"&aqi=no";
+                Log.d("countryURL",countryURL);
 
-                        //locText.setText(details);
+                setValues(countryURL);
 
+                Log.d("Details",details);
 
-                        String countryURL="https://api.weatherapi.com/v1/current.json?key=5660084f7fdd4f4cb80140903212811&q="+lat+","+lon+"&aqi=no";
-                        Log.d("countryURL",countryURL);
-
-                        setValues(countryURL);
-
-                        Log.d("Details",details);
-
-                    } catch (IOException e) {
-                        Log.e("Exception",e.getMessage());
-                    }
-
-                }
-
+            } catch (IOException e) {
+                Log.e("Exception",e.getMessage());
             }
-        });
+
+        }
+
+//        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+//            @Override
+//            public void onSuccess(Location location) {
+//
+//                //Location location=task.getResult();
+//                Log.d("Location", String.valueOf(location));
+//
+//                if(location!=null)
+//                {
+//
+//
+//
+//                }
+//
+//            }
+//        });
 
     }
 
@@ -873,4 +754,24 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+        Log.d("Disable", String.valueOf(provider));
+        DynamicToast.make(WeatherActivity.this,"GPS is required!",R.drawable.ic_baseline_gps_fixed_24_black).show();
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+        Log.d("Enable", String.valueOf(provider));
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.d("Status", String.valueOf(provider));
+    }
 }

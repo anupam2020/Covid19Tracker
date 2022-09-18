@@ -29,15 +29,15 @@
         android:layout_centerInParent="true"/>
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/splashLottieBottom"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        app:lottie_fileName="78334-loading.json"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true"
-        android:id="@+id/splashLottieBottom"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
-        app:lottie_speed="2"/>
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="78334-loading.json"
+        app:lottie_loop="true"
+        app:lottie_speed="2" />
 
 </RelativeLayout>

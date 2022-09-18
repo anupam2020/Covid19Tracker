@@ -1,10 +1,12 @@
 package com.sbdev.covid19tracker;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -60,14 +62,18 @@ public class HourlyFragment extends Fragment {
 
     private ProgressBar progressBar;
 
+    private LocationManager locationManager;
+
+    private double latitude,longitude;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         recyclerView=view.findViewById(R.id.hourlyRecycler);
         progressBar=view.findViewById(R.id.hourlyProgress);
-
 
         arrayList=new ArrayList<>();
 
@@ -96,140 +102,156 @@ public class HourlyFragment extends Fragment {
         {
             return;
         }
-        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
 
-                Location location = task.getResult();
+        Location location = locationManager
+                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-                if (location != null) {
+        if(location!=null)
+        {
+            Log.d("Hourly Location", String.valueOf(location));
+            Log.d("Hourly Latitude", String.valueOf(location.getLatitude()));
+            latitude=location.getLatitude();
+            Log.d("Hourly Longitude", String.valueOf(location.getLongitude()));
+            longitude=location.getLongitude();
 
-                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
-                    try {
+            try {
 
-                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
-                        String details = "Country Name: " + addresses.get(0).getCountryName() + "\n" +
-                                "Locality: " + addresses.get(0).getLocality() + "\n" +
-                                "Lat: " + (float) addresses.get(0).getLatitude() + "\n" +
-                                "Lon: " + (float) addresses.get(0).getLongitude() + "\n" +
-                                "Admin Area: " + addresses.get(0).getAdminArea() + "\n" +
-                                "Sub Admin Area: " + addresses.get(0).getSubAdminArea();
+                String details = "Country Name: " + addresses.get(0).getCountryName() + "\n" +
+                        "Locality: " + addresses.get(0).getLocality() + "\n" +
+                        "Lat: " + (float) addresses.get(0).getLatitude() + "\n" +
+                        "Lon: " + (float) addresses.get(0).getLongitude() + "\n" +
+                        "Admin Area: " + addresses.get(0).getAdminArea() + "\n" +
+                        "Sub Admin Area: " + addresses.get(0).getSubAdminArea();
 
-                        double lat = addresses.get(0).getLatitude();
-                        double lon = addresses.get(0).getLongitude();
+                double lat = addresses.get(0).getLatitude();
+                double lon = addresses.get(0).getLongitude();
 
 
-                        url="https://api.weatherapi.com/v1/forecast.json?key=5660084f7fdd4f4cb80140903212811&q="+lat+","+lon+"&days=1&aqi=no&alerts=no";
+                url="https://api.weatherapi.com/v1/forecast.json?key=5660084f7fdd4f4cb80140903212811&q="+lat+","+lon+"&days=1&aqi=no&alerts=no";
 
-                        request=new Request.Builder()
-                                .url(url)
-                                .build();
+                request=new Request.Builder()
+                        .url(url)
+                        .build();
 
-                        client.newCall(request).enqueue(new Callback() {
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                        getActivity().runOnUiThread(new Runnable() {
                             @Override
-                            public void onFailure(Call call, IOException e) {
+                            public void run() {
 
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        progressBar.setVisibility(View.GONE);
-                                        Log.e("OnFailure",e.getMessage());
-                                        DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
-
-                                    }
-                                });
-
-                            }
-
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-
-                                if(response.isSuccessful())
-                                {
-
-                                    String res=response.body().string();
-
-                                    if(getActivity()==null)
-                                    {
-                                        return;
-                                    }
-
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-
-                                            try {
-
-                                                JSONObject jsonObject=new JSONObject(res);
-
-                                                JSONObject forecast=jsonObject.getJSONObject("forecast");
-
-                                                JSONArray forecastday=forecast.getJSONArray("forecastday");
-
-                                                JSONObject forecastdayObject=forecastday.getJSONObject(0);
-
-                                                JSONArray hour=forecastdayObject.getJSONArray("hour");
-
-                                                for(int i=0;i<hour.length();i++)
-                                                {
-
-                                                    JSONObject hourObject=hour.getJSONObject(i);
-
-                                                    String time=hourObject.getString("time");
-                                                    int temp_c= (int) hourObject.getDouble("temp_c");
-                                                    int isDay=hourObject.getInt("is_day");
-
-                                                    JSONObject condition=hourObject.getJSONObject("condition");
-                                                    String text=condition.getString("text");
-
-                                                    arrayList.add(new HourlyModel(time.substring(11),isDay,temp_c,text));
-
-                                                }
-
-                                                adapter.notifyDataSetChanged();
-
-                                                progressBar.setVisibility(View.GONE);
-
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-
-                                        }
-                                    });
-
-                                }
-                                else
-                                {
-
-                                    if(getActivity()==null)
-                                    {
-                                        return;
-                                    }
-
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-
-                                            progressBar.setVisibility(View.GONE);
-                                            Log.e("OnFailure",response.message());
-                                            DynamicToast.makeError(getActivity(),response.message(),2000).show();
-
-                                        }
-                                    });
-                                }
+                                progressBar.setVisibility(View.GONE);
+                                Log.e("OnFailure",e.getMessage());
+                                DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
 
                             }
                         });
 
-                    }catch (IOException e) {
-                        Log.e("Exception",e.getMessage());
                     }
-                }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                        if(response.isSuccessful())
+                        {
+
+                            String res=response.body().string();
+
+                            if(getActivity()==null)
+                            {
+                                return;
+                            }
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    try {
+
+                                        JSONObject jsonObject=new JSONObject(res);
+
+                                        JSONObject forecast=jsonObject.getJSONObject("forecast");
+
+                                        JSONArray forecastday=forecast.getJSONArray("forecastday");
+
+                                        JSONObject forecastdayObject=forecastday.getJSONObject(0);
+
+                                        JSONArray hour=forecastdayObject.getJSONArray("hour");
+
+                                        for(int i=0;i<hour.length();i++)
+                                        {
+
+                                            JSONObject hourObject=hour.getJSONObject(i);
+
+                                            String time=hourObject.getString("time");
+                                            int temp_c= (int) hourObject.getDouble("temp_c");
+                                            int isDay=hourObject.getInt("is_day");
+
+                                            JSONObject condition=hourObject.getJSONObject("condition");
+                                            String text=condition.getString("text");
+
+                                            arrayList.add(new HourlyModel(time.substring(11),isDay,temp_c,text));
+
+                                        }
+
+                                        adapter.notifyDataSetChanged();
+
+                                        progressBar.setVisibility(View.GONE);
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            });
+
+                        }
+                        else
+                        {
+
+                            if(getActivity()==null)
+                            {
+                                return;
+                            }
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    progressBar.setVisibility(View.GONE);
+                                    Log.e("OnFailure",response.message());
+                                    DynamicToast.makeError(getActivity(),response.message(),2000).show();
+
+                                }
+                            });
+                        }
+
+                    }
+                });
+
+            }catch (IOException e) {
+                Log.e("Exception",e.getMessage());
             }
-        });
+
+        }
+
+//        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Location> task) {
+//
+//                Location location = task.getResult();
+//
+//                if (location != null) {
+//
+//
+//                }
+//            }
+//        });
     }
 
     @Override

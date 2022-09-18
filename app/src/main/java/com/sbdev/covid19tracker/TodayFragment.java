@@ -1,11 +1,13 @@
 package com.sbdev.covid19tracker;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -64,9 +66,15 @@ public class TodayFragment extends Fragment {
 
     private ProgressBar progressBar;
 
+    private LocationManager locationManager;
+
+    private double latitude,longitude;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         morningText=view.findViewById(R.id.morningText);
         morningTemp=view.findViewById(R.id.morningTemp);
@@ -120,355 +128,368 @@ public class TodayFragment extends Fragment {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
 
-                Location location = task.getResult();
+        Location location = locationManager
+                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-                if (location != null) {
+        if(location!=null)
+        {
+            Log.d("Today Location", String.valueOf(location));
+            Log.d("Today Latitude", String.valueOf(location.getLatitude()));
+            latitude=location.getLatitude();
+            Log.d("Today Longitude", String.valueOf(location.getLongitude()));
+            longitude=location.getLongitude();
 
-                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
-                    try {
+            try {
 
-                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
-                        String details = "Country Name: " + addresses.get(0).getCountryName() + "\n" +
-                                "Locality: " + addresses.get(0).getLocality() + "\n" +
-                                "Lat: " + (float) addresses.get(0).getLatitude() + "\n" +
-                                "Lon: " + (float) addresses.get(0).getLongitude() + "\n" +
-                                "Admin Area: " + addresses.get(0).getAdminArea() + "\n" +
-                                "Sub Admin Area: " + addresses.get(0).getSubAdminArea();
+                String details = "Country Name: " + addresses.get(0).getCountryName() + "\n" +
+                        "Locality: " + addresses.get(0).getLocality() + "\n" +
+                        "Lat: " + (float) addresses.get(0).getLatitude() + "\n" +
+                        "Lon: " + (float) addresses.get(0).getLongitude() + "\n" +
+                        "Admin Area: " + addresses.get(0).getAdminArea() + "\n" +
+                        "Sub Admin Area: " + addresses.get(0).getSubAdminArea();
 
-                        double lat = addresses.get(0).getLatitude();
-                        double lon = addresses.get(0).getLongitude();
+                double lat = addresses.get(0).getLatitude();
+                double lon = addresses.get(0).getLongitude();
 
-                        url="https://api.weatherapi.com/v1/forecast.json?key=5660084f7fdd4f4cb80140903212811&q="+lat+","+lon+"&days=1&aqi=no&alerts=no";
+                url="https://api.weatherapi.com/v1/forecast.json?key=5660084f7fdd4f4cb80140903212811&q="+lat+","+lon+"&days=1&aqi=no&alerts=no";
 
-                        request=new Request.Builder()
-                                .url(url)
-                                .build();
+                request=new Request.Builder()
+                        .url(url)
+                        .build();
 
-                        client.newCall(request).enqueue(new Callback() {
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                        getActivity().runOnUiThread(new Runnable() {
                             @Override
-                            public void onFailure(Call call, IOException e) {
+                            public void run() {
 
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        progressBar.setVisibility(View.GONE);
-                                        Log.e("OnFailure",e.getMessage());
-                                        DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
-
-                                    }
-                                });
-
-                            }
-
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-
-                                if(response.isSuccessful())
-                                {
-
-                                    String res=response.body().string();
-
-                                    if(getActivity()==null)
-                                    {
-                                        return;
-                                    }
-
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-
-                                            try {
-
-                                                JSONObject jsonObject=new JSONObject(res);
-
-                                                JSONObject forecast=jsonObject.getJSONObject("forecast");
-
-                                                JSONArray forecastday=forecast.getJSONArray("forecastday");
-
-                                                JSONObject forecastdayObject=forecastday.getJSONObject(0);
-
-                                                JSONArray hour=forecastdayObject.getJSONArray("hour");
-
-                                                for(int i=0;i<hour.length();i++)
-                                                {
-                                                    JSONObject hourObject=hour.getJSONObject(i);
-                                                    int temp_c= (int) hourObject.getDouble("temp_c");
-                                                    int isDay=hourObject.getInt("is_day");
-
-                                                    JSONObject condition=hourObject.getJSONObject("condition");
-                                                    String text=condition.getString("text");
-                                                    text=text.toLowerCase();
-
-                                                    if(i==7)
-                                                    {
-                                                        mCard.setBackgroundResource(R.drawable.day_mode);
-                                                        if(text.contains("rain"))
-                                                        {
-                                                            if(text.contains("light") || text.contains("patchy"))
-                                                            {
-                                                                morningImg.setImageResource(R.drawable.light_rain);
-                                                            }
-                                                            else if(text.contains("moderate"))
-                                                            {
-                                                                morningImg.setImageResource(R.drawable.moderate_rain);
-                                                            }
-                                                            else
-                                                            {
-                                                                if(text.contains("heavy"))
-                                                                {
-                                                                    morningImg.setImageResource(R.drawable.heavy_rain);
-                                                                }
-                                                            }
-                                                        }
-                                                        else if(text.contains("drizzle"))
-                                                        {
-                                                            morningImg.setImageResource(R.drawable.morning_drizzle);
-                                                        }
-                                                        else if(text.contains("cloudy"))
-                                                        {
-                                                            if(temp_c<=22)
-                                                            {
-                                                                morningImg.setImageResource(R.drawable.mist);
-                                                            }
-                                                            else
-                                                            {
-                                                                morningImg.setImageResource(R.drawable.cloudy);
-                                                            }
-                                                        }
-                                                        else if(text.contains("mist"))
-                                                        {
-                                                            morningImg.setImageResource(R.drawable.mist);
-                                                        }
-                                                        else
-                                                        {
-                                                            if(temp_c<=20)
-                                                            {
-                                                                morningImg.setImageResource(R.drawable.mist);
-                                                            }
-                                                            else
-                                                            {
-                                                                morningImg.setImageResource(R.drawable.clear_sky);
-                                                            }
-                                                        }
-                                                        morningTemp.setText(temp_c+"\u2103");
-                                                    }
-                                                    if(i==12)
-                                                    {
-                                                        aCard.setBackgroundResource(R.drawable.day_mode);
-                                                        if(text.contains("rain"))
-                                                        {
-                                                            if(text.contains("light") || text.contains("patchy"))
-                                                            {
-                                                                afternoonImg.setImageResource(R.drawable.light_rain);
-                                                            }
-                                                            else if(text.contains("moderate"))
-                                                            {
-                                                                afternoonImg.setImageResource(R.drawable.moderate_rain);
-                                                            }
-                                                            else
-                                                            {
-                                                                if(text.contains("heavy"))
-                                                                {
-                                                                    afternoonImg.setImageResource(R.drawable.heavy_rain);
-                                                                }
-                                                            }
-                                                        }
-                                                        else if(text.contains("drizzle"))
-                                                        {
-                                                            afternoonImg.setImageResource(R.drawable.morning_drizzle);
-                                                        }
-                                                        else if(text.contains("cloudy"))
-                                                        {
-                                                            if(temp_c<=25)
-                                                            {
-                                                                afternoonImg.setImageResource(R.drawable.mist);
-                                                            }
-                                                            else
-                                                            {
-                                                                afternoonImg.setImageResource(R.drawable.cloudy);
-                                                            }
-                                                        }
-                                                        else if(text.contains("mist"))
-                                                        {
-                                                            afternoonImg.setImageResource(R.drawable.mist);
-                                                        }
-                                                        else
-                                                        {
-                                                            if(temp_c<=20)
-                                                            {
-                                                                afternoonImg.setImageResource(R.drawable.mist);
-                                                            }
-                                                            else
-                                                            {
-                                                                afternoonImg.setImageResource(R.drawable.clear_sky);
-                                                            }
-                                                        }
-                                                        afternoonTemp.setText(temp_c+"\u2103");
-                                                    }
-                                                    if(i==17)
-                                                    {
-                                                        eCard.setBackgroundResource(R.drawable.night_mode);
-                                                        if(text.contains("rain"))
-                                                        {
-                                                            if(text.contains("light") || text.contains("patchy"))
-                                                            {
-                                                                eveningImg.setImageResource(R.drawable.light_rain_night);
-                                                            }
-                                                            else if(text.contains("moderate"))
-                                                            {
-                                                                eveningImg.setImageResource(R.drawable.moderate_rain_night);
-                                                            }
-                                                            else
-                                                            {
-                                                                if(text.contains("heavy"))
-                                                                {
-                                                                    eveningImg.setImageResource(R.drawable.heavy_rain_night);
-                                                                }
-                                                            }
-                                                        }
-                                                        else if(text.contains("drizzle"))
-                                                        {
-                                                            eveningImg.setImageResource(R.drawable.drizzle_night);
-                                                        }
-                                                        else if(text.contains("cloudy"))
-                                                        {
-                                                            if(temp_c<=20)
-                                                            {
-                                                                eveningImg.setImageResource(R.drawable.mist);
-                                                            }
-                                                            else
-                                                            {
-                                                                eveningImg.setImageResource(R.drawable.moon_clear);
-                                                            }
-                                                        }
-                                                        else if(text.contains("mist"))
-                                                        {
-                                                            eveningImg.setImageResource(R.drawable.mist);
-                                                        }
-                                                        else
-                                                        {
-                                                            if(temp_c<=20)
-                                                            {
-                                                                eveningImg.setImageResource(R.drawable.mist);
-                                                            }
-                                                            else
-                                                            {
-                                                                eveningImg.setImageResource(R.drawable.moon_clear);
-                                                            }
-                                                        }
-                                                        eveningTemp.setText(temp_c+"\u2103");
-                                                        eveningTemp.setTextColor(Color.WHITE);
-                                                        eveningText.setTextColor(Color.WHITE);
-
-                                                    }
-                                                    if(i==21)
-                                                    {
-                                                        nCard.setBackgroundResource(R.drawable.night_mode);
-                                                        if(text.contains("rain"))
-                                                        {
-                                                            if(text.contains("light") || text.contains("patchy"))
-                                                            {
-                                                                nightImg.setImageResource(R.drawable.light_rain_night);
-                                                            }
-                                                            else if(text.contains("moderate"))
-                                                            {
-                                                                nightImg.setImageResource(R.drawable.moderate_rain_night);
-                                                            }
-                                                            else
-                                                            {
-                                                                if(text.contains("heavy"))
-                                                                {
-                                                                    nightImg.setImageResource(R.drawable.heavy_rain_night);
-                                                                }
-                                                            }
-                                                        }
-                                                        else if(text.contains("drizzle"))
-                                                        {
-                                                            nightImg.setImageResource(R.drawable.drizzle_night);
-                                                        }
-                                                        else if(text.contains("cloudy"))
-                                                        {
-                                                            if(temp_c<=20)
-                                                            {
-                                                                nightImg.setImageResource(R.drawable.mist);
-                                                            }
-                                                            else
-                                                            {
-                                                                nightImg.setImageResource(R.drawable.moon_clear);
-                                                            }
-                                                        }
-                                                        else if(text.contains("mist") || text.contains("fog"))
-                                                        {
-                                                            nightImg.setImageResource(R.drawable.mist);
-                                                        }
-                                                        else
-                                                        {
-                                                            if(temp_c<=20)
-                                                            {
-                                                                nightImg.setImageResource(R.drawable.mist);
-                                                            }
-                                                            else
-                                                            {
-                                                                nightImg.setImageResource(R.drawable.moon_clear);
-                                                            }
-                                                        }
-                                                        nightTemp.setText(temp_c+"\u2103");
-                                                        nightTemp.setTextColor(Color.WHITE);
-                                                        nightText.setTextColor(Color.WHITE);
-
-                                                        progressBar.setVisibility(View.GONE);
-
-                                                    }
-
-                                                }
-
-                                            } catch (JSONException e) {
-                                                Log.e("CATCH",e.getMessage());
-                                            }
-
-                                        }
-                                    });
-
-                                }
-                                else
-                                {
-
-                                    if(getActivity()==null)
-                                    {
-                                        return;
-                                    }
-
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-
-                                            progressBar.setVisibility(View.GONE);
-                                            Log.e("OnFailure",response.message());
-                                            DynamicToast.makeError(getActivity(),response.message(),2000).show();
-
-                                        }
-                                    });
-                                }
+                                progressBar.setVisibility(View.GONE);
+                                Log.e("OnFailure",e.getMessage());
+                                DynamicToast.makeError(getActivity(),e.getMessage(),2000).show();
 
                             }
                         });
 
-
-                    } catch (IOException e) {
-                        Log.e("CATCH",e.getMessage());
                     }
 
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
 
-                }
+                        if(response.isSuccessful())
+                        {
+
+                            String res=response.body().string();
+
+                            if(getActivity()==null)
+                            {
+                                return;
+                            }
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    try {
+
+                                        JSONObject jsonObject=new JSONObject(res);
+
+                                        JSONObject forecast=jsonObject.getJSONObject("forecast");
+
+                                        JSONArray forecastday=forecast.getJSONArray("forecastday");
+
+                                        JSONObject forecastdayObject=forecastday.getJSONObject(0);
+
+                                        JSONArray hour=forecastdayObject.getJSONArray("hour");
+
+                                        for(int i=0;i<hour.length();i++)
+                                        {
+                                            JSONObject hourObject=hour.getJSONObject(i);
+                                            int temp_c= (int) hourObject.getDouble("temp_c");
+                                            int isDay=hourObject.getInt("is_day");
+
+                                            JSONObject condition=hourObject.getJSONObject("condition");
+                                            String text=condition.getString("text");
+                                            text=text.toLowerCase();
+
+                                            if(i==7)
+                                            {
+                                                mCard.setBackgroundResource(R.drawable.day_mode);
+                                                if(text.contains("rain"))
+                                                {
+                                                    if(text.contains("light") || text.contains("patchy"))
+                                                    {
+                                                        morningImg.setImageResource(R.drawable.light_rain);
+                                                    }
+                                                    else if(text.contains("moderate"))
+                                                    {
+                                                        morningImg.setImageResource(R.drawable.moderate_rain);
+                                                    }
+                                                    else
+                                                    {
+                                                        if(text.contains("heavy"))
+                                                        {
+                                                            morningImg.setImageResource(R.drawable.heavy_rain);
+                                                        }
+                                                    }
+                                                }
+                                                else if(text.contains("drizzle"))
+                                                {
+                                                    morningImg.setImageResource(R.drawable.morning_drizzle);
+                                                }
+                                                else if(text.contains("cloudy"))
+                                                {
+                                                    if(temp_c<=22)
+                                                    {
+                                                        morningImg.setImageResource(R.drawable.mist);
+                                                    }
+                                                    else
+                                                    {
+                                                        morningImg.setImageResource(R.drawable.cloudy);
+                                                    }
+                                                }
+                                                else if(text.contains("mist"))
+                                                {
+                                                    morningImg.setImageResource(R.drawable.mist);
+                                                }
+                                                else
+                                                {
+                                                    if(temp_c<=20)
+                                                    {
+                                                        morningImg.setImageResource(R.drawable.mist);
+                                                    }
+                                                    else
+                                                    {
+                                                        morningImg.setImageResource(R.drawable.clear_sky);
+                                                    }
+                                                }
+                                                morningTemp.setText(temp_c+"\u2103");
+                                            }
+                                            if(i==12)
+                                            {
+                                                aCard.setBackgroundResource(R.drawable.day_mode);
+                                                if(text.contains("rain"))
+                                                {
+                                                    if(text.contains("light") || text.contains("patchy"))
+                                                    {
+                                                        afternoonImg.setImageResource(R.drawable.light_rain);
+                                                    }
+                                                    else if(text.contains("moderate"))
+                                                    {
+                                                        afternoonImg.setImageResource(R.drawable.moderate_rain);
+                                                    }
+                                                    else
+                                                    {
+                                                        if(text.contains("heavy"))
+                                                        {
+                                                            afternoonImg.setImageResource(R.drawable.heavy_rain);
+                                                        }
+                                                    }
+                                                }
+                                                else if(text.contains("drizzle"))
+                                                {
+                                                    afternoonImg.setImageResource(R.drawable.morning_drizzle);
+                                                }
+                                                else if(text.contains("cloudy"))
+                                                {
+                                                    if(temp_c<=25)
+                                                    {
+                                                        afternoonImg.setImageResource(R.drawable.mist);
+                                                    }
+                                                    else
+                                                    {
+                                                        afternoonImg.setImageResource(R.drawable.cloudy);
+                                                    }
+                                                }
+                                                else if(text.contains("mist"))
+                                                {
+                                                    afternoonImg.setImageResource(R.drawable.mist);
+                                                }
+                                                else
+                                                {
+                                                    if(temp_c<=20)
+                                                    {
+                                                        afternoonImg.setImageResource(R.drawable.mist);
+                                                    }
+                                                    else
+                                                    {
+                                                        afternoonImg.setImageResource(R.drawable.clear_sky);
+                                                    }
+                                                }
+                                                afternoonTemp.setText(temp_c+"\u2103");
+                                            }
+                                            if(i==17)
+                                            {
+                                                eCard.setBackgroundResource(R.drawable.night_mode);
+                                                if(text.contains("rain"))
+                                                {
+                                                    if(text.contains("light") || text.contains("patchy"))
+                                                    {
+                                                        eveningImg.setImageResource(R.drawable.light_rain_night);
+                                                    }
+                                                    else if(text.contains("moderate"))
+                                                    {
+                                                        eveningImg.setImageResource(R.drawable.moderate_rain_night);
+                                                    }
+                                                    else
+                                                    {
+                                                        if(text.contains("heavy"))
+                                                        {
+                                                            eveningImg.setImageResource(R.drawable.heavy_rain_night);
+                                                        }
+                                                    }
+                                                }
+                                                else if(text.contains("drizzle"))
+                                                {
+                                                    eveningImg.setImageResource(R.drawable.drizzle_night);
+                                                }
+                                                else if(text.contains("cloudy"))
+                                                {
+                                                    if(temp_c<=20)
+                                                    {
+                                                        eveningImg.setImageResource(R.drawable.mist);
+                                                    }
+                                                    else
+                                                    {
+                                                        eveningImg.setImageResource(R.drawable.moon_clear);
+                                                    }
+                                                }
+                                                else if(text.contains("mist"))
+                                                {
+                                                    eveningImg.setImageResource(R.drawable.mist);
+                                                }
+                                                else
+                                                {
+                                                    if(temp_c<=20)
+                                                    {
+                                                        eveningImg.setImageResource(R.drawable.mist);
+                                                    }
+                                                    else
+                                                    {
+                                                        eveningImg.setImageResource(R.drawable.moon_clear);
+                                                    }
+                                                }
+                                                eveningTemp.setText(temp_c+"\u2103");
+                                                eveningTemp.setTextColor(Color.WHITE);
+                                                eveningText.setTextColor(Color.WHITE);
+
+                                            }
+                                            if(i==21)
+                                            {
+                                                nCard.setBackgroundResource(R.drawable.night_mode);
+                                                if(text.contains("rain"))
+                                                {
+                                                    if(text.contains("light") || text.contains("patchy"))
+                                                    {
+                                                        nightImg.setImageResource(R.drawable.light_rain_night);
+                                                    }
+                                                    else if(text.contains("moderate"))
+                                                    {
+                                                        nightImg.setImageResource(R.drawable.moderate_rain_night);
+                                                    }
+                                                    else
+                                                    {
+                                                        if(text.contains("heavy"))
+                                                        {
+                                                            nightImg.setImageResource(R.drawable.heavy_rain_night);
+                                                        }
+                                                    }
+                                                }
+                                                else if(text.contains("drizzle"))
+                                                {
+                                                    nightImg.setImageResource(R.drawable.drizzle_night);
+                                                }
+                                                else if(text.contains("cloudy"))
+                                                {
+                                                    if(temp_c<=20)
+                                                    {
+                                                        nightImg.setImageResource(R.drawable.mist);
+                                                    }
+                                                    else
+                                                    {
+                                                        nightImg.setImageResource(R.drawable.moon_clear);
+                                                    }
+                                                }
+                                                else if(text.contains("mist") || text.contains("fog"))
+                                                {
+                                                    nightImg.setImageResource(R.drawable.mist);
+                                                }
+                                                else
+                                                {
+                                                    if(temp_c<=20)
+                                                    {
+                                                        nightImg.setImageResource(R.drawable.mist);
+                                                    }
+                                                    else
+                                                    {
+                                                        nightImg.setImageResource(R.drawable.moon_clear);
+                                                    }
+                                                }
+                                                nightTemp.setText(temp_c+"\u2103");
+                                                nightTemp.setTextColor(Color.WHITE);
+                                                nightText.setTextColor(Color.WHITE);
+
+                                                progressBar.setVisibility(View.GONE);
+
+                                            }
+
+                                        }
+
+                                    } catch (JSONException e) {
+                                        Log.e("CATCH",e.getMessage());
+                                    }
+
+                                }
+                            });
+
+                        }
+                        else
+                        {
+
+                            if(getActivity()==null)
+                            {
+                                return;
+                            }
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    progressBar.setVisibility(View.GONE);
+                                    Log.e("OnFailure",response.message());
+                                    DynamicToast.makeError(getActivity(),response.message(),2000).show();
+
+                                }
+                            });
+                        }
+
+                    }
+                });
+
+
+            } catch (IOException e) {
+                Log.e("CATCH",e.getMessage());
             }
-        });
+
+        }
+
+//        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Location> task) {
+//
+//                Location location = task.getResult();
+//
+//                if (location != null) {
+//
+//                }
+//            }
+//        });
     }
 
 

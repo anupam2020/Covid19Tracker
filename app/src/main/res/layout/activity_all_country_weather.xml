@@ -67,18 +67,18 @@
                 android:id="@+id/allWeatherSwipeRelative"
                 android:layout_below="@+id/allWeatherLayout"
                 android:layout_marginTop="30dp"
-                android:visibility="gone">
+                >
 
 
                 <TextView
+                    android:id="@+id/allWeatherCityText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="- -"
-                    android:textSize="40dp"
-                    android:textColor="@color/black"
                     android:layout_centerHorizontal="true"
-                    android:id="@+id/allWeatherCityText"
-                    android:fontFamily="@font/aladin"/>
+                    android:fontFamily="@font/aladin"
+                    android:text="- -"
+                    android:textColor="@color/black"
+                    android:textSize="40dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
